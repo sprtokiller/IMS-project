@@ -19,7 +19,7 @@ public:
 	~Field();
 
 private:
-	size_t width;
-	size_t height;
+	const size_t width;
+	const size_t height;
 	std::vector<Cell> cells;
 };

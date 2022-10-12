@@ -10,4 +10,12 @@
 CAutomata::CAutomata(size_t w, size_t h)
 {
 	cells = std::make_pair(std::make_unique<Field>(w, h), std::make_unique<Field>(w, h));
+	
+	old = cells.first.get();
+	next = cells.second.get();
+}
+
+void CAutomata::update()
+{
+	std::swap(old, next);
 }

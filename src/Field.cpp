@@ -8,10 +8,8 @@
 
 #include "Field.h"
 
-Field::Field(size_t w, size_t h)
+Field::Field(size_t w, size_t h) : width(w), height(h)
 {
-	width = w;
-	height = h;
 	cells = std::vector<Cell>(w * h);
 }
 

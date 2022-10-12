@@ -20,6 +20,11 @@ class CAutomata
 public:
 	CAutomata(size_t w, size_t h);
 	~CAutomata() = default;
+
+	void update();
 private:
+	const Field* old;
+	const Field* next;
+
 	std::pair<std::unique_ptr<Field>, std::unique_ptr<Field>> cells;
 };
