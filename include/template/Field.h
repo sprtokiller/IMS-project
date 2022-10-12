@@ -10,7 +10,7 @@
 #include <string>
 #include <array>
 
-#include "Cell.h"
+#include "template/Cell.h"
 #include <util.h>
 
 #define WIDTH 100

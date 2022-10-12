@@ -1,4 +1,4 @@
-#include "CAutomata.h"
+#include "template/CAutomata.h"
 /**
  * @brief Defines an abstract class for a Cellular Automaton
  *

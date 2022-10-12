@@ -6,4 +6,4 @@
  * @author xkocic02
  */
 
-#include "Cell.h"
+#include "template/CAutomata.h"

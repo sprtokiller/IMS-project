@@ -12,8 +12,7 @@
 #include <vector>
 #include <memory>
 
-#include "Field.h"
-#include "Cell.h"
+#include "template/Field.h"
 #include <util.h>
 
 class CAutomata

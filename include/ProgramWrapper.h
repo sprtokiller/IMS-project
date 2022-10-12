@@ -9,7 +9,7 @@
 #pragma once
 
 #include "Args.h"
-#include "CAutomata.h"
+#include "template/CAutomata.h"
 
 class ProgramWrapper
 {
