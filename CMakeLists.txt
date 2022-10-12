@@ -1,4 +1,4 @@
-﻿# CMakeList.txt : CMake project for hinfosvc
+﻿# CMakeList.txt : CMake project for IMS: Cellular Automaton
 
 cmake_minimum_required (VERSION 3.16)
 
