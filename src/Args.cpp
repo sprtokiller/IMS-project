@@ -32,37 +32,17 @@ ProgramDesc::ProgramDesc(int argc, char* argv[])
 	int c;
 	opterr = 0;
 
-	if (argc < 2)
+	if (argc < 1)
 	{
 		usage();
 		exit(EXIT_FAILURE);
 	}
-
-	feed = argv[1];
-
-	while ((c = getopt(argc, argv, "f:c:C:Tauh")) != -1)
+	
+	while ((c = getopt(argc, argv, "vh")) != -1)
 		switch (c)
 		{
-		case 'f':
-			useURL = false;
-			feed = optarg;
-			break;
-		case 'c':
-			usedefaultcert = false;
-			certfile = optarg;
-			break;
-		case 'C':
-			usedefaultcert = false;
-			certdir = optarg;
-			break;
-		case 'T':
-			T_flag = true;
-			break;
-		case 'a':
-			a_flag = true;
-			break;
-		case 'u':
-			u_flag = true;
+		case 'v':
+			verbose = true;
 			break;
 		case 'h':
 			usage();
