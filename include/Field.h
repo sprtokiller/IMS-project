@@ -8,19 +8,24 @@
 
 #pragma once
 #include <string>
-#include <vector>
+#include <array>
 
 #include "Cell.h"
+#include <util.h>
+
+#define WIDTH 100
+#define HEIGHT 100
 
 class Field
 {
 public:
-	Field(size_t w, size_t h);
+	Field();
 	~Field();
 private:
 	void generatePaper();
 private:
-	const size_t width;
-	const size_t height;
-	std::vector<Cell> cells;
+	const size_t width = WIDTH;
+	const size_t height = HEIGHT;
+	
+	std::array<Cell,WIDTH*HEIGHT> cells;
 };

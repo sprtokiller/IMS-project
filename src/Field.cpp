@@ -11,9 +11,8 @@
 #include "Field.h"
 #include "MagicConstants.h"
 
-Field::Field(size_t w, size_t h) : width(w), height(h)
+Field::Field()
 {
-	cells = std::vector<Cell>(w * h);
 	generatePaper();
 }
 

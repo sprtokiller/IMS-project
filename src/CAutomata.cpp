@@ -7,9 +7,9 @@
  * @author xkocic02
  */
 
-CAutomata::CAutomata(size_t w, size_t h)
+CAutomata::CAutomata(csize_t w, csize_t h)
 {
-	cells = std::make_pair(std::make_unique<Field>(w, h), std::make_unique<Field>(w, h));
+	cells = std::make_pair(std::make_unique<const Field>(), std::make_unique<const Field>());
 	
 	old = cells.first.get();
 	next = cells.second.get();
