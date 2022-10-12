@@ -17,7 +17,8 @@ class Field
 public:
 	Field(size_t w, size_t h);
 	~Field();
-
+private:
+	void generatePaper();
 private:
 	const size_t width;
 	const size_t height;

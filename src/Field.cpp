@@ -11,8 +11,13 @@
 Field::Field(size_t w, size_t h) : width(w), height(h)
 {
 	cells = std::vector<Cell>(w * h);
+	generatePaper();
 }
 
 Field::~Field()
+{
+}
+
+void Field::generatePaper()
 {
 }
