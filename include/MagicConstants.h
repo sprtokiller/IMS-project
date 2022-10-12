@@ -9,4 +9,4 @@
 #pragma once
 
 const size_t DEFAULT_B = 100;
-const size_t DEFAULT_H = 100;
+const size_t DEFAULT_C = 100;
