@@ -10,6 +10,8 @@
 
 ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 {
+	CAutomata<int, 10, 10> ca;
+	ca.flip();
 }
 
 ProgramWrapper::~ProgramWrapper()

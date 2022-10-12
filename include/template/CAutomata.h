@@ -15,16 +15,29 @@
 #include "template/Field.h"
 #include <util.h>
 
+using namespace std;
+
+template <class T, size_t WIDTH, size_t HEIGHT>
 class CAutomata
 {
 public:
-	CAutomata(csize_t w, csize_t h);
-	~CAutomata() = default;
+	CAutomata();
 
-	void update();
-private:
-	const Field* old;
-	const Field* next;
-
-	std::pair<std::unique_ptr<const Field>, std::unique_ptr<const Field>> cells;
+	void flip();
+	
+	unique_ptr<const Field<T, WIDTH, HEIGHT>> old;
+	unique_ptr<const Field<T, WIDTH, HEIGHT>> next;
 };
+
+template <class T, size_t WIDTH, size_t HEIGHT>
+inline CAutomata<T, WIDTH, HEIGHT>::CAutomata()
+{
+	old = make_unique<const Field<T, WIDTH, HEIGHT>>();
+	next = make_unique<const Field<T, WIDTH, HEIGHT>>();
+}
+
+template <class T, size_t WIDTH, size_t HEIGHT>
+inline void CAutomata<T, WIDTH, HEIGHT>::flip()
+{
+	swap(old, next);
+}

@@ -7,25 +7,27 @@
  */
 
 #pragma once
-#include <string>
 #include <array>
-
-#include "template/Cell.h"
 #include <util.h>
 
-#define WIDTH 100
-#define HEIGHT 100
-
+template <class T,csize_t WIDTH, csize_t HEIGHT>
 class Field
 {
 public:
 	Field();
-	~Field();
+	T get(size_t x, size_t y) const;
 private:
-	void generatePaper();
-private:
-	const size_t width = WIDTH;
-	const size_t height = HEIGHT;
-	
-	std::array<Cell,WIDTH*HEIGHT> cells;
+	std::array<T, WIDTH* HEIGHT> cells;
 };
+
+template<class T, csize_t WIDTH, csize_t HEIGHT>
+inline Field<T, WIDTH, HEIGHT>::Field()
+{
+	cells = std::array<T, WIDTH* HEIGHT>();
+}
+
+template<class T, csize_t WIDTH, csize_t HEIGHT>
+inline T Field<T, WIDTH, HEIGHT>::get(size_t x, size_t y) const
+{
+	return cells[x + y * WIDTH];
+}

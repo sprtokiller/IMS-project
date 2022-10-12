@@ -1,4 +1,3 @@
-#include "template/CAutomata.h"
 /**
  * @brief Defines an abstract class for a Cellular Automaton
  *
@@ -6,16 +5,13 @@
  * @author xkrizv03
  * @author xkocic02
  */
-
-CAutomata::CAutomata(csize_t w, csize_t h)
+/*
+template <size_t SIZE>
+CAutomata<SIZE>::CAutomata()
 {
-	cells = std::make_pair(std::make_unique<const Field>(), std::make_unique<const Field>());
-	
-	old = cells.first.get();
-	next = cells.second.get();
+	old = std::make_unique<const Field<10,10>>();
+	next = std::make_unique<const Field<10,10>>();
 }
+*/
 
-void CAutomata::update()
-{
-	std::swap(old, next);
-}
+#include "template/CAutomata.h"
