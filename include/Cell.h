@@ -8,20 +8,19 @@
 
 #pragma once
 #include <vector>
+#include "MagicConstants.h"
 
 class Cell
 {
 public:
 	Cell() {};
-	Cell(size_t initB, size_t initC) : B(initB), C(initC) {}
 	~Cell() {};
-	inline size_t getW() const { return W; }
-	inline size_t getI() const { return I; }
-	inline size_t getB() const { return B; }
-	inline size_t getC() const { return C; }
+public:
 private:
+public:
 	size_t W = 0; //water particles
 	size_t I = 0; //ink particles
-	size_t B = 0; //height of bottom (water capacity)
-	size_t C = 0; //capacity of water captured to cells
+	size_t B = DEFAULT_B; //height of bottom (water capacity)
+	size_t C = DEFAULT_C; //capacity of water captured to cells
+private:
 };

@@ -10,3 +10,5 @@
 
 const size_t DEFAULT_B = 100;
 const size_t DEFAULT_C = 100;
+const size_t FIBERS_PER_CELL = 1;
+const size_t FIBER_LEN = 8;
