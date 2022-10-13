@@ -11,15 +11,9 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <thread>
 
 #include "template/Field.h"
-
-template <class T, size_t W, size_t H>
-class CAutomata_T;
-
-#include "Cell.h"
-typedef CAutomata_T<Cell, 100, 100> CAutomata;
-typedef void (*RunCell)(CAutomata);
 
 using namespace std;
 
@@ -52,8 +46,22 @@ public:
 		return next->get(x, y);
 	}
 
-	void run(size_t cycles, size_t cores, RunCell f) {
-		
+	void run(size_t cycles, size_t cores, void (*RunCell)(size_t, size_t, CAutomata_T)) {
+		vector<thread> threads;
+		int i;
+
+		for (size_t n = 0; n < cycles; n++)
+		{
+			//if (n % 16 == 0) cout << n * 100 / cycles << "%\n";
+
+			for (size_t id = 0; id < cores; id++)
+				threads.push_back(thread(RunCell, id, cores, *this));
+
+			for (auto& th : threads) th.join();
+			threads.clear();
+
+			flip();
+		}
 	}
 	
 	const size_t WIDTH = W;
@@ -62,3 +70,6 @@ private:
 	Field<T, W, H>* old;
 	Field<T, W, H>* next;
 };
+
+#include "Cell.h"
+typedef CAutomata_T<Cell, 100, 100> CAutomata;
