@@ -21,23 +21,37 @@ template <class T, size_t WIDTH, size_t HEIGHT>
 class CAutomata
 {
 public:
-	CAutomata();
+	CAutomata() {
+		old = new Field<T, WIDTH, HEIGHT>();
+		next = new Field<T, WIDTH, HEIGHT>();
+	}
+	/// <summary>
+	/// 
+	/// </summary>
+	void flip() {
+		swap(old, next);
+	}
 
-	void flip();
-	
-	unique_ptr<const Field<T, WIDTH, HEIGHT>> old;
-	unique_ptr<const Field<T, WIDTH, HEIGHT>> next;
+	/// <summary>
+	/// Gets cell (read only)
+	/// </summary>
+	const T* getOld(size_t x, size_t y) const {
+		return old->get(x, y);
+	}
+
+	/// <summary>
+	/// Gets cell (recommended for writing)
+	/// </summary>
+	T* getNext(size_t x, size_t y) const {
+		return next->get(x, y);
+	}
+private:
+	Field<T, WIDTH, HEIGHT>* old;
+	Field<T, WIDTH, HEIGHT>* next;
 };
 
-template <class T, size_t WIDTH, size_t HEIGHT>
-inline CAutomata<T, WIDTH, HEIGHT>::CAutomata()
-{
-	old = make_unique<const Field<T, WIDTH, HEIGHT>>();
-	next = make_unique<const Field<T, WIDTH, HEIGHT>>();
-}
-
-template <class T, size_t WIDTH, size_t HEIGHT>
-inline void CAutomata<T, WIDTH, HEIGHT>::flip()
-{
-	swap(old, next);
-}
+#ifdef DEBUG
+//force template init
+class foo {};
+template class CAutomata<foo, 1, 1>;
+#endif // DEBUG
