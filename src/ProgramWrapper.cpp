@@ -13,14 +13,13 @@
 
 ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 {
-	const size_t s = 10000;
-	CAutomata<Cell, s, s> ca;
+	CAutomatat ca;
 
-	for (size_t i = 0; i < 10; i++) {
-		for (size_t x = 0; x < s; x++)
-			for (size_t y = 0; y < s; y++) {
+	for (size_t i = 0; i < 1; i++) {
+		for (size_t x = 0; x < ca.WIDTH; x++)
+			for (size_t y = 0; y < ca.HEIGHT; y++) {
 				auto a = ca.getOld(x, y);
-				auto b = ca.getNext((x - i) % s, (y - 1) % s);
+				auto b = ca.getNext((x - i) % ca.WIDTH, (y - 1) % ca.HEIGHT);
 				//a->B = x;
 				b->B = y;
 			}

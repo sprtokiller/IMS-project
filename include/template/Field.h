@@ -8,23 +8,16 @@
 
 #pragma once
 #include <array>
-#include <util.h>
 
 using namespace std;
 
-template <class T,csize_t WIDTH, csize_t HEIGHT>
+template <class T,size_t W, size_t H>
 class Field
 {
 public:
 	T* get(size_t x, size_t y) {
-		return &cells[x + y*WIDTH];
+		return &cells[x + y*W];
 	};
 private:
-	array< T, WIDTH*HEIGHT> cells;
+	array< T, W*H> cells;
 };
-
-#if DEBUG
-//force template init
-class bar {};
-template class Field<bar, 1, 1>;
-#endif // DEBUG

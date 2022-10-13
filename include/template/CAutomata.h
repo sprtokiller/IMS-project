@@ -13,20 +13,19 @@
 #include <memory>
 
 #include "template/Field.h"
-#include <util.h>
 
 using namespace std;
 
-template <class T, size_t WIDTH, size_t HEIGHT>
+template <class T, size_t W, size_t H>
 class CAutomata
 {
 public:
-	CAutomata() {
-		old = new Field<T, WIDTH, HEIGHT>();
-		next = new Field<T, WIDTH, HEIGHT>();
+	CAutomata(){
+		old = new Field<T, W, H>();
+		next = new Field<T, W, H>();
 	}
 	/// <summary>
-	/// 
+	/// Updates world
 	/// </summary>
 	void flip() {
 		swap(old, next);
@@ -45,13 +44,13 @@ public:
 	T* getNext(size_t x, size_t y) const {
 		return next->get(x, y);
 	}
+
+	const size_t WIDTH = W;
+	const size_t HEIGHT = H;
 private:
-	Field<T, WIDTH, HEIGHT>* old;
-	Field<T, WIDTH, HEIGHT>* next;
+	Field<T, W, H>* old;
+	Field<T, W, H>* next;
 };
 
-#ifdef DEBUG
-//force template init
-class foo {};
-template class CAutomata<foo, 1, 1>;
-#endif // DEBUG
+#include "Cell.h"
+typedef CAutomata<Cell, 100, 100> CAutomatat;
