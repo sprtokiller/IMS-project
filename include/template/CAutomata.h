@@ -14,13 +14,20 @@
 
 #include "template/Field.h"
 
+template <class T, size_t W, size_t H>
+class CAutomata_T;
+
+#include "Cell.h"
+typedef CAutomata_T<Cell, 100, 100> CAutomata;
+typedef void (*RunCell)(CAutomata);
+
 using namespace std;
 
 template <class T, size_t W, size_t H>
-class CAutomata
+class CAutomata_T
 {
 public:
-	CAutomata(){
+	CAutomata_T(){
 		old = new Field<T, W, H>();
 		next = new Field<T, W, H>();
 	}
@@ -45,12 +52,13 @@ public:
 		return next->get(x, y);
 	}
 
+	void run(size_t cycles, size_t cores, RunCell f) {
+		
+	}
+	
 	const size_t WIDTH = W;
 	const size_t HEIGHT = H;
 private:
 	Field<T, W, H>* old;
 	Field<T, W, H>* next;
 };
-
-#include "Cell.h"
-typedef CAutomata<Cell, 100, 100> CAutomatat;

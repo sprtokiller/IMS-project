@@ -13,7 +13,7 @@
 
 ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 {
-	CAutomatat ca;
+	CAutomata ca;
 
 	for (size_t i = 0; i < 1; i++) {
 		for (size_t x = 0; x < ca.WIDTH; x++)
