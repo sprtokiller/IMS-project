@@ -9,6 +9,9 @@ project ("CAink" VERSION 1.0)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+
 file(GLOB_RECURSE srcs "${PROJECT_SOURCE_DIR}/src/*.cpp")
 file(GLOB_RECURSE hdrs "${PROJECT_SOURCE_DIR}/include/*.h")
 
@@ -17,3 +20,4 @@ add_executable ("${PROJECT_NAME}" ${srcs} ${hdrs})
 
 # Add the header file directory
 target_include_directories("${PROJECT_NAME}" PUBLIC ${PROJECT_SOURCE_DIR}/include)
+target_link_libraries("${PROJECT_NAME}" PRIVATE Threads::Threads)
