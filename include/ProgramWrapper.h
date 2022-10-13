@@ -18,5 +18,4 @@ public:
 	
 private:
 	ProgramDesc pd;
-	//CAutomata paper;
 };

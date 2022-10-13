@@ -1,7 +1,7 @@
 /**
  * @brief Abstract Field class, must be populated with a concrete implementation and rules
  *
- * @file Field.h
+ * @file World.h
  * @author xkrizv03
  * @author xkocic02
  */
@@ -11,13 +11,13 @@
 
 using namespace std;
 
-template <class T,size_t W, size_t H>
-class Field
+template <class Cell, size_t W, size_t H>
+class World_T
 {
 public:
-	T* get(size_t x, size_t y) {
-		return &cells[x + y*W];
+	Cell* get(size_t x, size_t y) {
+		return &cells[x + y * W];
 	};
 private:
-	array< T, W*H> cells;
+	array< Cell, W* H> cells;
 };

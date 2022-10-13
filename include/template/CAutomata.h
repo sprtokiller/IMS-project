@@ -13,17 +13,22 @@
 #include <memory>
 #include <thread>
 
-#include "template/Field.h"
+#include "template/World.h"
 
 using namespace std;
 
-template <class T, size_t W, size_t H>
+template <class Cell, size_t W, size_t H>
 class CAutomata_T
 {
+	using CAutomata = CAutomata_T<Cell, W, H>;
+	using World = World_T<Cell, W, H>;
+	
+	using UpdateFunc = void(*)(size_t id, size_t cores, CAutomata ca);
+	
 public:
-	CAutomata_T(){
-		old = new Field<T, W, H>();
-		next = new Field<T, W, H>();
+	CAutomata_T() {
+		old = new World();
+		next = new World();
 	}
 	/// <summary>
 	/// Updates world
@@ -35,27 +40,27 @@ public:
 	/// <summary>
 	/// Gets cell (read only)
 	/// </summary>
-	const T* getOld(size_t x, size_t y) const {
+	const Cell* getOld(size_t x, size_t y) {
 		return old->get(x, y);
 	}
 
 	/// <summary>
 	/// Gets cell (recommended for writing)
 	/// </summary>
-	T* getNext(size_t x, size_t y) const {
+	Cell* getNext(size_t x, size_t y) {
 		return next->get(x, y);
 	}
 
-	void run(size_t cycles, size_t cores, void (*RunCell)(size_t, size_t, CAutomata_T)) {
+	void run(size_t cycles, size_t cores, UpdateFunc func) {
 		vector<thread> threads;
 		int i;
 
 		for (size_t n = 0; n < cycles; n++)
 		{
-			//if (n % 16 == 0) cout << n * 100 / cycles << "%\n";
+			//if (n % cores == 0) cout << n * 100 / cycles << "%\n";
 
 			for (size_t id = 0; id < cores; id++)
-				threads.push_back(thread(RunCell, id, cores, *this));
+				threads.push_back(thread(func, id, cores, *this));
 
 			for (auto& th : threads) th.join();
 			threads.clear();
@@ -63,13 +68,10 @@ public:
 			flip();
 		}
 	}
-	
+
 	const size_t WIDTH = W;
 	const size_t HEIGHT = H;
 private:
-	Field<T, W, H>* old;
-	Field<T, W, H>* next;
+	World* old;
+	World* next;
 };
-
-#include "Cell.h"
-typedef CAutomata_T<Cell, 100, 100> CAutomata;
