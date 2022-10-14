@@ -14,12 +14,18 @@
 #define cm *1000*10
 #define m  *1000*1000
 
+struct Paper {
+	uint FIBER_LEN;
+	uint FIBER_DENSITY;
+};
+
 constexpr uint CELL_SIZE = 20 um;
-constexpr uint FIBER_LEN = 3 cm / CELL_SIZE;
+
+constexpr Paper SBSK = { 30 mm / CELL_SIZE, 50 };
+constexpr Paper SBHK = { 15 mm / CELL_SIZE, 50 };
+
 constexpr uint DEFAULT_B = 100 um;
 constexpr uint DEFAULT_C = 100 um;
-// for every 50 cells, generate a random fiber
-constexpr uint C_PER_FIBER = 50;
 
 #undef um
 #undef mm
