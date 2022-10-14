@@ -44,6 +44,8 @@ public:
 			setPaperPlane();
 			break;
 		case PaperType::SBSK:
+			setPaperPlane();
+			addFibres(SBSK);
 			break;
 		case PaperType::SBHK:
 			break;
@@ -56,9 +58,12 @@ public:
 private:
 	void setPaperPlane(size_t newB = DEFAULT_B, size_t newC = DEFAULT_C) {
 		for (auto& c : cells) {
-			c.B = newB + 4;
-			c.C = newC + 4;
+			c.B = newB;
+			c.C = newC;
 		}
+	}
+	void addFibres(const Paper paper) {
+		//algo
 	}
 private:
 	array< Cell, W* H> cells;
