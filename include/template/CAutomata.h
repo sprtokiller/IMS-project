@@ -76,6 +76,8 @@ public:
 		}
 	}
 
+	
+
 	static constexpr size_t aproxSize() {
 		return 2 * (World::aproxSize() + sizeof(World*));
 	}
