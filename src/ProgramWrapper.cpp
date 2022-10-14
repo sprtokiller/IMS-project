@@ -40,7 +40,8 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 		throw runtime_error("Not enough RAM for this program");
 	
 	CAutomata ca;
-
+	ca.setPaperType(PaperType::DEFAULT);
+	
 	high_resolution_clock::time_point t1 = high_resolution_clock::now();
 	ca.run(10, cores, doCalc);
 	high_resolution_clock::time_point t2 = high_resolution_clock::now();

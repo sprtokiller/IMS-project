@@ -8,7 +8,16 @@
 
 #pragma once
 #include <array>
+#include "MagicConstants.h"
 
+ // define enum for paper types
+enum class PaperType
+{
+	DEFAULT, //Plain paper-like surface
+	SBSK, //Southern Bleached Softwood Kraft
+	SBHK, //Southern Bleached Hardwood Kraft
+	CF //Cotton Fabric
+};
 using namespace std;
 
 template <class Cell, size_t W, size_t H>
@@ -24,6 +33,30 @@ public:
 
 	static constexpr size_t aproxSize() {
 		return W * H * Cell::aproxSize();
+	}
+
+	void setPaperType(PaperType type) {
+		switch (type)
+		{
+		case PaperType::DEFAULT:
+			setPaperPlane();
+			break;
+		case PaperType::SBSK:
+			break;
+		case PaperType::SBHK:
+			break;
+		case PaperType::CF:
+			break;
+		default:
+			break;
+		}
+	}
+private:
+	void setPaperPlane(size_t newB = DEFAULT_B, size_t newC = DEFAULT_C) {
+		for (auto& c : cells) {
+			c.B = newB + 4;
+			c.C = newC + 4;
+		}
 	}
 private:
 	array< Cell, W* H> cells;

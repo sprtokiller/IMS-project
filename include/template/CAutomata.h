@@ -79,6 +79,18 @@ public:
 		return 2 * (World::aproxSize() + sizeof(World*));
 	}
 
+	void setPaperType(PaperType pt) {
+		old->setPaperType(pt);
+		// next should be a copy of old
+		makeDeepCopy(old, next);
+	}
+private:
+	void makeDeepCopy(World* from, World* to) {
+		delete to;
+		to = new World(*from);
+	}
+public:
+	
 	const size_t WIDTH = W;
 	const size_t HEIGHT = H;
 private:
