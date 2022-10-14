@@ -1,10 +1,12 @@
 #pragma once
 
+using namespace std;
+
 typedef unsigned int uint;
 
 #include <sstream>
 #include <iostream>
-inline std::string to_string(uint value)
+inline string to_string(uint value)
 {
 	std::ostringstream os;
 	os << value;
