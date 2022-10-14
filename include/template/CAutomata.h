@@ -12,6 +12,7 @@
 #include <vector>
 #include <memory>
 #include <thread>
+#include <iostream>
 
 #include "template/World.h"
 
@@ -23,12 +24,16 @@ class CAutomata_T
 	using CAutomata = CAutomata_T<Cell, W, H>;
 	using World = World_T<Cell, W, H>;
 	
-	using UpdateFunc = void(*)(size_t id, size_t cores, CAutomata ca);
+	using UpdateFunc = void(*)(size_t id, size_t cores, CAutomata* ca);
 	
 public:
 	CAutomata_T() {
 		old = new World();
 		next = new World();
+	}
+	~CAutomata_T() {
+		free(old);
+		free(next);
 	}
 	/// <summary>
 	/// Updates world
@@ -51,22 +56,27 @@ public:
 		return next->get(x, y);
 	}
 
-	void run(size_t cycles, size_t cores, UpdateFunc func) {
+	void run(size_t cycles, size_t cores, UpdateFunc func, bool print = false) {
 		vector<thread> threads;
 		int i;
 
 		for (size_t n = 0; n < cycles; n++)
 		{
-			//if (n % cores == 0) cout << n * 100 / cycles << "%\n";
+			if(print)
+				if (n % cores == 0) cout << n * 100 / cycles << "%\n";
 
 			for (size_t id = 0; id < cores; id++)
-				threads.push_back(thread(func, id, cores, *this));
+				threads.push_back(thread(func, id, cores, this));
 
 			for (auto& th : threads) th.join();
 			threads.clear();
 
 			flip();
 		}
+	}
+
+	static constexpr size_t aproxSize() {
+		return 2 * (World::aproxSize() + sizeof(World*));
 	}
 
 	const size_t WIDTH = W;

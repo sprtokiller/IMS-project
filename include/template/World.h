@@ -15,9 +15,16 @@ template <class Cell, size_t W, size_t H>
 class World_T
 {
 public:
+	World_T() {};
+	~World_T() {};
+	
 	Cell* get(size_t x, size_t y) {
 		return &cells[x + y * W];
 	};
+
+	static constexpr size_t aproxSize() {
+		return W * H * Cell::aproxSize();
+	}
 private:
 	array< Cell, W* H> cells;
 };
