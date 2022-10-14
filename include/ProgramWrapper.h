@@ -6,7 +6,8 @@
  * @author xkocic02
  */
 
-#pragma once
+#ifndef PROGRAMWRAPPER_H
+#define PROGRAMWRAPPER_H
 
 #include "Args.h"
 
@@ -19,3 +20,5 @@ public:
 private:
 	ProgramDesc pd;
 };
+
+#endif

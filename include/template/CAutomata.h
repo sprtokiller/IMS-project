@@ -6,7 +6,8 @@
  * @author xkocic02
  */
 
-#pragma once
+#ifndef CAUTOMATA_H
+#define CAUTOMATA_H
 
 #include <string>
 #include <vector>
@@ -97,3 +98,5 @@ private:
 	World* old;
 	World* next;
 };
+
+#endif

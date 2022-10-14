@@ -5,7 +5,10 @@
  * @author xkrizv03
  * @author xkocic02
  */
-#pragma once
+
+#ifndef ARGS_H
+#define ARGS_H
+
 #include <string_view>
 
 struct ProgramDesc
@@ -15,3 +18,5 @@ public:
 public:
 	bool verbose = false;
 };
+
+#endif

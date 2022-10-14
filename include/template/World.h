@@ -6,7 +6,9 @@
  * @author xkocic02
  */
 
-#pragma once
+#ifndef WORLD_H
+#define WORLD_H
+
 #include <array>
 #include "MagicConstants.h"
 
@@ -61,3 +63,5 @@ private:
 private:
 	array< Cell, W* H> cells;
 };
+
+#endif

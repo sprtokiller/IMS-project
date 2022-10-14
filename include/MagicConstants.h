@@ -6,7 +6,8 @@
  * @author xkocic02
  */
 
-#pragma once
+#ifndef MAGICCONSTANTS_H
+#define MAGICCONSTANTS_H
 
 #define um *1
 #define mm *1000
@@ -24,3 +25,5 @@ constexpr uint C_PER_FIBER = 50;
 #undef mm
 #undef cm
 #undef m
+
+#endif

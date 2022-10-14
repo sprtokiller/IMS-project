@@ -6,7 +6,9 @@
  * @author xkocic02
  */
 
-#pragma once
+#ifndef CELL_H
+#define CELL_H
+
 #include <vector>
 #include "MagicConstants.h"
 
@@ -26,3 +28,5 @@ public:
 	uint C = DEFAULT_C; //capacity of water captured to cells
 private:
 };
+
+#endif

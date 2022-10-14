@@ -1,4 +1,13 @@
-#pragma once
+/**
+ * @brief Random utility functions for the project
+ *
+ * @file Util.h
+ * @author xkrizv03
+ * @author xkocic02
+ */
+
+#ifndef UTIL_H
+#define UTIL_H
 
 using namespace std;
 
@@ -97,4 +106,6 @@ unsigned long long getTotalSystemMemory()
 {
 	return 2;
 }
+#endif
+
 #endif
