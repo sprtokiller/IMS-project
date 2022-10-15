@@ -9,11 +9,12 @@
 #include <stdio.h>
 
 #include "ProgramWrapper.h"
-#include "Cell.h"
 #include "Util.h"
 #include "BitMapWriter.h"
 #include "MagicConstants.h"
-#include "Paper.h"
+
+#include "models/Paper.h"
+#include "models/Cell.h"
 
 //time tests
 #include <iostream>
@@ -26,7 +27,6 @@ void doCalc(size_t id, size_t cores, Paper::CAutomata* ca) {
 		for (size_t x = 0; x < ca->WIDTH; x++) {
 			auto a = ca->getOld(x, y);
 			auto b = ca->getNext(x % ca->WIDTH, y % ca->HEIGHT);
-			b->B = y + a->B * x;
 		}
 	}
 }
@@ -51,7 +51,7 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
 
 	std::chrono::duration<double> time_span = duration_cast<std::chrono::duration<double>>(t2 - t1);
-	std::cout << "Time required = " << time_span.count() << " seconds" << endl;
+	std::cout << "Time required:   " << time_span.count() << " s" << endl;
 }
 
 ProgramWrapper::~ProgramWrapper()

@@ -26,7 +26,7 @@ inline PaperType operator|(PaperType a, PaperType b)
 	return PaperType(static_cast<int>(a) | static_cast<int>(b));
 }
 
-class Paper: public CAutomata_T<Cell, DEFAULT_WIDTH, DEFAULT_HEIGHT> {
+class Paper: public CAutomata_T<SimpleCell, DEFAULT_WIDTH, DEFAULT_HEIGHT> {
 public:
 	Paper();
 	~Paper();

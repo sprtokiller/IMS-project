@@ -8,7 +8,7 @@
 
 using namespace std;
 
-#include "Paper.h"
+#include "models/Paper.h"
 
 Paper::Paper()
 {
@@ -38,8 +38,8 @@ void Paper::setPaperPlane(size_t newB, size_t newC) {
 	for (size_t x = 0; x < WIDTH; x++)
 		for (size_t y = 0; y < HEIGHT; y++) {
 			auto cell = getNext(x, y);
-			cell->B = newB;
-			cell->C = newC;
+			//cell->B = newB;
+			//cell->C = newC;
 		}
 }
 

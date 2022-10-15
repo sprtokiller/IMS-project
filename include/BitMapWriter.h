@@ -15,7 +15,7 @@
 #include <array>
 #include <math.h>
 #include "MagicConstants.h"
-#include "Cell.h"
+#include "models/Cell.h"
 
 struct BmpHeader {
     const char bitmapSignatureBytes[2] = { 'B', 'M' };

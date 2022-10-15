@@ -48,22 +48,22 @@ inline string printSize(size_t size) {
 	switch (unit)
 	{
 	case 0:
-		msg += "B";
+		msg += " B";
 		break;
 	case 1:
-		msg += "KB";
+		msg += " KB";
 		break;
 	case 2:
-		msg += "MB";
+		msg += " MB";
 		break;
 	case 3:
-		msg += "GB";
+		msg += " GB";
 		break;
 	case 6:
-		msg += "TB";
+		msg += " TB";
 		break;
 	case 7:
-		msg += "PB";
+		msg += " PB";
 		break;
 	default:
 		return "INVALID";
