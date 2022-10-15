@@ -25,9 +25,9 @@ class CAutomata_T
 public:
 	using CAutomata = CAutomata_T<Unit, W, H>;
 	using World = World_T<Unit, W, H>;
-	
+
 	using UpdateFunc = void(*)(size_t id, size_t cores, CAutomata* ca);
-	
+
 	CAutomata_T() {
 		old = new World();
 		next = new World();
@@ -42,56 +42,45 @@ public:
 	void flip() {
 		swap(old, next);
 	}
-
-	/// <summary>
-	/// Gets cell (read only)
-	/// </summary>
 	const Unit* getOld(size_t x, size_t y) const {
 		return old->get(x, y);
 	}
-
-	/// <summary>
-	/// Gets cell (read only)
-	/// </summary>
 	const Unit* getOld(size_t i) const {
 		return old->get(i);
 	}
-	
-	/// <summary>
-	/// Gets cell (read only)
-	/// </summary>
 	const std::array<const Unit, W* H>& getOld() const {
 		return old->getData();
 	}
-
-	/// <summary>
-	/// Gets cell (for writing)
-	/// </summary>
 	Unit* getNext(size_t x, size_t y) const {
 		return next->get(x, y);
 	}
-
-	/// <summary>
-	/// Gets cell (for writing)
-	/// </summary>
 	Unit* getNext(size_t i) const {
 		return next->get(i);
 	}
-
-	/// <summary>
-	/// Gets cell (for writing)
-	/// </summary>
 	std::array<Unit, W* H>& getNext() {
 		return next->getData();
 	}
-	
+
+	const Unit* getOldUnsafe(size_t x, size_t y) const {
+		return old->getUnsafe(x, y);
+	}
+	const Unit* getOldUnsafe(size_t i) const {
+		return old->getUnsafe(i);
+	}
+	Unit* getNextUnsafe(size_t x, size_t y) const {
+		return next->getUnsafe(x, y);
+	}
+	Unit* getNextUnsafe(size_t i) const {
+		return next->getUnsafe(i);
+	}
+
 	void run(size_t cycles, size_t cores, UpdateFunc func, bool print = false) {
 		vector<thread> threads;
 		int i;
 
 		for (size_t n = 0; n < cycles; n++)
 		{
-			if(print)
+			if (print)
 				if (n % cores == 0) cout << n * 100 / cycles << "%\n";
 
 			for (size_t id = 0; id < cores; id++)

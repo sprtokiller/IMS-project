@@ -108,4 +108,4 @@ unsigned long long getTotalSystemMemory()
 }
 #endif
 
-#endif
+#endif //UTIL_H
