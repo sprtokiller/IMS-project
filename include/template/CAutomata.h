@@ -46,42 +46,42 @@ public:
 	/// <summary>
 	/// Gets cell (read only)
 	/// </summary>
-	const Unit* getOld(size_t x, size_t y) {
+	const Unit* getOld(size_t x, size_t y) const {
 		return old->get(x, y);
 	}
 
 	/// <summary>
 	/// Gets cell (read only)
 	/// </summary>
-	const Unit* getOld(size_t i) {
+	const Unit* getOld(size_t i) const {
 		return old->get(i);
 	}
 	
 	/// <summary>
 	/// Gets cell (read only)
 	/// </summary>
-	std::array<Unit, W* H>& getOld() {
+	const std::array<const Unit, W* H>& getOld() const {
 		return old->getData();
 	}
 
 	/// <summary>
 	/// Gets cell (for writing)
 	/// </summary>
-	Unit* getNext(size_t x, size_t y) {
+	Unit* getNext(size_t x, size_t y) const {
 		return next->get(x, y);
 	}
 
 	/// <summary>
 	/// Gets cell (for writing)
 	/// </summary>
-	Unit* getNext(size_t i) {
+	Unit* getNext(size_t i) const {
 		return next->get(i);
 	}
 
 	/// <summary>
 	/// Gets cell (for writing)
 	/// </summary>
-	std::array<Unit, W* H>& getNext() {
+	const std::array<Unit, W* H>& getNext() const {
 		return next->getData();
 	}
 	

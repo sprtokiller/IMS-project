@@ -20,7 +20,7 @@ public:
 	World_T() = default;
 	~World_T() = default;
 
-	std::array<Unit, W * H>& getData() {
+	const std::array<Unit, W * H>& getData() const {
 		return cells;
 	};
 	
