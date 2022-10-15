@@ -57,6 +57,10 @@ public:
 		return next->get(x, y);
 	}
 
+	std::array<Cell, W * H> getData() {
+		return old->getData();
+	}
+
 	void run(size_t cycles, size_t cores, UpdateFunc func, bool print = false) {
 		vector<thread> threads;
 		int i;

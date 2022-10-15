@@ -16,16 +16,19 @@
 
 struct Paper {
 	uint FIBER_LEN;
-	uint FIBER_DENSITY;
+	uint FIBER_INVERSE_DENSITY;
 };
 
 constexpr uint CELL_SIZE = 20 um;
 
-constexpr Paper SBSK = { 30 mm / CELL_SIZE, 50 };
-constexpr Paper SBHK = { 15 mm / CELL_SIZE, 50 };
+constexpr Paper SBSK = { 30 mm / CELL_SIZE, 500 };
+constexpr Paper SBHK = { 15 mm / CELL_SIZE, 500 };
 
-constexpr uint DEFAULT_B = 100 um;
-constexpr uint DEFAULT_C = 100 um;
+constexpr uint DEFAULT_B = 10 mm; //100 um;
+constexpr uint DEFAULT_C = 10 mm; //100 um;
+
+constexpr size_t DEFAULT_WIDTH = 5 cm / CELL_SIZE;
+constexpr size_t DEFAULT_HEIGHT = 5 cm / CELL_SIZE;
 
 #undef um
 #undef mm

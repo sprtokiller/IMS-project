@@ -6,18 +6,20 @@
  * @author xkocic02
  */
 
+#include <stdio.h>
+
 #include "ProgramWrapper.h"
 #include "template/CAutomata.h"
 #include "Cell.h"
-#include <stdio.h>
-#include <Util.h>
+#include "Util.h"
 #include "BitMapWriter.h"
+#include "MagicConstants.h"
+
 //time tests
 #include <iostream>
 #include <chrono>
-//using namespace std::chrono; 
 
-using CAutomata = CAutomata_T<Cell, 20000, 10000>;
+using CAutomata = CAutomata_T<Cell, DEFAULT_WIDTH, DEFAULT_HEIGHT>;
 
 void doCalc(size_t id, size_t cores, CAutomata* ca) {
 	for (size_t y = id * ca->HEIGHT / cores; y < (id + 1) * ca->HEIGHT / cores; y++) {
@@ -33,9 +35,6 @@ void doCalc(size_t id, size_t cores, CAutomata* ca) {
 
 ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 {
-	BitMapWriter bmw;
-	bmw.writeFile(300, 200, "Ukraine.bmp"); // Viva Ukraine
-	
 	const auto cores = getCores();
 	size_t ram = CAutomata::aproxSize();
 	std::cout << "Required memory: " << printSize(ram) << "\n";
@@ -43,7 +42,9 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 		throw runtime_error("Not enough RAM for this program");
 	
 	CAutomata ca;
-	ca.setPaperType(PaperType::DEFAULT);
+	ca.setPaperType(PaperType::SBSK);
+	BitMapWriter bmw;
+	bmw.writeFile(ca.WIDTH, ca.HEIGHT, "Ukraine.bmp", ca.getOld(0, 0));
 
 	std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
 	ca.run(10, cores, doCalc);

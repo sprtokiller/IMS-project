@@ -12,7 +12,9 @@
 //source: https://dev.to/muiz6/c-how-to-write-a-bitmap-image-from-scratch-1k6m
 #include <cstdint>
 #include <fstream>
+#include <array>
 #include "MagicConstants.h"
+#include "Cell.h"
 
 struct BmpHeader {
     const char bitmapSignatureBytes[2] = { 'B', 'M' };
@@ -47,7 +49,7 @@ public:
     BitMapWriter() {};
     ~BitMapWriter() {};
 
-    bool writeFile(const int32_t w, const  int32_t h, const char* name);
+	bool writeFile(const int32_t w, const int32_t h, const char* name, const Cell* data);
 };
 
 
