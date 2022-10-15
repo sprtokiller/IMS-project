@@ -9,16 +9,7 @@
 #include "BitMapWriter.h"
 
 bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name, const Cell *data) {
-    
-	/* test graphics */
-    uint min = data[0].B;
-    uint max = data[0].B;
-    for (size_t i = 0; i < w*h; i++)
-    {
-        if (data[i].B < min) min = data[i].B;
-        if (data[i].B > max) max = data[i].B;
-    }
-	
+   
     std::ofstream fout(name, std::ios::binary);
 
     BmpHeader header = BmpHeader();

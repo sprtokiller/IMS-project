@@ -19,26 +19,17 @@ Paper::~Paper()
 }
 
 void Paper::setPaperType(PaperType type) {
-	switch (type)
-	{
-	case PaperType::DEFAULT:
+	if (type & PaperType::PLAIN)
 		setPaperPlane();
-		break;
-	case PaperType::NOISE:
+
+	if (type & PaperType::NOISE)
 		setNoise();
-		break;
-	case PaperType::SBSK:
-		setPaperPlane();
+	
+	if (type & PaperType::SBSK)
 		addFibres(SBSK);
-		normalize();
-		break;
-	case PaperType::SBHK:
-		break;
-	case PaperType::CF:
-		break;
-	default:
-		break;
-	}
+
+	if (type & PaperType::SBHK)
+		addFibres(SBHK);
 
 	mirror();
 }
@@ -60,12 +51,12 @@ void Paper::setNoise() {
 		double y = (double)(i / WIDTH) / ((double)HEIGHT);
 
 		// Typical Perlin noise
-		double n = pn.noise(50 * x, 50 * y, 0.8);
+		double n = pn.noise(CELL_SIZE * 10 * x, CELL_SIZE * 10 * y, 0.42);
 
 		auto cell = getNext(i);
 		if (cell)
 		{
-			cell->B = floor(255 * n);
+			cell->h = n;
 		}
 	}
 }
@@ -120,19 +111,21 @@ void Paper::addFibres(const PAPER paper) {
 			}
 		}
 	}
+
+	normalize();
 }
 
 void Paper::normalize()
 {
 	double max = -1;
 
-	for (auto c : getNext()) {
+	for (auto &c : getNext()) {
 		if (max < c.h)
 		{
 			max = c.h;
 		}
 	}
-	for (auto c : getNext()) {
+	for (auto &c : getNext()) {
 		c.h = c.h / max;
 	}
 }
