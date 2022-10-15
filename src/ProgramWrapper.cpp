@@ -9,19 +9,17 @@
 #include <stdio.h>
 
 #include "ProgramWrapper.h"
-#include "template/CAutomata.h"
 #include "Cell.h"
 #include "Util.h"
 #include "BitMapWriter.h"
 #include "MagicConstants.h"
+#include "Paper.h"
 
 //time tests
 #include <iostream>
 #include <chrono>
 
-using CAutomata = CAutomata_T<Cell, DEFAULT_WIDTH, DEFAULT_HEIGHT>;
-
-void doCalc(size_t id, size_t cores, CAutomata* ca) {
+void doCalc(size_t id, size_t cores, Paper::CAutomata* ca) {
 	for (size_t y = id * ca->HEIGHT / cores; y < (id + 1) * ca->HEIGHT / cores; y++) {
 		if (y == 0) continue;
 		if (y >= ca->HEIGHT - 1) break;
@@ -36,13 +34,13 @@ void doCalc(size_t id, size_t cores, CAutomata* ca) {
 ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 {
 	const auto cores = getCores();
-	size_t ram = CAutomata::aproxSize();
+	size_t ram = Paper::aproxSize();
 	std::cout << "Required memory: " << printSize(ram) << "\n";
 	if(ram > getTotalSystemMemory())
 		throw runtime_error("Not enough RAM for this program");
 	
-	CAutomata ca;
-	ca.setPaperType(PaperType::NOISE_SBSK);
+	Paper ca;
+	ca.setPaperType(PaperType::SBSK);
 	
 	BitMapWriter bmw;
 	bmw.writeFile(ca.WIDTH, ca.HEIGHT, "noise_sbsk_new.bmp", ca.getOld(0, 0));

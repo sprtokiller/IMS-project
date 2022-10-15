@@ -19,15 +19,15 @@
 
 using namespace std;
 
-template <class Cell, size_t W, size_t H>
+template <class Unit, size_t W, size_t H>
 class CAutomata_T
 {
-	using CAutomata = CAutomata_T<Cell, W, H>;
-	using World = World_T<Cell, W, H>;
+public:
+	using CAutomata = CAutomata_T<Unit, W, H>;
+	using World = World_T<Unit, W, H>;
 	
 	using UpdateFunc = void(*)(size_t id, size_t cores, CAutomata* ca);
 	
-public:
 	CAutomata_T() {
 		old = new World();
 		next = new World();
@@ -46,21 +46,45 @@ public:
 	/// <summary>
 	/// Gets cell (read only)
 	/// </summary>
-	const Cell* getOld(size_t x, size_t y) {
+	const Unit* getOld(size_t x, size_t y) {
 		return old->get(x, y);
 	}
 
 	/// <summary>
-	/// Gets cell (recommended for writing)
+	/// Gets cell (read only)
 	/// </summary>
-	Cell* getNext(size_t x, size_t y) {
-		return next->get(x, y);
+	const Unit* getOld(size_t i) {
+		return old->get(i);
 	}
-
-	std::array<Cell, W * H> getData() {
+	
+	/// <summary>
+	/// Gets cell (read only)
+	/// </summary>
+	std::array<Unit, W* H>& getOld() {
 		return old->getData();
 	}
 
+	/// <summary>
+	/// Gets cell (for writing)
+	/// </summary>
+	Unit* getNext(size_t x, size_t y) {
+		return next->get(x, y);
+	}
+
+	/// <summary>
+	/// Gets cell (for writing)
+	/// </summary>
+	Unit* getNext(size_t i) {
+		return next->get(i);
+	}
+
+	/// <summary>
+	/// Gets cell (for writing)
+	/// </summary>
+	std::array<Unit, W* H>& getNext() {
+		return next->getData();
+	}
+	
 	void run(size_t cycles, size_t cores, UpdateFunc func, bool print = false) {
 		vector<thread> threads;
 		int i;
@@ -80,26 +104,18 @@ public:
 		}
 	}
 
-	
+	const size_t WIDTH = W;
+	const size_t HEIGHT = H;
 
 	static constexpr size_t aproxSize() {
 		return 2 * (World::aproxSize() + sizeof(World*));
 	}
+protected:
+	void mirror() {
+		delete old;
+		old = new World(*next);
+	}
 
-	void setPaperType(PaperType pt) {
-		old->setPaperType(pt);
-		// next should be a copy of old
-		makeDeepCopy(old, &next);
-	}
-private:
-	void makeDeepCopy(World* from, World** to) {
-		delete *to;
-		*to = new World(*from);
-	}
-public:
-	
-	const size_t WIDTH = W;
-	const size_t HEIGHT = H;
 private:
 	World* old;
 	World* next;
