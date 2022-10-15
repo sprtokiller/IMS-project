@@ -43,8 +43,10 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	
 	CAutomata ca;
 	ca.setPaperType(PaperType::SBSK);
+	
 	BitMapWriter bmw;
-	bmw.writeFile(ca.WIDTH, ca.HEIGHT, "Ukraine.bmp", ca.getOld(0, 0));
+	bmw.writeFile(ca.WIDTH, ca.HEIGHT, "UkraineOld.bmp", ca.getOld(0, 0));
+	//bmw.writeFile(ca.WIDTH, ca.HEIGHT, "UkraineNext.bmp", ca.getNext(0, 0));
 
 	std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
 	ca.run(10, cores, doCalc);
