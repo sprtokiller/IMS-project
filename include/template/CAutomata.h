@@ -81,7 +81,7 @@ public:
 	/// <summary>
 	/// Gets cell (for writing)
 	/// </summary>
-	const std::array<Unit, W* H>& getNext() const {
+	std::array<Unit, W* H>& getNext() {
 		return next->getData();
 	}
 	
