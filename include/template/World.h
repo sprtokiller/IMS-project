@@ -20,6 +20,7 @@ enum class PaperType
 {
 	DEFAULT, //Plain paper-like surface
 	NOISE, //Perlin noise world
+	NOISE_SBSK, //Combination
 	SBSK, //Southern Bleached Softwood Kraft
 	SBHK, //Southern Bleached Hardwood Kraft
 	CF //Cotton Fabric
@@ -33,10 +34,10 @@ public:
 	World_T() {};
 	~World_T() {};
 
-	std::array<Cell, W * H> getData() {
+	std::array<Cell, W* H> getData() {
 		return cells;
 	};
-	
+
 	Cell* getSafe(long long int x, long long int y) {
 		// make sure the cell is always in the scope by applying positive modulo formula
 		if (!((x >= 0 && x < W) && (y >= 0 && y < H)))
@@ -54,7 +55,7 @@ public:
 	};
 
 	Cell* get(size_t i) {
-		assert(i < W * H);
+		assert(i < W* H);
 		Cell* cell = &cells[i];
 		assert(cell != nullptr);
 		return cell;
@@ -72,11 +73,16 @@ public:
 			break;
 		case PaperType::NOISE:
 			setNoise();
+			break;
+		case PaperType::NOISE_SBSK:
+			setNoise();
 			addFibres(SBSK);
+			normalize();
 			break;
 		case PaperType::SBSK:
 			setPaperPlane();
 			addFibres(SBSK);
+			normalize();
 			break;
 		case PaperType::SBHK:
 			break;
@@ -101,17 +107,16 @@ private:
 			double y = (double)(i / W) / ((double)H);
 
 			// Typical Perlin noise
-			double n = pn.noise(50 * x, 50 * y, 0.8);
-			
+			double n = pn.noise(CELL_SIZE * 8 * x, CELL_SIZE * 8 * y, 0.8);
+
 			Cell* cell = get(i);
 			if (cell)
 			{
-				cell->B = floor(255 * n);
+				cell->h = n;
 			}
 		}
 	}
 	void addFibres(const Paper paper) {
-
 		for (size_t i = 0; i < W * H / paper.FIBER_INVERSE_DENSITY; i++)
 		{
 			//draw a random line from the selected cell of length FIBER_LEN and get all cells the line crosses using Bresenham's algorithm
@@ -135,10 +140,15 @@ private:
 				Cell* cell = getSafe(x1, y1);
 				if (cell)
 				{
-					cell->B += 10;
-					cell->C = cell->C > 10 ? cell->C - 10 : 0;
+					if (i % 30 == 0)
+					{
+						cell->h += 0.6;
+					}
+					else
+					{
+						cell->h += 0.2;
+					}
 				}
-
 
 				if (x1 == x2 && y1 == y2)
 					break;
@@ -157,8 +167,22 @@ private:
 			}
 		}
 	}
+
+	void normalize() {
+		double max = -1;
+		for (auto& c : cells) {
+			if (max < c.h)
+			{
+				max = c.h;
+			}
+		}
+		for (auto& c : cells) {
+			c.h = c.h / max;
+		}
+	}
+
 private:
-	array<Cell, W*H> cells;
+	array<Cell, W* H> cells;
 };
 
 #endif

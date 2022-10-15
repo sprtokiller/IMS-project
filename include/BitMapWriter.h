@@ -13,6 +13,7 @@
 #include <cstdint>
 #include <fstream>
 #include <array>
+#include <math.h>
 #include "MagicConstants.h"
 #include "Cell.h"
 

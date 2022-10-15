@@ -21,8 +21,8 @@ struct Paper {
 
 constexpr uint CELL_SIZE = 20 um;
 
-constexpr Paper SBSK = { 3 mm / CELL_SIZE, 5 };
-constexpr Paper SBHK = { 1500 um / CELL_SIZE, 5 };
+constexpr Paper SBSK = { 3 mm / CELL_SIZE, 50 };
+constexpr Paper SBHK = { 1500 um / CELL_SIZE, 50 };
 
 constexpr uint DEFAULT_B = 10 mm; //100 um;
 constexpr uint DEFAULT_C = 10 mm; //100 um;

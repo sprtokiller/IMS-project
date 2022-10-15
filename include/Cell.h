@@ -27,8 +27,9 @@ public:
 	uint B = DEFAULT_B; //height of bottom (water capacity)
 	uint C = DEFAULT_C; //capacity of water captured to cells
 	//publikace 2
-	float u = 0; //velocity in x direction
-	float v = 0; //velocity in y direction
+	double h = 0; //paper "structure"
+	double u = 0; //velocity in x direction
+	double v = 0; //velocity in y direction
 private:
 };
 
