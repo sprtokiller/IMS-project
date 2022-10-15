@@ -13,11 +13,13 @@
 #include <math.h>
 #include <assert.h>
 #include "MagicConstants.h"
+#include "PerlinNoise.h"
 
  // define enum for paper types
 enum class PaperType
 {
 	DEFAULT, //Plain paper-like surface
+	NOISE, //Perlin noise world
 	SBSK, //Southern Bleached Softwood Kraft
 	SBHK, //Southern Bleached Hardwood Kraft
 	CF //Cotton Fabric
@@ -37,8 +39,9 @@ public:
 	
 	Cell* getSafe(long long int x, long long int y) {
 		// make sure the cell is always in the scope by applying positive modulo formula
-		Cell* cell = &cells[(x % W + W) % W + (y % H + H) % H * W];
-		assert(cell != nullptr);
+		if (!((x >= 0 && x < W) && (y >= 0 && y < H)))
+			return nullptr;
+		Cell* cell = &cells[x + y * W];
 		return cell;
 	};
 
@@ -46,6 +49,13 @@ public:
 		assert(x < W);
 		assert(y < H);
 		Cell* cell = &cells[x + y * W];
+		assert(cell != nullptr);
+		return cell;
+	};
+
+	Cell* get(size_t i) {
+		assert(i < W * H);
+		Cell* cell = &cells[i];
 		assert(cell != nullptr);
 		return cell;
 	};
@@ -59,6 +69,10 @@ public:
 		{
 		case PaperType::DEFAULT:
 			setPaperPlane();
+			break;
+		case PaperType::NOISE:
+			setNoise();
+			addFibres(SBSK);
 			break;
 		case PaperType::SBSK:
 			setPaperPlane();
@@ -77,6 +91,23 @@ private:
 		for (auto& c : cells) {
 			c.B = newB;
 			c.C = newC;
+		}
+	}
+	void setNoise() {
+		PerlinNoise pn;
+		for (size_t i = 0; i < W * H; i++)
+		{
+			double x = (double)(i % W) / ((double)W);
+			double y = (double)(i / W) / ((double)H);
+
+			// Typical Perlin noise
+			double n = pn.noise(50 * x, 50 * y, 0.8);
+			
+			Cell* cell = get(i);
+			if (cell)
+			{
+				cell->B = floor(255 * n);
+			}
 		}
 	}
 	void addFibres(const Paper paper) {
@@ -102,8 +133,12 @@ private:
 			while (true)
 			{
 				Cell* cell = getSafe(x1, y1);
-				cell->B += 10;
-				cell->C = cell->C > 10 ? cell->C - 10 : 0;
+				if (cell)
+				{
+					cell->B += 10;
+					cell->C = cell->C > 10 ? cell->C - 10 : 0;
+				}
+
 
 				if (x1 == x2 && y1 == y2)
 					break;
