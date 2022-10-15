@@ -11,6 +11,7 @@
 
 #include <array>
 #include <math.h>
+#include <assert.h>
 #include "MagicConstants.h"
 
  // define enum for paper types
@@ -36,11 +37,17 @@ public:
 	
 	Cell* getSafe(long long int x, long long int y) {
 		// make sure the cell is always in the scope by applying positive modulo formula
-		return &cells[(x % W + W) % W + (y % H + H) % H * W];
+		Cell* cell = &cells[(x % W + W) % W + (y % H + H) % H * W];
+		assert(cell != nullptr);
+		return cell;
 	};
 
 	Cell* get(size_t x, size_t y) {
-		return &cells[x + y * W];
+		assert(x < W);
+		assert(y < H);
+		Cell* cell = &cells[x + y * W];
+		assert(cell != nullptr);
+		return cell;
 	};
 
 	static constexpr size_t aproxSize() {
