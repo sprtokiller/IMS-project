@@ -127,5 +127,8 @@ void Paper::normalize()
 	}
 	for (auto &c : getNext()) {
 		c.h = c.h / max;
+		c.fixPaperHeight();
 	}
+
+	
 }

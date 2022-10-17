@@ -20,6 +20,7 @@ public:
 
 	template<class T>
 	static void doCalc(size_t id, size_t cores, T* ca){}
+	void virtual fixPaperHeight() = 0;
 public:
 	double h = 0; //paper "structure"
 private:
@@ -37,6 +38,10 @@ public:
 	template<class T>
 	static void doCalc(size_t id, size_t cores, T* ca) {
 		printf("dd");
+	}
+	void fixPaperHeight() {
+		B += floor(h * 300);
+		C -= floor(h * 300);
 	}
 public:
 	uint W = 0; //water particles
