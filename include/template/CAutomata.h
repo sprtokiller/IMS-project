@@ -48,7 +48,7 @@ public:
 	const Unit* getOld(size_t i) const {
 		return old->get(i);
 	}
-	const std::array<const Unit, W* H>& getOld() const {
+	const World::Data& getOld() const {
 		return old->getData();
 	}
 	Unit* getNext(size_t x, size_t y) const {
@@ -57,7 +57,7 @@ public:
 	Unit* getNext(size_t i) const {
 		return next->get(i);
 	}
-	std::array<Unit, W* H>& getNext() {
+	World::Data& getNext() {
 		return next->getData();
 	}
 

@@ -8,7 +8,7 @@
 
 #include "BitMapWriter.h"
 
-bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name, const Cell *data) {
+bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name, const Paper::Data& data) {
    
     std::ofstream fout(name, std::ios::binary);
 
@@ -38,8 +38,8 @@ bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name,
 
     // writing pixel data, TODO, replace with automaton visualization
     size_t numberOfPixels = w * h;
-    for (int i = 0; i < numberOfPixels; i++) {
-		uint8_t shade = static_cast<uint8_t>(255 - floor(255 * data[i].h));
+    for (auto cell : data) {
+		uint8_t shade = static_cast<uint8_t>(255 - floor(255 * cell.h));
         Pixel pix = Pixel({ shade, shade, 255});
         fout.write((char*)&pix.blue, sizeof(uint8_t));
         fout.write((char*)&pix.green, sizeof(uint8_t));

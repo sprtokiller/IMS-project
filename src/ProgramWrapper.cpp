@@ -43,8 +43,8 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	ca.setPaperType(PaperType::NOISE | PaperType::SBSK);
 	
 	BitMapWriter bmw;
-	bmw.writeFile(ca.WIDTH, ca.HEIGHT, "test.bmp", ca.getOld(0, 0));
-	//bmw.writeFile(ca.WIDTH, ca.HEIGHT, "UkraineNext.bmp", ca.getNext(0, 0));
+	bmw.writeFile(ca.WIDTH, ca.HEIGHT, "test.bmp", ca.getOld());
+	//bmw.writeFile(ca.WIDTH, ca.HEIGHT, "UkraineNext.bmp", ca.getNext());
 
 	std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
 	ca.run(10, cores, doCalc);

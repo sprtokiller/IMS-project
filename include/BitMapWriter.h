@@ -16,6 +16,7 @@
 #include <math.h>
 #include "MagicConstants.h"
 #include "models/Cell.h"
+#include "models/Paper.h"
 
 struct BmpHeader {
     const char bitmapSignatureBytes[2] = { 'B', 'M' };
@@ -50,7 +51,7 @@ public:
     BitMapWriter() {};
     ~BitMapWriter() {};
 
-	bool writeFile(const int32_t w, const int32_t h, const char* name, const Cell* data);
+	bool writeFile(const int32_t w, const int32_t h, const char* name, const Paper::Data& data);
 };
 
 

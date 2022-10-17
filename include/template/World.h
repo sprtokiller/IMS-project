@@ -15,12 +15,14 @@
 
 template <class Unit, size_t W, size_t H>
 class World_T
-{
+{	
 public:
+	using Data = std::array<Unit, W* H>;
+	
 	World_T() = default;
 	~World_T() = default;
 
-	std::array<Unit, W * H>& getData() {
+	Data& getData() {
 		return cells;
 	};
 	
@@ -77,7 +79,7 @@ public:
 		return W * H * Unit::aproxSize();
 	}
 protected:
-	std::array<Unit, W*H> cells;
+	Data cells;
 };
 
 #endif

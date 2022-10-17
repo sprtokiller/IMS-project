@@ -28,6 +28,8 @@ inline PaperType operator|(PaperType a, PaperType b)
 
 class Paper: public CAutomata_T<SimpleCell, DEFAULT_WIDTH, DEFAULT_HEIGHT> {
 public:
+	using Data = CAutomata::World::Data;
+	
 	Paper();
 	~Paper();
 	
