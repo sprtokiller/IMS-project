@@ -47,7 +47,7 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	//bmw.writeFile(ca.WIDTH, ca.HEIGHT, "UkraineNext.bmp", ca.getNext());
 
 	std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
-	ca.run(10, cores, doCalc);
+	ca.run(10, cores, Paper::WorldUnit::doCalc);
 	std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
 
 	std::chrono::duration<double> time_span = duration_cast<std::chrono::duration<double>>(t2 - t1);

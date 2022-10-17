@@ -17,6 +17,9 @@ class Cell
 public:
 	Cell() {};
 	~Cell() {};
+
+	template<class T>
+	static void doCalc(size_t id, size_t cores, T* ca){}
 public:
 	double h = 0; //paper "structure"
 private:
@@ -30,6 +33,10 @@ class SimpleCell : public Cell {
 public:
 	static constexpr size_t aproxSize() {
 		return sizeof(SimpleCell);
+	}
+	template<class T>
+	static void doCalc(size_t id, size_t cores, T* ca) {
+		printf("dd");
 	}
 public:
 	uint W = 0; //water particles
@@ -46,6 +53,10 @@ class ComplexCell : public Cell {
 public:
 	static constexpr size_t aproxSize() {
 		return sizeof(ComplexCell);
+	}
+	template<class T>
+	static void doCalc(size_t id, size_t cores, T* ca) {
+		printf("xx");
 	}
 public:
 	double u = 0; //velocity in x direction

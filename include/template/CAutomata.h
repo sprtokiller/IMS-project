@@ -25,6 +25,7 @@ class CAutomata_T
 public:
 	using CAutomata = CAutomata_T<Unit, W, H>;
 	using World = World_T<Unit, W, H>;
+	using WorldUnit = Unit;
 
 	using UpdateFunc = void(*)(size_t id, size_t cores, CAutomata* ca);
 
