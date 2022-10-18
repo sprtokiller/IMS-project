@@ -21,9 +21,9 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	const auto cores = getCores();
 	size_t ram = Paper::aproxSize();
 	MEMORY(ram);
-	if(ram > getTotalSystemMemory())
+	if (ram > getTotalSystemMemory())
 		throw runtime_error("Not enough RAM for this program");
-	
+
 	Paper ca;
 	TIMEIT(ca.setPaperType(PaperType::NOISE | PaperType::SBSK));
 	TIMEIT(ca.makeWaterStroke());
@@ -31,11 +31,23 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	TIMEIT(ca.mirror());
 	BitMapWriter bmw;
 
-	bmw.writeFile(ca.WIDTH, ca.HEIGHT, "test.bmp", ca.getOld());
-	TIMEIT(ca.run(200, cores, Paper::WorldUnit::doCalc));
-	bmw.writeFile(ca.WIDTH, ca.HEIGHT, "test2.bmp", ca.getOld());
+	//generate images
+	size_t max = 200;
+	for (size_t i = 0; i < max; i++) {
+		TIMEIT(ca.run(1, cores, Paper::WorldUnit::doCalc));
+		std::string comm = "test";
+		comm += to_string(i);
+		comm += ".bmp";
+		bmw.writeFile(ca.WIDTH, ca.HEIGHT, comm.data(), ca.getOld());
+	}
+	
+	//show images
+	std::string comm = "eog --disable-gallery ";
+	comm += "test0.bmp";
+	system(comm.data());
 
-	return;
+	//remove all
+	system("rm test*.bmp");
 }
 
 ProgramWrapper::~ProgramWrapper()

@@ -71,8 +71,6 @@ bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name,
         fout.write((char*)&pix.red, sizeof(uint8_t));
     }
     fout.close();
-    std::string comm = "eog --disable-gallery " + std::string(name);
-    system(comm.data());
     return true;
 }
 
