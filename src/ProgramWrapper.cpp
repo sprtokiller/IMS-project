@@ -20,17 +20,6 @@
 #include <iostream>
 #include <chrono>
 
-void doCalc(size_t id, size_t cores, Paper::CAutomata* ca) {
-	for (size_t y = id * ca->HEIGHT / cores; y < (id + 1) * ca->HEIGHT / cores; y++) {
-		if (y == 0) continue;
-		if (y >= ca->HEIGHT - 1) break;
-		for (size_t x = 0; x < ca->WIDTH; x++) {
-			auto a = ca->getOld(x, y);
-			auto b = ca->getNext(x % ca->WIDTH, y % ca->HEIGHT);
-		}
-	}
-}
-
 ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 {
 	const auto cores = getCores();
@@ -41,10 +30,12 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	
 	Paper ca;
 	ca.setPaperType(PaperType::NOISE | PaperType::SBSK);
+	ca.makeWaterStroke();
+	ca.makeInkStroke();
+	ca.mirror();
 	
 	BitMapWriter bmw;
 	bmw.writeFile(ca.WIDTH, ca.HEIGHT, "test.bmp", ca.getOld());
-	//bmw.writeFile(ca.WIDTH, ca.HEIGHT, "UkraineNext.bmp", ca.getNext());
 
 	std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
 	ca.run(10, cores, Paper::WorldUnit::doCalc);

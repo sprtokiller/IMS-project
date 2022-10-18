@@ -100,7 +100,7 @@ public:
 	static constexpr size_t aproxSize() {
 		return 2 * (World::aproxSize() + sizeof(World*));
 	}
-protected:
+	
 	void mirror() {
 		delete old;
 		old = new World(*next);
