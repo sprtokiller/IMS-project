@@ -45,10 +45,10 @@ constexpr size_t WATER_BRUSH_START_Y = DEFAULT_WIDTH / 5;
 constexpr size_t WATER_BRUSH_END_Y = DEFAULT_WIDTH - DEFAULT_WIDTH / 5;
 constexpr size_t WATER_BRUSH_WATER_ADD = 3000;
 
-constexpr size_t WATER_MAX_GRAPHIC_LEVEL = 6000;
+constexpr size_t WATER_MAX_GRAPHIC_LEVEL = 3000;
 constexpr size_t INK_MAX_GRAPHIC_LEVEL = 2500;
 
-constexpr double WATER_DIFUSION_ALPHA = 2300.0 / (CELL_SIZE * CELL_SIZE); //2.299·10−9 m2·s−1 at 25 °C
+constexpr double WATER_DIFUSION_ALPHA = 300.0 / (CELL_SIZE * CELL_SIZE); //2.299·10−9 m2·s−1 at 25 °C
 constexpr double INK_DIFUSION_BETA = 1100.0 / (CELL_SIZE * CELL_SIZE);
 #undef um
 #undef mm
