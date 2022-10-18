@@ -34,6 +34,8 @@ public:
 	~Paper();
 	
 	void setPaperType(PaperType pt);
+	void makeWaterStroke();
+	void makeInkStroke();
 private:
 	void setPaperPlane(size_t newB = DEFAULT_B, size_t newC = DEFAULT_C);
 	void setNoise();

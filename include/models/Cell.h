@@ -11,6 +11,7 @@
 
 #include <vector>
 #include "MagicConstants.h"
+#include <iostream>
 
 class Cell
 {
@@ -21,6 +22,8 @@ public:
 	template<class T>
 	static void doCalc(size_t id, size_t cores, T* ca){}
 	void virtual fixPaperHeight() = 0;
+	void virtual addWater() = 0;
+	void virtual addInk() = 0;
 public:
 	double h = 0; //paper "structure"
 private:
@@ -37,12 +40,23 @@ public:
 	}
 	template<class T>
 	static void doCalc(size_t id, size_t cores, T* ca) {
-		printf("dd");
+		for (size_t y = id * ca->HEIGHT / cores; y < (id + 1) * ca->HEIGHT / cores; y++) {
+			if (y == 0) continue;
+			if (y >= ca->HEIGHT - 1) break;
+			for (size_t x = 1; x < ca->WIDTH - 1; x++) {
+				SimpleCell* cell = ca->getNext(x, y);
+				const SimpleCell* oldCellUp = ca->getOld(x, y - 1);
+				const SimpleCell* oldCellDown = ca->getOld(x, y + 1);
+				const SimpleCell* oldCellLeft = ca->getOld(x - 1, y);
+				const SimpleCell* oldCellRight = ca->getOld(x + 1, y);
+
+				
+			}
+		}
 	}
-	void fixPaperHeight() {
-		B += floor(h * 300);
-		C -= floor(h * 300);
-	}
+	void fixPaperHeight();
+	void addWater();
+	void addInk();
 public:
 	uint W = 0; //water particles
 	uint I = 0; //ink particles

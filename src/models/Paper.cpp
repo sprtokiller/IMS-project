@@ -30,9 +30,31 @@ void Paper::setPaperType(PaperType type) {
 
 	if (type & PaperType::SBHK)
 		addFibres(SBHK);
-
-	mirror();
 }
+
+void Paper::makeWaterStroke()
+{
+	for (size_t x = WATER_BRUSH_START_X; x < WATER_BRUSH_END_X; x++)
+	{
+		for (size_t y = WATER_BRUSH_START_Y; y < WATER_BRUSH_END_Y; y++)
+		{
+			getNext(x, y)->addWater();
+		}
+	}
+}
+
+void Paper::makeInkStroke()
+{
+	for (size_t x = INK_BRUSH_START_X; x < INK_BRUSH_END_X; x++)
+	{
+		for (size_t y = INK_BRUSH_START_Y; y < INK_BRUSH_END_Y; y++)
+		{
+			getNext(x, y)->addInk();
+		}
+	}	mirror();
+}
+
+
 
 void Paper::setPaperPlane(size_t newB, size_t newC) {
 	for (size_t x = 0; x < WIDTH; x++)
