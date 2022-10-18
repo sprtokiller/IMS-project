@@ -24,11 +24,13 @@ constexpr uint CELL_SIZE = 20 um;
 constexpr PAPER SBSK = { 3 mm / CELL_SIZE, 50 };
 constexpr PAPER SBHK = { 1500 um / CELL_SIZE, 50 };
 
-constexpr int DEFAULT_B = 1000;
+constexpr int DEFAULT_B = 500;
 constexpr int DEFAULT_C = 1000;
+constexpr int B_CHANGE = 500;
+constexpr int C_CHANGE = 200;
 
-constexpr size_t DEFAULT_WIDTH = 5 cm / CELL_SIZE;
-constexpr size_t DEFAULT_HEIGHT = 5 cm / CELL_SIZE;
+constexpr size_t DEFAULT_WIDTH = 2 cm / CELL_SIZE;
+constexpr size_t DEFAULT_HEIGHT = 2 cm / CELL_SIZE;
 
 constexpr size_t INK_BRUSH_WIDTH = (5 mm / CELL_SIZE) > DEFAULT_HEIGHT ? DEFAULT_HEIGHT : (5 mm / CELL_SIZE);
 constexpr size_t INK_BRUSH_START_X = DEFAULT_WIDTH / 5;
@@ -45,11 +47,13 @@ constexpr size_t WATER_BRUSH_START_Y = DEFAULT_WIDTH / 5;
 constexpr size_t WATER_BRUSH_END_Y = DEFAULT_WIDTH - DEFAULT_WIDTH / 5;
 constexpr size_t WATER_BRUSH_WATER_ADD = 3000;
 
-constexpr size_t WATER_MAX_GRAPHIC_LEVEL = 3000;
+constexpr size_t WATER_MAX_GRAPHIC_LEVEL = 4000;
 constexpr size_t INK_MAX_GRAPHIC_LEVEL = 2500;
 
-constexpr double WATER_DIFUSION_ALPHA = 300.0 / (CELL_SIZE * CELL_SIZE); //2.299·10−9 m2·s−1 at 25 °C
+constexpr double WATER_DIFUSION_ALPHA = 600 / (CELL_SIZE * CELL_SIZE); //2.299·10−9 m2·s−1 at 25 °C
 constexpr double INK_DIFUSION_BETA = 1100.0 / (CELL_SIZE * CELL_SIZE);
+
+constexpr int WATER_EVAPORATION_RATE = 2;
 #undef um
 #undef mm
 #undef cm

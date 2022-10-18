@@ -33,6 +33,8 @@ void SimpleCell::doCalc(size_t id, size_t cores, T* ca) {
 				water_sum += (d_W_ko - d_W_ok);
 			}
 
+			// 4: water evaporation
+			water_sum -= WATER_EVAPORATION_RATE;
 			water_sum = Tmax(water_sum, 0);
 			ca->getNext(x, y)->W = water_sum;
 		}
@@ -41,8 +43,8 @@ void SimpleCell::doCalc(size_t id, size_t cores, T* ca) {
 
 void SimpleCell::fixPaperHeight()
 {
-	B += floor(h * 300);
-	C -= floor(h * 300);
+	B += floor(h * B_CHANGE);
+	C -= floor(h * C_CHANGE);
 }
 
 void SimpleCell::addWater()

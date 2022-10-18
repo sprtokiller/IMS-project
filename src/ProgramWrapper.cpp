@@ -32,7 +32,7 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	BitMapWriter bmw;
 
 	bmw.writeFile(ca.WIDTH, ca.HEIGHT, "test.bmp", ca.getOld());
-	TIMEIT(ca.run(80, cores, Paper::WorldUnit::doCalc));
+	TIMEIT(ca.run(200, cores, Paper::WorldUnit::doCalc));
 	bmw.writeFile(ca.WIDTH, ca.HEIGHT, "test2.bmp", ca.getOld());
 
 	return;
