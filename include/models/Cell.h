@@ -22,6 +22,7 @@ public:
 	template<class T>
 	static void doCalc(size_t id, size_t cores, T* ca){}
 	void virtual fixPaperHeight() = 0;
+	double virtual getWater() = 0;
 	void virtual addWater() = 0;
 	void virtual addInk() = 0;
 public:
@@ -57,6 +58,9 @@ public:
 	void fixPaperHeight();
 	void addWater();
 	void addInk();
+	double getWater() {
+		return W;
+	}
 public:
 	uint W = 0; //water particles
 	uint I = 0; //ink particles

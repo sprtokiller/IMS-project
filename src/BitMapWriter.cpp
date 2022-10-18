@@ -37,10 +37,31 @@ bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name,
     fout.write((char*)&infoheader.importantColors, sizeof(uint32_t));
 
     // writing pixel data, TODO, replace with automaton visualization
-    size_t numberOfPixels = w * h;
+    size_t maxWater = 0;
+    size_t minWater = -1;
+    for (auto cell : data)
+    {
+		if (cell.getWater() > maxWater)
+			maxWater = cell.getWater();
+		if (cell.getWater() < minWater)
+			minWater = cell.getWater();
+    }
+
     for (auto cell : data) {
-		uint8_t shade = static_cast<uint8_t>(255 - floor(255 * cell.h));
-        Pixel pix = Pixel({ shade, shade, 255});
+
+        // background, paper height
+        Color bg = Color({ 1.0, 1.0 - cell.h, 1.0 - cell.h, 0.50 });
+        // foreground, water level
+        Color fg = Color({ 1.0 - cell.getWater() / maxWater , 1.0 - cell.getWater() / maxWater , 1.0, 0.5 });
+        // The result
+        Color r = Color();
+        r.A = 1 - (1 - fg.A) * (1 - bg.A);
+        r.R = fg.R * fg.A / r.A + bg.R * bg.A * (1 - fg.A) / r.A;
+        r.G = fg.G * fg.A / r.A + bg.G * bg.A * (1 - fg.A) / r.A;
+        r.B = fg.B * fg.A / r.A + bg.B * bg.A * (1 - fg.A) / r.A;
+		
+        Pixel pix = Pixel({ (uint8_t)floor(255 * r.B), (uint8_t)floor(255 * r.G), (uint8_t)floor(255 * r.R)});
+
         fout.write((char*)&pix.blue, sizeof(uint8_t));
         fout.write((char*)&pix.green, sizeof(uint8_t));
         fout.write((char*)&pix.red, sizeof(uint8_t));

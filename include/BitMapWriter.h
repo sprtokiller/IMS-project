@@ -45,6 +45,13 @@ struct Pixel {
     uint8_t red = 255;
 };
 
+struct Color {
+	double R = 0.0;
+	double G = 0.0;
+	double B = 0.0;
+	double A = 0.0;
+};
+
 class BitMapWriter
 {
 public:
