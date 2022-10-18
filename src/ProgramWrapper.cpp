@@ -29,12 +29,13 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	TIMEIT(ca.makeWaterStroke());
 	TIMEIT(ca.makeInkStroke());
 	TIMEIT(ca.mirror());
-	TIMEIT(ca.run(10, cores, Paper::WorldUnit::doCalc));
-	
-	return;
-
 	BitMapWriter bmw;
+
 	bmw.writeFile(ca.WIDTH, ca.HEIGHT, "test.bmp", ca.getOld());
+	TIMEIT(ca.run(10, cores, Paper::WorldUnit::doCalc));
+	bmw.writeFile(ca.WIDTH, ca.HEIGHT, "test2.bmp", ca.getOld());
+
+	return;
 }
 
 ProgramWrapper::~ProgramWrapper()

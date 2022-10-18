@@ -12,6 +12,11 @@
 #include <vector>
 #include "MagicConstants.h"
 
+inline int Tmax(int a, int b) { return a > b ? a : b; }
+inline double Tmax(double a, double b) { return a > b ? a : b; }
+inline int Tmin(int a, int b) { return a < b ? a : b; }
+inline double Tmin(double a, double b) { return a < b ? a : b; }
+
 class Cell
 {
 public:
@@ -38,6 +43,7 @@ public:
 	static constexpr size_t aproxSize() {
 		return sizeof(SimpleCell);
 	}
+	// main simulation equations
 	template<class T>
 	static void doCalc(size_t id, size_t cores, T* ca);
 	
@@ -47,11 +53,14 @@ public:
 	double getWater() const {
 		return W;
 	}
+	double getInk() const {
+		return I;
+	}
 public:
-	uint W = 0; //water particles
-	uint I = 0; //ink particles
-	uint B = DEFAULT_B; //height of bottom (water capacity)
-	uint C = DEFAULT_C; //capacity of water captured to cells
+	int W = 0; //water particles
+	int I = 0; //ink particles
+	int B = DEFAULT_B; //height of bottom (water capacity)
+	int C = DEFAULT_C; //capacity of water captured to cells
 };
 
 /*
