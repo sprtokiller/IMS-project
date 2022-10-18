@@ -30,18 +30,23 @@ inline std::string printSize(size_t size) {
 	std::string msg;
 	
 	uint unit = 0;
-	size_t remain = size;
-	while (size / 1024)
-	{
+	size_t remain = 0;
+	while (size / 1024)	{
 		remain = size;
 		size /= 1024;
 		unit++;
 	}
+
+	//leave last unit after decimal
+	while (remain / 10){remain /= 10;}
+
 	msg += to_string(size);
 	if (remain != 0) {
 		msg += ",";
 		msg += to_string(remain);
 	}
+
+	while (msg.length() < 10) msg += " ";
 		
 	switch (unit)
 	{
@@ -105,5 +110,23 @@ unsigned long long getTotalSystemMemory()
 	return 2;
 }
 #endif
+
+//time tests
+#include <iostream>
+#include <chrono>
+
+#define TIMEIT(FUNC)\
+do {\
+	std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();\
+	{\
+	FUNC;\
+	}\
+	std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();\
+	std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(t2 - t1);\
+	std::cout << "TIMEIT ";\
+	std::cout.width(10);\
+	std::cout << left << time_span.count() << " s ";\
+	std::cout << #FUNC << endl;\
+} while (false);
 
 #endif //UTIL_H
