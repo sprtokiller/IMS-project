@@ -5,13 +5,6 @@
 /// <summary>
 /// Returns value as string
 /// </summary>
-std::string to_string(uint value)
-{
-	std::ostringstream os;
-	os << value;
-	return os.str();
-}
-
 std::string sizeToMemory(size_t size) {
 	std::string msg;
 
@@ -26,10 +19,10 @@ std::string sizeToMemory(size_t size) {
 	//leave last unit after decimal
 	while (remain / 10) { remain /= 10; }
 
-	msg += to_string(size);
+	msg += std::to_string(size);
 	if (remain != 0) {
 		msg += ",";
-		msg += to_string(remain);
+		msg += std::to_string(remain);
 	}
 
 	while (msg.length() < 10) msg += " ";
