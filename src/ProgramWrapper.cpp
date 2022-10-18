@@ -16,6 +16,15 @@
 
 #include "models/Paper.h"
 
+void PrintWaterDT(const Paper& ca) {
+	long long int water = 0;
+	for (size_t i = 0; i < ca.WIDTH * ca.HEIGHT; i++)
+	{
+		water += ca.getNext(i)->W - ca.getOld(i)->W;
+	}
+	printf("WATER  %-10lld DT\n", water);
+}
+
 ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 {
 	const auto cores = getCores();
@@ -39,6 +48,7 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 		comm += to_string(i);
 		comm += ".bmp";
 		bmw.writeFile(ca.WIDTH, ca.HEIGHT, comm.data(), ca.getOld());
+		PrintWaterDT(ca);
 	}
 	
 	//show images
