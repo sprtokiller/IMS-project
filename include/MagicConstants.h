@@ -49,7 +49,7 @@ constexpr size_t WATER_MAX_GRAPHIC_LEVEL = 6000;
 constexpr size_t INK_MAX_GRAPHIC_LEVEL = 2500;
 
 constexpr double WATER_DIFUSION_ALPHA = 2300.0 / (CELL_SIZE * CELL_SIZE); //2.299·10−9 m2·s−1 at 25 °C
-
+constexpr double INK_DIFUSION_BETA = 1100.0 / (CELL_SIZE * CELL_SIZE);
 #undef um
 #undef mm
 #undef cm
