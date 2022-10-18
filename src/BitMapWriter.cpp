@@ -39,7 +39,7 @@ bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name,
     // writing pixel data, TODO, replace with automaton visualization
     size_t maxWater = 0;
     size_t minWater = -1;
-    for (auto cell : data)
+    for (auto& cell : data)
     {
 		if (cell.getWater() > maxWater)
 			maxWater = cell.getWater();
@@ -47,7 +47,7 @@ bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name,
 			minWater = cell.getWater();
     }
 
-    for (auto cell : data) {
+    for (auto& cell : data) {
 
         // background, paper height
         Color bg = Color({ 1.0, 1.0 - cell.h, 1.0 - cell.h, 0.50 });

@@ -11,7 +11,6 @@
 
 #include <vector>
 #include "MagicConstants.h"
-#include <iostream>
 
 class Cell
 {
@@ -22,7 +21,7 @@ public:
 	template<class T>
 	static void doCalc(size_t id, size_t cores, T* ca){}
 	void virtual fixPaperHeight() = 0;
-	double virtual getWater() = 0;
+	double virtual getWater() const = 0;
 	void virtual addWater() = 0;
 	void virtual addInk() = 0;
 public:
@@ -40,25 +39,12 @@ public:
 		return sizeof(SimpleCell);
 	}
 	template<class T>
-	static void doCalc(size_t id, size_t cores, T* ca) {
-		for (size_t y = id * ca->HEIGHT / cores; y < (id + 1) * ca->HEIGHT / cores; y++) {
-			if (y == 0) continue;
-			if (y >= ca->HEIGHT - 1) break;
-			for (size_t x = 1; x < ca->WIDTH - 1; x++) {
-				SimpleCell* cell = ca->getNext(x, y);
-				const SimpleCell* oldCellUp = ca->getOld(x, y - 1);
-				const SimpleCell* oldCellDown = ca->getOld(x, y + 1);
-				const SimpleCell* oldCellLeft = ca->getOld(x - 1, y);
-				const SimpleCell* oldCellRight = ca->getOld(x + 1, y);
-
-				
-			}
-		}
-	}
+	static void doCalc(size_t id, size_t cores, T* ca);
+	
 	void fixPaperHeight();
 	void addWater();
 	void addInk();
-	double getWater() {
+	double getWater() const {
 		return W;
 	}
 public:
@@ -78,9 +64,7 @@ public:
 		return sizeof(ComplexCell);
 	}
 	template<class T>
-	static void doCalc(size_t id, size_t cores, T* ca) {
-		printf("xx");
-	}
+	static void doCalc(size_t id, size_t cores, T* ca);
 public:
 	double u = 0; //velocity in x direction
 	double v = 0; //velocity in y direction
