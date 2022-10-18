@@ -9,13 +9,11 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-using namespace std;
-
 typedef unsigned int uint;
 
 #include <sstream>
 #include <iostream>
-inline string to_string(uint value)
+inline std::string to_string(uint value)
 {
 	std::ostringstream os;
 	os << value;
@@ -28,8 +26,8 @@ inline string to_string(uint value)
 /// <param name="size">
 /// Return parameter of func sizeof()
 /// </param>
-inline string printSize(size_t size) {
-	string msg;
+inline std::string printSize(size_t size) {
+	std::string msg;
 	
 	uint unit = 0;
 	size_t remain = size;

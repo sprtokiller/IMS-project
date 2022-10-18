@@ -6,8 +6,6 @@
  * @author xkocic02
  */
 
-using namespace std;
-
 #include "models/Paper.h"
 
 Paper::Paper()

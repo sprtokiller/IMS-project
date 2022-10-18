@@ -15,7 +15,7 @@
 #include <array>
 #include <math.h>
 #include "MagicConstants.h"
-#include "models/Cell.h"
+#include "models/PaperCell.h"
 #include "models/Paper.h"
 
 struct BmpHeader {

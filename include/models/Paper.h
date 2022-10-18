@@ -3,7 +3,7 @@
 
 #include "template/CAutomata.h"
 #include "template/World.h"
-#include "Cell.h"
+#include "PaperCell.h"
 #include "MagicConstants.h"
 #include "PerlinNoise.h"
 

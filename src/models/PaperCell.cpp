@@ -6,7 +6,7 @@
  * @author xkocic02
  */
 
-#include "models/Cell.h"
+#include "models/PaperCell.h"
 #include "models/Paper.h"
 
 template<class T>

@@ -14,7 +14,6 @@
 #include "MagicConstants.h"
 
 #include "models/Paper.h"
-#include "models/Cell.h"
 
 //time tests
 #include <iostream>
