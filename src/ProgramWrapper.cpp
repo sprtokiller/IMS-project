@@ -20,7 +20,7 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 {
 	const auto cores = getCores();
 	size_t ram = Paper::aproxSize();
-	std::cout << "MEMORY " << printSize(ram) << "\n";
+	MEMORY(ram);
 	if(ram > getTotalSystemMemory())
 		throw runtime_error("Not enough RAM for this program");
 	
