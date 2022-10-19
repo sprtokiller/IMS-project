@@ -136,7 +136,9 @@ void ComplexCell::updateVelocities(T* ca, size_t x, size_t y)
 		A -= pow(ca->getOld(x + 1, y)->u, 2);
 		A += ((ca->getOld(x, y)->u - ca->getOld(x + 1, y - 1)->u) / 2.0) * ((ca->getOld(x, y)->v - ca->getOld(x + 1, y - 1)->v) / 2.0); // this line is fishy
 		A -= ((ca->getOld(x, y)->u - ca->getOld(x + 1, y + 1)->u) / 2.0) * ((ca->getOld(x, y)->v - ca->getOld(x + 1, y + 1)->v) / 2.0); // this line is fishy
-
+		double B = 0.0;
+		B += ((ca->getOld(x + 1, y)->u + ca->getOld(x + 2, y)->u) / 2.0);
+		B += ((ca->getOld(x - 1, y)->u + ca->getOld(x, y)->u) / 2.0);
 	}
 }
 
