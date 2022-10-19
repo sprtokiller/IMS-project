@@ -146,7 +146,7 @@ void ComplexCell::updateVelocities(T* ca, size_t x, size_t y)
 		val += ((ca->getOld(x, y)->u + ca->getOld(x + 1, y)->u) / 2.0);
 		val += dt * (A - WC_U * B + ca->getOld(x, y)->p - ca->getOld(x + 1, y)->p - WC_K * ((ca->getOld(x, y)->u - ca->getOld(x + 1, y)->u) / 2.0));
 		//50% adds to my (x,y)->u, 50% adds to my next neighbor (x+1,y)->u
-
+		
 		// enforceBoundaryConditions();
 		if (x > M_X1 && x < M_X2 && y > M_Y1 && y < M_Y2)
 			ca->getNext(x, y)->u += val / 2.0;

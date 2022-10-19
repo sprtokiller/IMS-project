@@ -102,6 +102,7 @@ public:
 	double c = 0; //water capacity
 	double u = 0; //velocity in x direction
 	double v = 0; //velocity in y direction
+	double p = 0; //water pressure
 };
 
 #endif
