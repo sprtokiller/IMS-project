@@ -23,7 +23,8 @@ class Cell
 public:
 	Cell() {};
 	~Cell() {};
-
+	template<typename _Callable, class T>
+	static void runAsync(size_t cores, _Callable&& __f, T ca);
 	void virtual fixPaperHeight() = 0;
 	void virtual setHeightGradient(double new_hx, double new_hy) = 0;
 	double virtual getWater() const = 0;
@@ -47,6 +48,9 @@ public:
 	// main simulation equations
 	template<class T>
 	static void doCalc(size_t cores, T* ca);
+	template<class T>
+	static void SimpleFlow(size_t x, size_t y, T* ca);
+
 	void setHeightGradient(double new_hx, double new_hy) {};
 	void fixPaperHeight();
 	void addWater();
@@ -78,6 +82,9 @@ public:
 	}
 	template<class T>
 	static void doCalc(size_t cores, T* ca);
+	template<class T>
+	static void ComplexFlow(size_t x, size_t y, T* ca);
+	
     void fixPaperHeight();
 	void setHeightGradient(double new_hx, double new_hy);
 	template<class T>
