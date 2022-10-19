@@ -134,20 +134,59 @@ void ComplexCell::updateVelocities(T* ca, size_t x, size_t y)
 		double A = 0.0;
 		A += pow(ca->getOld(x, y)->u, 2);
 		A -= pow(ca->getOld(x + 1, y)->u, 2);
-		A += ((ca->getOld(x, y)->u - ca->getOld(x + 1, y - 1)->u) / 2.0) * ((ca->getOld(x, y)->v - ca->getOld(x + 1, y - 1)->v) / 2.0); // this line is fishy
-		A -= ((ca->getOld(x, y)->u - ca->getOld(x + 1, y + 1)->u) / 2.0) * ((ca->getOld(x, y)->v - ca->getOld(x + 1, y + 1)->v) / 2.0); // this line is fishy
+		A += ((ca->getOld(x, y)->u + ca->getOld(x + 1, y - 1)->u) / 2.0) * ((ca->getOld(x, y)->v + ca->getOld(x + 1, y - 1)->v) / 2.0); // this line is fishy
+		A -= ((ca->getOld(x, y)->u + ca->getOld(x + 1, y + 1)->u) / 2.0) * ((ca->getOld(x, y)->v + ca->getOld(x + 1, y + 1)->v) / 2.0); // this line is fishy
 		double B = 0.0;
 		B += ((ca->getOld(x + 1, y)->u + ca->getOld(x + 2, y)->u) / 2.0);
 		B += ((ca->getOld(x - 1, y)->u + ca->getOld(x, y)->u) / 2.0);
 		B += ((ca->getOld(x, y + 1)->u + ca->getOld(x + 1, y + 1)->u) / 2.0);
 		B += ((ca->getOld(x, y - 1)->u + ca->getOld(x + 1, y - 1)->u) / 2.0);
 		B -= (4.0 * ((ca->getOld(x, y)->u + ca->getOld(x + 1, y)->u) / 2.0));
-		double U = 0.0;
-		U += (ca->getOld(x, y)->u + ca->getOld(x + 1, y)->u);
-		U += dt * (A - WC_U * B + ca->getOld(x, y)->p - ca->getOld(x + 1, y)->p - WC_K * ((ca->getOld(x, y)->u - ca->getOld(x + 1, y)->u) / 2.0));
-		//50% adds to my (x,y)->u, 50% adds to my next neighbor (x+y,y)->u
-		ca->getNext(x, y)->u += U / 2.0;
-		ca->getNext(x + 1, y)->u += U / 2.0;
+		double val = 0.0;
+		val += ((ca->getOld(x, y)->u + ca->getOld(x + 1, y)->u) / 2.0);
+		val += dt * (A - WC_U * B + ca->getOld(x, y)->p - ca->getOld(x + 1, y)->p - WC_K * ((ca->getOld(x, y)->u - ca->getOld(x + 1, y)->u) / 2.0));
+		//50% adds to my (x,y)->u, 50% adds to my next neighbor (x+1,y)->u
+
+		// enforceBoundaryConditions();
+		if (x > M_X1 && x < M_X2 && y > M_Y1 && y < M_Y2)
+			ca->getNext(x, y)->u += val / 2.0;
+		else
+			ca->getNext(x, y)->u = 0.0;
+
+		// enforceBoundaryConditions();
+		if ((x + 1) > M_X1 && (x + 1) < M_X2 && y > M_Y1 && y < M_Y2)
+			ca->getNext((x + 1), y)->u += val / 2.0;
+		else
+			ca->getNext((x + 1), y)->u = 0.0;
+
+		/* ------ */
+		A = 0.0;
+		A += pow(ca->getOld(x, y)->v, 2);
+		A -= pow(ca->getOld(x, y + 1)->v, 2);
+		A += ((ca->getOld(x, y)->u + ca->getOld(x - 1, y + 1)->u) / 2.0) * ((ca->getOld(x, y)->v + ca->getOld(x - 1, y + 1)->v) / 2.0); // this line is fishy
+		A -= ((ca->getOld(x, y)->u + ca->getOld(x + 1, y + 1)->u) / 2.0) * ((ca->getOld(x, y)->v + ca->getOld(x + 1, y + 1)->v) / 2.0); // this line is fishy
+		B = 0.0;
+		B += ((ca->getOld(x + 1, y)->v + ca->getOld(x + 1, y + 1)->v) / 2.0);
+		B += ((ca->getOld(x - 1, y)->v + ca->getOld(x - 1, y + 1)->v) / 2.0);
+		B += ((ca->getOld(x, y + 1)->v + ca->getOld(x + 1, y + 2)->v) / 2.0);
+		B += ((ca->getOld(x, y)->v + ca->getOld(x, y - 1)->v) / 2.0);
+		B -= (4.0 * ((ca->getOld(x, y)->v + ca->getOld(x, y + 1)->v) / 2.0));
+		val = 0.0;
+		val += ((ca->getOld(x, y)->v + ca->getOld(x, y + 1)->v) / 2.0);
+		val += dt * (A - WC_U * B + ca->getOld(x, y)->p - ca->getOld(x, y + 1)->p - WC_K * ((ca->getOld(x, y)->v - ca->getOld(x, y + 1)->v) / 2.0));
+		//50% adds to my (x,y)->v, 50% adds to my next neighbor (x,y+1)->v
+
+		// enforceBoundaryConditions();
+		if (x > M_X1 && x < M_X2 && y > M_Y1 && y < M_Y2)
+			ca->getNext(x, y)->v += val / 2.0;
+		else
+			ca->getNext(x, y)->v = 0.0;
+
+		// enforceBoundaryConditions();
+		if (x > M_X1 && x < M_X2 && (y + 1) > M_Y1 && (y + 1) < M_Y2)
+			ca->getNext(x, (y + 1))->v += val / 2.0;
+		else
+			ca->getNext(x, (y + 1))->v = 0.0;
 	}
 }
 
