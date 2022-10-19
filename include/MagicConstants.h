@@ -97,6 +97,8 @@ constexpr size_t M_X2 = DEFAULT_WIDTH - DEFAULT_WIDTH / 5;
 constexpr size_t M_Y1 = DEFAULT_HEIGHT / 5;
 constexpr size_t M_Y2 = DEFAULT_HEIGHT - DEFAULT_HEIGHT / 5;
 
+constexpr double WC_U = 0.1; // watercolor viscosity
+constexpr double WC_K = 0.01; // viscous drag
  
 #undef um
 #undef mm
