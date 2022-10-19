@@ -36,11 +36,15 @@ public:
 	void setPaperType(PaperType pt);
 	void makeWaterStroke();
 	void makeInkStroke();
+	void calculateMaxSpeed();
+	double getMaxSpeed() const { return maxSpeed; }
 private:
 	void setPaperPlane(size_t newB = DEFAULT_B, size_t newC = DEFAULT_C);
 	void setNoise();
 	void addFibres(const PAPER paper);
 	void normalize();
+private:
+	double maxSpeed = 0.0;
 };
 
 #endif // PAPER_H

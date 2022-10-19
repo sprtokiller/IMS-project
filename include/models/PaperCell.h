@@ -24,10 +24,11 @@ public:
 	~Cell() {};
 
 	void virtual fixPaperHeight() = 0;
-	void virtual setHeightGradient() = 0;
+	void virtual setHeightGradient(double new_hx, double new_hy) = 0;
 	double virtual getWater() const = 0;
 	void virtual addWater() = 0;
 	void virtual addInk() = 0;
+	double virtual getMaxSpeed() const = 0;
 public:
 	double h = 0; //paper "structure"
 private:
@@ -45,10 +46,13 @@ public:
 	// main simulation equations
 	template<class T>
 	static void doCalc(size_t cores, T* ca);
-	
+	void setHeightGradient(double new_hx, double new_hy) {};
 	void fixPaperHeight();
 	void addWater();
 	void addInk();
+	double getMaxSpeed() const {
+		return 0.0;
+	}
 	double getWater() const {
 		return W;
 	}
@@ -74,17 +78,23 @@ public:
 	template<class T>
 	static void doCalc(size_t cores, T* ca);
     void fixPaperHeight();
-	void setHeightGradient();
-	void moveWater();
-	void updateVelocities();
-	void relaxDivergence();
-	void flowOutward();
-
+	void setHeightGradient(double new_hx, double new_hy);
+	template<class T>
+	void moveWater(T* ca);
 	double getWater() const {
 		return 0.0;  /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */
 	}
 	void addWater() { /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */ };
 	void addInk() { /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */ };
+	double getMaxSpeed() const {
+		if (abs(u) > abs(v)) return abs(u);
+		return abs(v);
+	}
+private:
+	template<class T>
+	void updateVelocities(T* ca);
+	void relaxDivergence();
+	void flowOutward();
 public:
 	double hx = 0; //height change in x direction
 	double hy = 0; //height change in y direction

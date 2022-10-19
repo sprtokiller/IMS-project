@@ -106,23 +106,33 @@ void ComplexCell::fixPaperHeight()
 	c = h * (C_MAX - C_MIN) + C_MIN;
 }
 
-void ComplexCell::setHeightGradient()
+void ComplexCell::setHeightGradient(double new_hx, double new_hy)
 {
-	//hx = 
+	hx = new_hx;
+	hy = new_hy;
 }
 
 // works with M, u, v, p
-void ComplexCell::moveWater()
+template<class T>
+void ComplexCell::moveWater(T* ca)
 {
-	updateVelocities();
+	updateVelocities(ca);
 	relaxDivergence();
 	flowOutward();
 }
 
 // works with M, u, v, p
-void ComplexCell::updateVelocities()
+template<class T>
+void ComplexCell::updateVelocities(T* ca)
 {
-	
+	u -= hx;
+	v -= hy;
+	double dt = 1 / ca->getMaxSpeed();
+	for (double t = 0.0; t < 1.0; t += dt)
+	{
+		double A;
+		double B;
+	}
 }
 
 // works with M, u, v, p

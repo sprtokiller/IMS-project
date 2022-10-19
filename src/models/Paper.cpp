@@ -52,6 +52,14 @@ void Paper::makeInkStroke()
 	}	mirror();
 }
 
+void Paper::calculateMaxSpeed()
+{
+	maxSpeed = -1.0;
+	for (auto u : getOld()) {
+		if (u.getMaxSpeed() > maxSpeed) maxSpeed = u.getMaxSpeed();
+	}
+}
+
 
 
 void Paper::setPaperPlane(size_t newB, size_t newC) {
@@ -154,12 +162,10 @@ void Paper::normalize()
 	{
 		for (size_t y = 1; y < DEFAULT_HEIGHT - 1; y++)
 		{
-			//getNext(x, y).
+			double hx = (getNext(x + 1, y)->h - getNext(x - 1, y)->h) / 2;
+			double hy = (getNext(x, y + 1)->h - getNext(x, y - 1)->h) / 2;
+			getNext(x, y)->setHeightGradient(hx, hy);
 		}
-	}
-	for (auto& c : getNext()) {
-		c.setHeightGradient();
-	}
-
-	
+	}	
 }
+ 

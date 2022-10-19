@@ -56,7 +56,6 @@ public:
 	World::Data& getNext() {
 		return next->getData();
 	}
-
 	const Unit* getOldUnsafe(size_t x, size_t y) const {
 		return old->getUnsafe(x, y);
 	}
