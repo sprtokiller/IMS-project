@@ -41,14 +41,14 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	BitMapWriter bmw;
 
 	//generate images
-	const size_t max = 1/TIME_STEP * 60;
+	const size_t max = 1/TIME_STEP * 20;
 	for (size_t i = 0; i < max; i++) {
 		TIMEIT(ca.run(1, cores, Paper::WorldUnit::doCalc));
 		std::string comm = "test";
 		comm += to_string(i);
 		comm += ".bmp";
 		bmw.writeFile(ca.WIDTH, ca.HEIGHT, comm.data(), ca.getOld());
-		PrintWaterDT(ca);
+		//PrintWaterDT(ca);
 	}
 	
 	//show images

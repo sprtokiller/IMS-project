@@ -74,7 +74,9 @@ public:
 	}
 	template<class T>
 	static void doCalc(size_t id, size_t cores, T* ca);
+    void fixPaperHeight();
 public:
+	double c = 0;
 	double u = 0; //velocity in x direction
 	double v = 0; //velocity in y direction
 };

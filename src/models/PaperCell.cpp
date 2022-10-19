@@ -72,7 +72,21 @@ void SimpleCell::addInk()
 
 template<class T>
 void ComplexCell::doCalc(size_t id, size_t cores, T* ca) {
+	for (size_t y = id * ca->HEIGHT / cores; y < (id + 1) * ca->HEIGHT / cores; y++) {
+		if (y == 0) continue;
+		if (y >= ca->HEIGHT - 1) break;
+		for (size_t x = 1; x < ca->WIDTH - 1; x++) {
+			//MoveWater();
+			//MovePigment();
+			//TransferPigment();
+			//SimulateCapillaryFlow();
+		}
+	}
+}
 
+void ComplexCell::fixPaperHeight()
+{
+	c = h * (C_MAX - C_MIN) + C_MIN;
 }
 
 namespace CXX {
