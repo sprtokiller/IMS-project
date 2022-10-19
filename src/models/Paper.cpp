@@ -162,8 +162,14 @@ void Paper::normalize()
 	{
 		for (size_t y = 1; y < DEFAULT_HEIGHT - 1; y++)
 		{
+			// Vita: monke logic
 			double hx = (getNext(x + 1, y)->h - getNext(x - 1, y)->h) / 2;
 			double hy = (getNext(x, y + 1)->h - getNext(x, y - 1)->h) / 2;
+			getNext(x, y)->setHeightGradient(hx, hy);
+
+			// Johanka: ((u+1,v) - (u,v), (u,v+1) - (u,v))
+			double hx = getNext(x + 1, y)->h - getNext(x, y)->h;
+			double hy = getNext(x, y + 1)->h - getNext(x, y)->h;
 			getNext(x, y)->setHeightGradient(hx, hy);
 		}
 	}	
