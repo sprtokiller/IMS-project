@@ -16,23 +16,35 @@ void SimpleCell::doCalc(size_t id, size_t cores, T* ca) {
 		if (y >= ca->HEIGHT - 1) break;
 		for (size_t x = 1; x < ca->WIDTH - 1; x++) {
 			//get current cell
-			const SimpleCell* cell = ca->getOld(x, y);
+			const SimpleCell* o = ca->getOld(x, y);
 
 			//create a list of 4 cells
 			std::vector<const SimpleCell*> neighbours = { ca->getOld(x, y - 1), ca->getOld(x, y + 1), ca->getOld(x - 1, y), ca->getOld(x + 1, y) };
 
 			// 1: water diffusion
-			int water_sum = cell->W;
+			int water_sum = o->W;
 			for (const SimpleCell* k : neighbours)
 			{
-				int PipeHeight_ko = Tmax(cell->B, k->B + k->C);
-				int PipeHeight_ok = Tmax(k->B, cell->B + cell->C);
-				int d_W_ko = (int)Tmax(0.0, floor(WATER_DIFUSION_ALPHA * Tmin(k->B + k->W - cell->B - cell->W, k->B + k->W - PipeHeight_ko) / 4.0));
-				int d_W_ok = (int)Tmax(0.0, floor(WATER_DIFUSION_ALPHA * Tmin(cell->B + cell->W - k->B - k->W, cell->B + cell->W - PipeHeight_ok) / 4.0));
-				
-				water_sum += (d_W_ko - d_W_ok);
-			}
+				//water height in neighbor cell
+				int k_WH = k->B + k->W;
+				//water height in cell
+				int o_WH = o->B + o->W;
+				//water height difference 
+				int ko_WH = k_WH - o_WH;
+				int ok_WH = -ko_WH;
 
+				//water pipe height of neighbor cell
+				int PH_ko = k->B + k->C;
+				//water pipe height of cell
+				int PH_ok = o->B + o->C;
+
+				//water flow to cell
+				int dW_ko = Tmax(0.0, WATER_DIFUSION_ALPHA * Tmin(ko_WH, k_WH - PH_ko) / 4);
+				//water flow from cell
+				int dW_ok = Tmax(0.0, WATER_DIFUSION_ALPHA * Tmin(ok_WH, o_WH - PH_ok) / 4);
+
+				water_sum += dW_ko - dW_ok;
+			}
 			// 4: water evaporation
 			water_sum -= WATER_EVAPORATION_RATE;
 			water_sum = Tmax(water_sum, 0);
@@ -60,7 +72,7 @@ void SimpleCell::addInk()
 
 template<class T>
 void ComplexCell::doCalc(size_t id, size_t cores, T* ca) {
-	
+
 }
 
 namespace CXX {

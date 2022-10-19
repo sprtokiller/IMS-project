@@ -20,7 +20,7 @@ void PrintWaterDT(const Paper& ca) {
 	long long int water = 0;
 	for (size_t i = 0; i < ca.WIDTH * ca.HEIGHT; i++)
 	{
-		water += ca.getNext(i)->W - ca.getOld(i)->W;
+		water += ca.getOld(i)->W - ca.getNext(i)->W;
 	}
 	printf("WATER  %-10lld DT\n", water);
 }
@@ -41,7 +41,7 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	BitMapWriter bmw;
 
 	//generate images
-	size_t max = 200;
+	const size_t max = 1/TIME_STEP * 60;
 	for (size_t i = 0; i < max; i++) {
 		TIMEIT(ca.run(1, cores, Paper::WorldUnit::doCalc));
 		std::string comm = "test";
