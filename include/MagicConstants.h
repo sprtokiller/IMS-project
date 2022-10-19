@@ -91,6 +91,12 @@ static_assert(WATER_DIFUSION_ALPHA <= 1, "WATER_DIFUSION_ALPHA must be <= 1 for 
 /* complex simulation  */
 constexpr double C_MIN = 5.0;
 constexpr double C_MAX = 10.0;
+
+constexpr size_t M_X1 = DEFAULT_WIDTH / 5;
+constexpr size_t M_X2 = DEFAULT_WIDTH - DEFAULT_WIDTH / 5;
+constexpr size_t M_Y1 = DEFAULT_HEIGHT / 5;
+constexpr size_t M_Y2 = DEFAULT_HEIGHT - DEFAULT_HEIGHT / 5;
+
  
 #undef um
 #undef mm

@@ -89,6 +89,37 @@ void ComplexCell::fixPaperHeight()
 	c = h * (C_MAX - C_MIN) + C_MIN;
 }
 
+void ComplexCell::setHeightGradient()
+{
+	//hx = 
+}
+
+// works with M, u, v, p
+void ComplexCell::moveWater()
+{
+	updateVelocities();
+	relaxDivergence();
+	flowOutward();
+}
+
+// works with M, u, v, p
+void ComplexCell::updateVelocities()
+{
+	
+}
+
+// works with M, u, v, p
+void ComplexCell::relaxDivergence()
+{
+	
+}
+
+// works with M, p
+void ComplexCell::flowOutward()
+{
+	
+}
+
 namespace CXX {
 	void Linking() {
 		Paper::WorldUnit c;

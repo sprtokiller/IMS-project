@@ -26,6 +26,7 @@ public:
 	template<class T>
 	static void doCalc(size_t id, size_t cores, T* ca){}
 	void virtual fixPaperHeight() = 0;
+	void virtual setHeightGradient() = 0;
 	double virtual getWater() const = 0;
 	void virtual addWater() = 0;
 	void virtual addInk() = 0;
@@ -75,8 +76,21 @@ public:
 	template<class T>
 	static void doCalc(size_t id, size_t cores, T* ca);
     void fixPaperHeight();
+	void setHeightGradient();
+	void moveWater();
+	void updateVelocities();
+	void relaxDivergence();
+	void flowOutward();
+
+	double getWater() const {
+		return 0.0;  /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */
+	}
+	void addWater() { /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */ };
+	void addInk() { /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */ };
 public:
-	double c = 0;
+	double hx = 0; //height change in x direction
+	double hy = 0; //height change in y direction
+	double c = 0; //water capacity
 	double u = 0; //velocity in x direction
 	double v = 0; //velocity in y direction
 };

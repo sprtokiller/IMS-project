@@ -43,8 +43,6 @@ bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name,
     {
 		if (cell.getWater() > maxWater)
 			maxWater = cell.getWater();
-		if (cell.getInk() > maxInk)
-            maxInk = cell.getInk();
     }
 
     for (auto& cell : data) {
@@ -60,7 +58,7 @@ bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name,
         // Mix it
         r = mixColors(r, water);
         // ink level
-        Color ink = Color({ 0.0863, 0.1490, 0.2980, min(cell.getInk() / INK_MAX_GRAPHIC_LEVEL, 1.0) });
+        //Color ink = Color({ 0.0863, 0.1490, 0.2980, min(cell.getInk() / INK_MAX_GRAPHIC_LEVEL, 1.0) });
         // Mix it again
         //r = mixColors(r, ink);
 		

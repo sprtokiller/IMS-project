@@ -150,5 +150,16 @@ void Paper::normalize()
 		c.fixPaperHeight();
 	}
 
+	for (size_t x = 1; x < DEFAULT_WIDTH - 1; x++)
+	{
+		for (size_t y = 1; y < DEFAULT_HEIGHT - 1; y++)
+		{
+			//getNext(x, y).
+		}
+	}
+	for (auto& c : getNext()) {
+		c.setHeightGradient();
+	}
+
 	
 }

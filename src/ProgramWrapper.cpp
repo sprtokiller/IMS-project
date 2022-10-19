@@ -20,7 +20,7 @@ void PrintWaterDT(const Paper& ca) {
 	long long int water = 0;
 	for (size_t i = 0; i < ca.WIDTH * ca.HEIGHT; i++)
 	{
-		water += ca.getOld(i)->W - ca.getNext(i)->W;
+		water += ca.getOld(i)->getWater() - ca.getNext(i)->getWater();
 	}
 	printf("WATER  %-10lld DT\n", water);
 }
