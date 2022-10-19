@@ -11,6 +11,7 @@
 
 #include <vector>
 #include "MagicConstants.h"
+#include <math.h>
 
 inline int Tmax(int a, int b) { return a > b ? a : b; }
 inline double Tmax(double a, double b) { return a > b ? a : b; }
@@ -80,7 +81,7 @@ public:
     void fixPaperHeight();
 	void setHeightGradient(double new_hx, double new_hy);
 	template<class T>
-	void moveWater(T* ca);
+	void moveWater(T* ca, size_t x, size_t y);
 	double getWater() const {
 		return 0.0;  /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */
 	}
@@ -92,7 +93,7 @@ public:
 	}
 private:
 	template<class T>
-	void updateVelocities(T* ca);
+	void updateVelocities(T* ca, size_t x, size_t y);
 	void relaxDivergence();
 	void flowOutward();
 public:

@@ -114,24 +114,30 @@ void ComplexCell::setHeightGradient(double new_hx, double new_hy)
 
 // works with M, u, v, p
 template<class T>
-void ComplexCell::moveWater(T* ca)
+void ComplexCell::moveWater(T* ca, size_t x, size_t y)
 {
-	updateVelocities(ca);
+	updateVelocities(ca, x, y);
 	relaxDivergence();
 	flowOutward();
 }
 
 // works with M, u, v, p
 template<class T>
-void ComplexCell::updateVelocities(T* ca)
+void ComplexCell::updateVelocities(T* ca, size_t x, size_t y)
 {
 	u -= hx;
 	v -= hy;
 	double dt = 1 / ca->getMaxSpeed();
 	for (double t = 0.0; t < 1.0; t += dt)
 	{
-		double A;
-		double B;
+		// we are at x=0.5, y=0.5
+		double A = 0.0;
+		A += pow((ca->getOld(x - 1, y)->u + ca->getOld(x, y)->u) / 2, 2);
+		A -= pow((ca->getOld(x, y)->u + ca->getOld(x + 1, y)->u) / 2, 2);
+		A += ca->getOld(x, y - 1)->u * ca->getOld(x, y - 1)->v;
+		A -= ca->getOld(x, y)->u * ca->getOld(x, y)->v; // this line is fishy
+		//double B = 0.0;
+		//B = ca->getOld(x - 1, y)->u
 	}
 }
 
