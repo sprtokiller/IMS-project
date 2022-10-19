@@ -54,7 +54,7 @@ bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name,
         // Mix it
         r = mixColors(r, paper);
         // water level
-        Color water = Color({ 0.45, 0.68, 0.86, min(cell.getWater() / WATER_MAX_GRAPHIC_LEVEL, 1.0) });
+        Color water = Color({ 0.45, 0.68, 0.86, std::min(cell.getWater() / WATER_MAX_GRAPHIC_LEVEL, 1.0) });
         // Mix it
         r = mixColors(r, water);
         // ink level

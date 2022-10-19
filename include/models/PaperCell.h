@@ -23,8 +23,6 @@ public:
 	Cell() {};
 	~Cell() {};
 
-	template<class T>
-	static void doCalc(size_t id, size_t cores, T* ca){}
 	void virtual fixPaperHeight() = 0;
 	void virtual setHeightGradient() = 0;
 	double virtual getWater() const = 0;
@@ -46,7 +44,7 @@ public:
 	}
 	// main simulation equations
 	template<class T>
-	static void doCalc(size_t id, size_t cores, T* ca);
+	static void doCalc(size_t cores, T* ca);
 	
 	void fixPaperHeight();
 	void addWater();
@@ -74,7 +72,7 @@ public:
 		return sizeof(ComplexCell);
 	}
 	template<class T>
-	static void doCalc(size_t id, size_t cores, T* ca);
+	static void doCalc(size_t cores, T* ca);
     void fixPaperHeight();
 	void setHeightGradient();
 	void moveWater();

@@ -31,7 +31,7 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	size_t ram = Paper::aproxSize();
 	MEMORY(ram);
 	if (ram > getTotalSystemMemory())
-		throw runtime_error("Not enough RAM for this program");
+		throw std::runtime_error("Not enough RAM for this program");
 
 	Paper ca;
 	TIMEIT(ca.setPaperType(PaperType::NOISE | PaperType::SBSK));
@@ -43,9 +43,9 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	//generate images
 	const size_t max = 1/TIME_STEP * 20;
 	for (size_t i = 0; i < max; i++) {
-		TIMEIT(ca.run(1, cores, Paper::WorldUnit::doCalc));
+		TIMEIT(ca.run(cores,1));
 		std::string comm = "test";
-		comm += to_string(i);
+		comm += std::to_string(i);
 		comm += ".bmp";
 		bmw.writeFile(ca.WIDTH, ca.HEIGHT, comm.data(), ca.getOld());
 		//PrintWaterDT(ca);

@@ -49,8 +49,8 @@ do {\
 	std::chrono::duration<double> time_span = std::chrono::duration_cast<std::chrono::duration<double>>(t2 - t1);\
 	std::cout << "TIMEIT ";\
 	std::cout.width(10);\
-	std::cout << left << time_span.count() << " s ";\
-	std::cout << #FUNC << endl;\
+	std::cout << std::left << time_span.count() << " s ";\
+	std::cout << #FUNC << std::endl;\
 } while (false);
 
 #endif //UTIL_H
