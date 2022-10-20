@@ -19,9 +19,9 @@ void Cell::runAsync(size_t cores, Cell_Function<T> __f, T* ca) {
 	std::vector<std::thread> threads;
 	auto cell_caller = [&](size_t id) {
 		for (size_t y = id * ca->HEIGHT / cores; y < (id + 1) * ca->HEIGHT / cores; y++) {
-			if (y == 0) continue;
-			if (y >= ca->HEIGHT - 1) break;
-			for (size_t x = 1; x < ca->WIDTH - 1; x++) {
+			if (y <= 1 ) continue;
+			if (y >= ca->HEIGHT - 2) break;
+			for (size_t x = 2; x < ca->WIDTH - 2; x++) {
 				__f(x, y, ca);
 			}
 		}
@@ -103,7 +103,7 @@ void ComplexCell::doCalc(size_t cores, T* ca) {
 	runAsync(cores, clearVelocities<T>, ca);
 	// 2.	: MoveWater
 	// 2.1.	: UpdateVelocities
-	//runAsync(cores, updateVelocities<T>, ca);
+	runAsync(cores, updateVelocities<T>, ca);
 	// 2.2.	: RelaxDivergence
 	//TODO
 	// 2.3.	: FlowOutward
@@ -115,11 +115,6 @@ void ComplexCell::doCalc(size_t cores, T* ca) {
 	// 5.	: SimulateCapillaryFlow
 	//TODO
 	ca->flip();
-}
-
-template<class T>
-void ComplexCell::complexFlow(size_t x, size_t y, T* ca) {
-
 }
 
 void ComplexCell::fixPaperHeight()

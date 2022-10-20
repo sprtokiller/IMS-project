@@ -85,11 +85,7 @@ public:
 	
     void fixPaperHeight();
 	void setHeightGradient(double new_hx, double new_hy);
-	void addWater() {}; /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */ 
-	void addInk() {}; /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */ 
 	double getWater() const {return 0.0;} /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */ 
-	void addWater() { /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */ };
-	void addInk() { /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */ };
 	void addWater() { /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */ };
 	void addInk() { /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */ };
 	double getMaxSpeed() const {
@@ -97,12 +93,8 @@ public:
 		return abs(v);
 	}
 private:
-	template<class T>
-	static void clearVelocities(size_t x, size_t y, T* tca);
-	template<class T>
-	static void updateVelocities(size_t x, size_t y, T* tca);
-	void relaxDivergence();
-	void flowOutward();
+	void relaxDivergence(); //TODO make static
+	void flowOutward(); //TODO make static
 public://TODO @vita remove public
 	double hx = 0; //height change in x direction
 	double hy = 0; //height change in y direction
@@ -112,9 +104,9 @@ public://TODO @vita remove public
 	double p = 0; //water pressure
 protected:
 	template<class T>
-	void moveWater(T* ca, size_t x, size_t y);
+	static void clearVelocities(size_t x, size_t y, T* tca);
 	template<class T>
-	static void complexFlow(size_t x, size_t y, T* ca);
+	static void updateVelocities(size_t x, size_t y, T* tca);
 };
 
 #endif
