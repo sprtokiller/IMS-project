@@ -11,19 +11,28 @@
 
 #include <thread>
 
+//doc used to create this
+//https://learn.microsoft.com/en-us/cpp/cpp/lambda-expressions-in-cpp?view=msvc-170
+
 template<typename _Callable, class T>
 void Cell::runAsync(size_t cores, _Callable&& __f, T ca) {
 	std::vector<std::thread> threads;
-	for (size_t id = 0; id < cores; id++)
+	auto cell_caller = [&](size_t id) {
 		for (size_t y = id * ca->HEIGHT / cores; y < (id + 1) * ca->HEIGHT / cores; y++) {
 			if (y == 0) continue;
 			if (y >= ca->HEIGHT - 1) break;
 			for (size_t x = 1; x < ca->WIDTH - 1; x++) {
-				threads.push_back(std::thread(__f, x, y, ca));
+				__f(x, y, ca);
 			}
 		}
+	};
+	
+	for (size_t id = 0; id < cores; id++)
+		threads.push_back(std::thread(cell_caller, id));
+	
 	for (auto& th : threads)
 		th.join();
+	
 	threads.clear();
 }
 
@@ -95,7 +104,7 @@ void ComplexCell::doCalc(size_t cores, T* ca) {
 }
 
 template<class T>
-void ComplexCell::ComplexFlow(size_t x, size_t y, T* ca){
+void ComplexCell::ComplexFlow(size_t x, size_t y, T* ca) {
 
 }
 
@@ -144,7 +153,7 @@ void ComplexCell::updateVelocities(T* ca, size_t x, size_t y)
 		val += ((ca->getOld(x, y)->u + ca->getOld(x + 1, y)->u) / 2.0);
 		val += dt * (A - WC_U * B + ca->getOld(x, y)->p - ca->getOld(x + 1, y)->p - WC_K * ((ca->getOld(x, y)->u - ca->getOld(x + 1, y)->u) / 2.0));
 		//50% adds to my (x,y)->u, 50% adds to my next neighbor (x+1,y)->u
-		
+
 		// enforceBoundaryConditions();
 		if (x > M_X1 && x < M_X2 && y > M_Y1 && y < M_Y2)
 			ca->getNext(x, y)->u += val / 2.0;
@@ -204,7 +213,7 @@ void ComplexCell::flowOutward()
 namespace CXX {
 	void Linking() {
 		Paper::CAutomata ca;
-		Paper::WorldUnit::doCalc<Paper::CAutomata>(0,&ca);
+		Paper::WorldUnit::doCalc<Paper::CAutomata>(0, &ca);
 		exit(EXIT_FAILURE);
 	}
 }
