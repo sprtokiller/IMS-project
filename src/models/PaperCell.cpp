@@ -11,7 +11,7 @@
 
 #include <thread>
 
-//doc used to create this
+//doc used to create this lamba function
 //https://learn.microsoft.com/en-us/cpp/cpp/lambda-expressions-in-cpp?view=msvc-170
 
 template<class T>
