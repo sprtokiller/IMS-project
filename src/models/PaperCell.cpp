@@ -15,14 +15,23 @@
 //https://learn.microsoft.com/en-us/cpp/cpp/lambda-expressions-in-cpp?view=msvc-170
 
 template<class T>
-void Cell::runAsync(size_t cores, Cell_Function<T> __f, T* ca) {
+void Cell::runAsync(size_t cores, Cell_Function<T> __f, T* ca, bool all) {
 	std::vector<std::thread> threads;
 	auto cell_caller = [&](size_t id) {
 		for (size_t y = id * ca->HEIGHT / cores; y < (id + 1) * ca->HEIGHT / cores; y++) {
-			if (y <= 1 ) continue;
-			if (y >= ca->HEIGHT - 2) break;
-			for (size_t x = 2; x < ca->WIDTH - 2; x++) {
-				__f(x, y, ca);
+			if (!all) {
+				if (y <= 1) continue;
+				if (y >= ca->HEIGHT - 2) break;
+
+				for (size_t x = 2; x < ca->WIDTH - 2; x++) {
+					__f(x, y, ca);
+				}
+			}
+			else
+			{
+				for (size_t x = 0; x < ca->WIDTH; x++) {
+					__f(x, y, ca);
+				}
 			}
 		}
 	};
@@ -100,7 +109,7 @@ void SimpleCell::addInk()
 template<class T>
 void ComplexCell::doCalc(size_t cores, T* ca) {
 	// 1.	: clear velocities
-	runAsync(cores, clearVelocities<T>, ca);
+	runAsync(cores, clearVelocities<T>, ca, true);
 	// 2.	: MoveWater
 	// 2.1.	: UpdateVelocities
 	runAsync(cores, updateVelocities<T>, ca);

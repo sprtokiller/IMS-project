@@ -39,7 +39,7 @@ public:
 
 	template<class T>
 	//Runs Cell update functions on separate threads
-	static void runAsync(size_t cores, Cell_Function<T> __f, T* ca);
+	static void runAsync(size_t cores, Cell_Function<T> __f, T* ca, bool all = false);
 public://TODO @vita remove public
 	double h = 0; //paper "structure"
 };
