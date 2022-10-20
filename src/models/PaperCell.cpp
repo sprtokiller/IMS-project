@@ -99,7 +99,21 @@ void SimpleCell::addInk()
 
 template<class T>
 void ComplexCell::doCalc(size_t cores, T* ca) {
-	runAsync(cores, complexFlow<T>, ca);
+	// 1.	: clear velocities
+	runAsync(cores, clearVelocities<T>, ca);
+	// 2.	: MoveWater
+	// 2.1.	: UpdateVelocities
+	//runAsync(cores, updateVelocities<T>, ca);
+	// 2.2.	: RelaxDivergence
+	//TODO
+	// 2.3.	: FlowOutward
+	//TODO
+	// 3.	: MovePigment
+	//TODO
+	// 4.	: TransferPigment
+	//TODO
+	// 5.	: SimulateCapillaryFlow
+	//TODO
 	ca->flip();
 }
 
@@ -121,20 +135,21 @@ void ComplexCell::setHeightGradient(double new_hx, double new_hy)
 
 // works with M, u, v, p
 template<class T>
-void ComplexCell::moveWater(T* ca, size_t x, size_t y)
+void ComplexCell::clearVelocities(size_t x, size_t y, T* tca)
 {
-	updateVelocities(ca, x, y);
-	relaxDivergence();
-	flowOutward();
+	Paper* ca = static_cast<Paper*>(tca);
+	ca->getNext(x, y)->u = 0;
+	ca->getNext(x, y)->v = 0;
 }
 
 // works with M, u, v, p
 template<class T>
-void ComplexCell::updateVelocities(T* ca, size_t x, size_t y)
+void ComplexCell::updateVelocities(size_t x, size_t y, T* tca)
 {
-	// TODO: must clear all u/v after flip
-	u -= hx;
-	v -= hy;
+	Paper* ca = static_cast<Paper*>(tca);
+	ca->getNext(x, y)->u -= ca->getOld(x, y)->hx;
+	ca->getNext(x, y)->v -= ca->getOld(x, y)->hy;
+	
 	double dt = 1 / ca->getMaxSpeed();
 	for (double t = 0.0; t < 1.0; t += dt)
 	{

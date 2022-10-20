@@ -88,13 +88,19 @@ public:
 	void addWater() {}; /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */ 
 	void addInk() {}; /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */ 
 	double getWater() const {return 0.0;} /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */ 
+	void addWater() { /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */ };
+	void addInk() { /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */ };
+	void addWater() { /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */ };
+	void addInk() { /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */ };
 	double getMaxSpeed() const {
 		if (abs(u) > abs(v)) return abs(u);
 		return abs(v);
 	}
 private:
 	template<class T>
-	void updateVelocities(T* ca, size_t x, size_t y);
+	static void clearVelocities(size_t x, size_t y, T* tca);
+	template<class T>
+	static void updateVelocities(size_t x, size_t y, T* tca);
 	void relaxDivergence();
 	void flowOutward();
 public://TODO @vita remove public

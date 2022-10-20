@@ -41,7 +41,7 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	BitMapWriter bmw;
 
 	//generate images
-	const size_t max = 1/TIME_STEP * 20;
+	const size_t max = 1/TIME_STEP * 20; //<-- seconds count
 	for (size_t i = 0; i < max; i++) {
 		TIMEIT(ca.run(cores,1));
 		std::string comm = "test";
