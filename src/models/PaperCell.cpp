@@ -14,8 +14,8 @@
 //doc used to create this
 //https://learn.microsoft.com/en-us/cpp/cpp/lambda-expressions-in-cpp?view=msvc-170
 
-template<typename _Callable, class T>
-void Cell::runAsync(size_t cores, _Callable&& __f, T ca) {
+template<class T>
+void Cell::runAsync(size_t cores, Cell_Function<T> __f, T* ca) {
 	std::vector<std::thread> threads;
 	auto cell_caller = [&](size_t id) {
 		for (size_t y = id * ca->HEIGHT / cores; y < (id + 1) * ca->HEIGHT / cores; y++) {
@@ -38,12 +38,12 @@ void Cell::runAsync(size_t cores, _Callable&& __f, T ca) {
 
 template<class T>
 void SimpleCell::doCalc(size_t cores, T* ca) {
-	runAsync(cores, SimpleFlow<T>, ca);
+	runAsync(cores, simpleFlow<T>, ca);
 	ca->flip();
 }
 
 template<class T>
-void SimpleCell::SimpleFlow(size_t x, size_t y, T* ca) {
+void SimpleCell::simpleFlow(size_t x, size_t y, T* ca) {
 	//get current cell
 	const SimpleCell* o = ca->getOld(x, y);
 
@@ -99,12 +99,12 @@ void SimpleCell::addInk()
 
 template<class T>
 void ComplexCell::doCalc(size_t cores, T* ca) {
-	runAsync(cores, ComplexFlow<T>, ca);
+	runAsync(cores, complexFlow<T>, ca);
 	ca->flip();
 }
 
 template<class T>
-void ComplexCell::ComplexFlow(size_t x, size_t y, T* ca) {
+void ComplexCell::complexFlow(size_t x, size_t y, T* ca) {
 
 }
 

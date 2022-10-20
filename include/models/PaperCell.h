@@ -18,13 +18,20 @@ inline double Tmax(double a, double b) { return a > b ? a : b; }
 inline int Tmin(int a, int b) { return a < b ? a : b; }
 inline double Tmin(double a, double b) { return a < b ? a : b; }
 
+template<typename T>
+//Cell update function
+using Cell_Function = void(*)(size_t, size_t, T*);
+
 class Cell
 {
 public:
 	Cell() {};
 	~Cell() {};
-	template<typename _Callable, class T>
-	static void runAsync(size_t cores, _Callable&& __f, T ca);
+	
+	template<class T>
+	//Runs Cell update functions on separate threads
+	static void runAsync(size_t cores, Cell_Function<T> __f, T* ca);
+	
 	void virtual fixPaperHeight() = 0;
 	void virtual setHeightGradient(double new_hx, double new_hy) = 0;
 	double virtual getWater() const = 0;
@@ -49,7 +56,7 @@ public:
 	template<class T>
 	static void doCalc(size_t cores, T* ca);
 	template<class T>
-	static void SimpleFlow(size_t x, size_t y, T* ca);
+	static void simpleFlow(size_t x, size_t y, T* ca);
 
 	void setHeightGradient(double new_hx, double new_hy) {};
 	void fixPaperHeight();
@@ -83,7 +90,7 @@ public:
 	template<class T>
 	static void doCalc(size_t cores, T* ca);
 	template<class T>
-	static void ComplexFlow(size_t x, size_t y, T* ca);
+	static void complexFlow(size_t x, size_t y, T* ca);
 	
     void fixPaperHeight();
 	void setHeightGradient(double new_hx, double new_hy);
