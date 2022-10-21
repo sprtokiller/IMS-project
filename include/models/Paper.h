@@ -3,10 +3,11 @@
 
 #include "template/CAutomata.h"
 #include "template/World.h"
-#include "PaperCell.h"
 #include "MagicConstants.h"
 #include "PerlinNoise.h"
 
+#include "models/ComplexCell.h"
+#include "models/SimpleCell.h"
 // define enum for paper types
 enum class PaperType
 {
