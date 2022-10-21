@@ -118,9 +118,13 @@ void ComplexCell::updateVelocities(size_t x, size_t y, T* ca)
 }
 
 // works with M, u, v, p
-void ComplexCell::relaxDivergence()
+template<class T>
+void ComplexCell::relaxDivergence(size_t x, size_t y, T* tca)
 {
-
+	Paper* ca = static_cast<Paper*>(tca);
+	/*double u_old
+	ca->getNext(x, y)->u = 0;
+	ca->getNext(x, y)->v = 0;*/
 }
 
 // works with M, p
