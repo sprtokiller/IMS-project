@@ -39,12 +39,12 @@ public:
 	void makeInkStroke();
 	void calculateMaxSpeed();
 	double getMaxSpeed() const { return maxSpeed; }
+	double div_max = 0.0;
 private:
 	void setPaperPlane(size_t newB = DEFAULT_B, size_t newC = DEFAULT_C);
 	void setNoise();
 	void addFibres(const PAPER paper);
 	void normalize();
-
 	double maxSpeed = 0.0;
 public:
 	// Inherited via CAutomata_T

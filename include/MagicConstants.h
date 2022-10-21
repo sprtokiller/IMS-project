@@ -99,6 +99,9 @@ constexpr size_t M_Y2 = DEFAULT_HEIGHT - DEFAULT_HEIGHT / 5;
 
 constexpr double WC_U = 0.1; // watercolor viscosity
 constexpr double WC_K = 0.01; // viscous drag
+constexpr size_t REL_MAX = 50; // max relax iterations
+constexpr double REL_TOL = 0.01; // relax tolerance
+constexpr double REL_DAMP = 0.1; // relax damping
  
 #undef um
 #undef mm
