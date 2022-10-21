@@ -69,12 +69,7 @@ public:
 		return next->getUnsafe(i);
 	}
 
-	void run(size_t cores, size_t cycles) {
-		for (size_t n = 0; n < cycles; n++)
-		{
-			Unit::doCalc(cores, this);
-		}
-	}
+	virtual void run(size_t cores, size_t cycles) = 0;
 
 	static constexpr size_t aproxSize() {
 		return 2 * (World::aproxSize() + sizeof(World*));

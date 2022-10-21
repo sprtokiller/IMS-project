@@ -43,8 +43,11 @@ private:
 	void setNoise();
 	void addFibres(const PAPER paper);
 	void normalize();
-private:
+
 	double maxSpeed = 0.0;
+public:
+	// Inherited via CAutomata_T
+	virtual void run(size_t cores, size_t cycles) override;
 };
 
 #endif // PAPER_H
