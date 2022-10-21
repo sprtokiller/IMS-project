@@ -40,17 +40,25 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	TIMEIT(ca.mirror());
 	BitMapWriter bmw;
 
-	//generate images
-	const size_t max = 1/TIME_STEP * 20; //<-- seconds count
-	for (size_t i = 0; i < max; i++) {
-		TIMEIT(ca.run(cores,1));
+	const size_t TIME = 20;	/// seconds to simulate
+	const size_t STEPS = 1 / TIME_STEP;
+	
+	/// Iterates simulation by one second and saves image
+	auto generateFrame = [&](size_t frame_id) {
+		for (size_t i = 0; i < STEPS; i++) {
+			ca.run(cores, 1);
+			//PrintWaterDT(ca);
+		}
 		std::string comm = "test";
-		comm += std::to_string(i);
+		comm += std::to_string(frame_id);
 		comm += ".bmp";
 		bmw.writeFile(ca.WIDTH, ca.HEIGHT, comm.data(), ca.getOld());
-		//PrintWaterDT(ca);
+	};
+
+	for (size_t frame_id = 0; frame_id < TIME; frame_id++) {
+		TIMEIT(generateFrame(frame_id));
 	}
-	
+
 	//show images
 	std::string comm = "eog --disable-gallery ";
 	comm += "test0.bmp";
