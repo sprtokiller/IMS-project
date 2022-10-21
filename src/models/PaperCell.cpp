@@ -72,7 +72,10 @@ void SimpleCell::addInk()
 
 const Color SimpleCell::draw() const
 {
-	return Color();
+	if (W > 0)
+		return Color({0, 0, 1, 1});
+	else
+		return Color();
 }
 
 template<class T>
