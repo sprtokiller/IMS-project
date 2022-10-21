@@ -80,6 +80,9 @@ public:
 	static constexpr size_t aproxSize() {
 		return W * H * Unit::aproxSize();
 	}
+
+	const size_t WIDTH = W;
+	const size_t HEIGHT = H;
 protected:
 	Data cells;
 };

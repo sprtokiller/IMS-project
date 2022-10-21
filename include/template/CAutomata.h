@@ -76,9 +76,6 @@ public:
 		}
 	}
 
-	const size_t WIDTH = W;
-	const size_t HEIGHT = H;
-
 	static constexpr size_t aproxSize() {
 		return 2 * (World::aproxSize() + sizeof(World*));
 	}
@@ -88,6 +85,8 @@ public:
 		old = new World(*next);
 	}
 
+	const size_t WIDTH = W;
+	const size_t HEIGHT = H;
 private:
 	World* old;
 	World* next;
