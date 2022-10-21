@@ -31,7 +31,6 @@ public:
 		return abs(v);
 	}
 private:
-	void relaxDivergence(); //TODO make static
 	void flowOutward(); //TODO make static
 public://TODO @vita remove public
 	double hx = 0; //height change in x direction
@@ -41,6 +40,8 @@ public://TODO @vita remove public
 	double v = 0; //velocity in y direction
 	double p = 0; //water pressure
 protected:
+	template<class T>
+	static void relaxDivergence(size_t x, size_t y, T* tca);
 	template<class T>
 	static void clearVelocities(size_t x, size_t y, T* tca);
 	template<class T>

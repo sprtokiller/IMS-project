@@ -9,6 +9,11 @@
 #include "models/ComplexCell.h"
 #include "models/Paper.h"
 
+inline int Tmax(int a, int b) { return a > b ? a : b; };
+inline double Tmax(double a, double b) { return a > b ? a : b; };
+inline int Tmin(int a, int b) { return a < b ? a : b; };
+inline double Tmin(double a, double b) { return a < b ? a : b; };
+
 template<class T>
 void ComplexCell::doCalc(size_t cores, T* ca) {
 	// 1.	: clear velocities
@@ -17,7 +22,13 @@ void ComplexCell::doCalc(size_t cores, T* ca) {
 	// 2.1.	: UpdateVelocities
 	Cell_T::runAsync(cores, updateVelocities<T>, ca);
 	// 2.2.	: RelaxDivergence
-	//TODO
+	ca->div_max = 0.0;
+	size_t n = 0;
+	while (ca->div_max <= REL_TOL && n < REL_MAX)
+	{
+		n++;
+		Cell_T::runAsync(cores, relaxDivergence<T>, ca);
+	}
 	// 2.3.	: FlowOutward
 	//TODO
 	// 3.	: MovePigment
@@ -122,9 +133,21 @@ template<class T>
 void ComplexCell::relaxDivergence(size_t x, size_t y, T* tca)
 {
 	Paper* ca = static_cast<Paper*>(tca);
-	/*double u_old
-	ca->getNext(x, y)->u = 0;
-	ca->getNext(x, y)->v = 0;*/
+	double div = 0.0;
+	div += (ca->getOld(x, y)->u + ca->getOld(x + 1, y)->u) / 2.0;
+	div -= (ca->getOld(x, y)->u + ca->getOld(x - 1, y)->u) / 2.0;
+	div += (ca->getOld(x, y)->v + ca->getOld(x, y + 1)->v) / 2.0;
+	div -= (ca->getOld(x, y)->v + ca->getOld(x, y - 1)->v) / 2.0;
+	div *= REL_DAMP;
+
+	ca->getNext(x, y)->p += div;
+	
+	ca->getNext(x + 1, y)->u += (div / 2.0);
+	ca->getNext(x - 1, y)->u -= (div / 2.0);
+	ca->getNext(x, y + 1)->v += (div / 2.0);
+	ca->getNext(x, y - 1)->v -= (div / 2.0);
+
+	ca->div_max = Tmax(ca->div_max, abs(div));
 }
 
 // works with M, p
