@@ -11,7 +11,7 @@
 
 #include "ProgramWrapper.h"
 #include "Util.h"
-#include "BitMapWriter.h"
+#include "output/BitMapWriter.h"
 #include "MagicConstants.h"
 
 #include "models/Paper.h"

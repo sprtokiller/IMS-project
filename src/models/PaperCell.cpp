@@ -106,6 +106,11 @@ void SimpleCell::addInk()
 	I += INK_BRUSH_WATER_ADD;
 }
 
+const Color SimpleCell::draw() const
+{
+	return Color();
+}
+
 template<class T>
 void ComplexCell::doCalc(size_t cores, T* ca) {
 	// 1.	: clear velocities
@@ -226,6 +231,11 @@ void ComplexCell::relaxDivergence()
 void ComplexCell::flowOutward()
 {
 
+}
+
+const Color ComplexCell::draw() const
+{
+	return Color();
 }
 
 // don´t use or edit

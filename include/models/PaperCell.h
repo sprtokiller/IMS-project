@@ -11,6 +11,7 @@
 
 #include <vector>
 #include "MagicConstants.h"
+#include "output/BitMapTypes.h"
 #include <math.h>
 
 inline int Tmax(int a, int b) { return a > b ? a : b; };
@@ -27,15 +28,11 @@ class Cell
 public:
 	Cell() {};
 	~Cell() {};
-		
+	
 	void virtual addWater() = 0;
 	void virtual addInk() = 0;
-	
-	void virtual fixPaperHeight() = 0;
-	void virtual setHeightGradient(double new_hx, double new_hy) = 0;
-	
-	double virtual getWater() const = 0;
-	double virtual getMaxSpeed() const = 0;
+
+	const Color virtual draw() const = 0;
 
 	template<class T>
 	//Runs Cell update functions on separate threads
@@ -71,6 +68,9 @@ public://TODO @vita remove public
 protected:
 	template<class T>
 	static void simpleFlow(size_t x, size_t y, T* ca);
+public:
+	// Inherited via Cell
+	virtual const Color draw() const override;
 };
 
 /*
@@ -107,6 +107,9 @@ protected:
 	static void clearVelocities(size_t x, size_t y, T* tca);
 	template<class T>
 	static void updateVelocities(size_t x, size_t y, T* tca);
+public:
+	// Inherited via Cell
+	virtual const Color draw() const override;
 };
 
 #endif

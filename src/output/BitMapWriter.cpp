@@ -6,7 +6,7 @@
  * @author xkocic02
  */
 
-#include "BitMapWriter.h"
+#include "output/BitMapWriter.h"
 
 bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name, const Paper::Data& data) {
    
@@ -46,21 +46,16 @@ bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name,
     }
 
     for (auto& cell : data) {
-
         // background
 		Color r = Color({ 1.0, 1.0, 1.0, 1.0});
 		// paper height
         Color paper = Color({ 0.9490, 0.9334, 0.7961, cell.h });
         // Mix it
         r = mixColors(r, paper);
-        // water level
-        Color water = Color({ 0.45, 0.68, 0.86, std::min(cell.getWater() / WATER_MAX_GRAPHIC_LEVEL, 1.0) });
+		// Cell color
+        Color cellC = cell.draw();
         // Mix it
-        r = mixColors(r, water);
-        // ink level
-        //Color ink = Color({ 0.0863, 0.1490, 0.2980, min(cell.getInk() / INK_MAX_GRAPHIC_LEVEL, 1.0) });
-        // Mix it again
-        //r = mixColors(r, ink);
+        r = mixColors(r, cellC);
 		
         Pixel pix = Pixel({ (uint8_t)floor(255 * r.B), (uint8_t)floor(255 * r.G), (uint8_t)floor(255 * r.R)});
 

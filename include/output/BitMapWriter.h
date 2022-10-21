@@ -15,6 +15,7 @@
 #include <array>
 #include <math.h>
 #include "MagicConstants.h"
+#include "BitMapTypes.h"
 #include "models/PaperCell.h"
 #include "models/Paper.h"
 
@@ -37,19 +38,6 @@ struct BmpInfoHeader {
     const int32_t verticalResolution = 25400 / CELL_SIZE; // in pixel per meter
     const uint32_t colorTableEntries = 0;
     const uint32_t importantColors = 0;
-};
-
-struct Pixel {
-    uint8_t blue = 255;
-    uint8_t green = 255;
-    uint8_t red = 255;
-};
-
-struct Color {
-	double R = 0.0;
-	double G = 0.0;
-	double B = 0.0;
-	double A = 0.0;
 };
 
 class BitMapWriter
