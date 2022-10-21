@@ -13,6 +13,8 @@
 #include <math.h>
 #include <assert.h>
 
+#include "template/Cell.h"
+
 template <class Unit, size_t W, size_t H>
 class World_T
 {	

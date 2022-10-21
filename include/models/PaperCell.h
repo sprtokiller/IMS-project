@@ -6,12 +6,13 @@
  * @author xkocic02
  */
 
-#ifndef CELL_H
-#define CELL_H
+#ifndef PAPERCELL_H
+#define PAPERCELL_H
 
 #include <vector>
 #include "MagicConstants.h"
 #include "output/BitMapTypes.h"
+#include "template/Cell.h"
 #include <math.h>
 
 inline int Tmax(int a, int b) { return a > b ? a : b; };
@@ -19,24 +20,11 @@ inline double Tmax(double a, double b) { return a > b ? a : b; };
 inline int Tmin(int a, int b) { return a < b ? a : b; };
 inline double Tmin(double a, double b) { return a < b ? a : b; };
 
-template<typename T>
-//Cell update function
-using Cell_Function = void(*)(size_t, size_t, T*);
-
-class Cell
+class Cell : public Cell_T
 {
 public:
-	Cell() {};
-	~Cell() {};
-	
 	void virtual addWater() = 0;
 	void virtual addInk() = 0;
-
-	const Color virtual draw() const = 0;
-
-	template<class T>
-	//Runs Cell update functions on separate threads
-	static void runAsync(size_t cores, Cell_Function<T> __f, T* ca, bool all = false);
 public://TODO @vita remove public
 	double h = 0; //paper "structure"
 };
@@ -47,7 +35,7 @@ public://TODO @vita remove public
 */
 class SimpleCell : public Cell {
 public:
-	static constexpr size_t aproxSize() {return sizeof(SimpleCell);}
+	static constexpr size_t aproxSize() { return sizeof(SimpleCell); }
 	// main simulation equations
 	template<class T>
 	static void doCalc(size_t cores, T* ca);
@@ -56,7 +44,7 @@ public:
 	void fixPaperHeight();
 	void addWater();
 	void addInk();
-	
+
 	double getMaxSpeed() const { return 0.0; };
 	double getWater() const { return W; };
 	double getInk() const { return I; };
@@ -79,13 +67,13 @@ public:
 */
 class ComplexCell : public Cell {
 public:
-	static constexpr size_t aproxSize() {return sizeof(ComplexCell);}
+	static constexpr size_t aproxSize() { return sizeof(ComplexCell); }
 	template<class T>
 	static void doCalc(size_t cores, T* ca);
-	
-    void fixPaperHeight();
+
+	void fixPaperHeight();
 	void setHeightGradient(double new_hx, double new_hy);
-	double getWater() const {return 0.0;} /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */ 
+	double getWater() const { return 0.0; } /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */
 	void addWater() { /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */ };
 	void addInk() { /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */ };
 	double getMaxSpeed() const {
@@ -112,4 +100,4 @@ public:
 	virtual const Color draw() const override;
 };
 
-#endif
+#endif // !PAPERCELL_H
