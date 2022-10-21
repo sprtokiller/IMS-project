@@ -108,18 +108,16 @@ void ComplexCell::setHeightGradient(double new_hx, double new_hy)
 
 // works with M, u, v, p
 template<class T>
-void ComplexCell::clearVelocities(size_t x, size_t y, T* tca)
+void ComplexCell::clearVelocities(size_t x, size_t y, T* ca)
 {
-	Paper* ca = static_cast<Paper*>(tca);
 	ca->getNext(x, y)->u = 0;
 	ca->getNext(x, y)->v = 0;
 }
 
 // works with M, u, v, p
 template<class T>
-void ComplexCell::updateVelocities(size_t x, size_t y, T* tca)
+void ComplexCell::updateVelocities(size_t x, size_t y, T* ca)
 {
-	Paper* ca = static_cast<Paper*>(tca);
 	ca->getNext(x, y)->u -= ca->getOld(x, y)->hx;
 	ca->getNext(x, y)->v -= ca->getOld(x, y)->hy;
 	
