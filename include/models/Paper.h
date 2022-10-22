@@ -27,25 +27,29 @@ inline PaperType operator|(PaperType a, PaperType b)
 	return PaperType(static_cast<int>(a) | static_cast<int>(b));
 }
 
-class Paper: public CAutomata_T<ComplexCell, DEFAULT_WIDTH, DEFAULT_HEIGHT> {
+class Paper : public CAutomata_T<ComplexCell, DEFAULT_WIDTH, DEFAULT_HEIGHT> {
 public:
 	using Data = CAutomata::World::Data;
-	
+
 	Paper();
 	~Paper();
-	
+
 	void setPaperType(PaperType pt);
 	void makeWaterStroke();
 	void makeInkStroke();
-	void calculateMaxSpeed();
+	void calculatePaperMaxSpeed();
+	void adjustDt() { dt = 1 / maxSpeed; }
 	double getMaxSpeed() const { return maxSpeed; }
+	double getDt() const { return dt; }
 	double div_max = 0.0;
 private:
+	double getPaperMaxSpeed() const { return maxSpeed; }
 	void setPaperPlane(size_t newB = DEFAULT_B, size_t newC = DEFAULT_C);
 	void setNoise();
 	void addFibres(const PAPER paper);
 	void normalize();
 	double maxSpeed = 0.0;
+	double dt = 0.0;
 public:
 	// Inherited via CAutomata_T
 	virtual void run(size_t cores, size_t cycles) override;

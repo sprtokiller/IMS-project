@@ -52,15 +52,13 @@ void Paper::makeInkStroke()
 	}	mirror();
 }
 
-void Paper::calculateMaxSpeed()
+void Paper::calculatePaperMaxSpeed()
 {
 	maxSpeed = -1.0;
 	for (auto u : getOld()) {
 		if (u.getMaxSpeed() > maxSpeed) maxSpeed = u.getMaxSpeed();
 	}
 }
-
-
 
 void Paper::setPaperPlane(size_t newB, size_t newC) {
 	for (size_t x = 0; x < WIDTH; x++)
@@ -164,14 +162,14 @@ void Paper::normalize()
 		{
 			//TODO @vita decide
 			// Vita: monke logic
-			double hx = (getNext(x + 1, y)->h - getNext(x - 1, y)->h) / 2;
-			double hy = (getNext(x, y + 1)->h - getNext(x, y - 1)->h) / 2;
-			getNext(x, y)->setHeightGradient(hx, hy);
-
-			//// Johanka: ((u+1,v) - (u,v), (u,v+1) - (u,v))
-			//double hx = getNext(x + 1, y)->h - getNext(x, y)->h;
-			//double hy = getNext(x, y + 1)->h - getNext(x, y)->h;
+			//double hx = (getNext(x + 1, y)->h - getNext(x - 1, y)->h) / 2;
+			//double hy = (getNext(x, y + 1)->h - getNext(x, y - 1)->h) / 2;
 			//getNext(x, y)->setHeightGradient(hx, hy);
+
+			// Johanka: ((u+1,v) - (u,v), (u,v+1) - (u,v))
+			double hx = getNext(x + 1, y)->h - getNext(x, y)->h;
+			double hy = getNext(x, y + 1)->h - getNext(x, y)->h;
+			getNext(x, y)->setHeightGradient(hx, hy);
 		}
 	}	
 }

@@ -54,11 +54,11 @@ constexpr PAPER SBSK = { 3 mm / CELL_SIZE, 50 };
 constexpr PAPER SBHK = { 1500 um / CELL_SIZE, 50 };
 
 // simulation size in real life units 
-constexpr size_t DEFAULT_WIDTH = 2 cm / CELL_SIZE;
-constexpr size_t DEFAULT_HEIGHT = 2 cm / CELL_SIZE;
+constexpr size_t DEFAULT_WIDTH = /*2 cm / CELL_SIZE;*/ 10;
+constexpr size_t DEFAULT_HEIGHT = /*2 cm / CELL_SIZE;*/ 10;
 
 // ink brush and stroke dimensions
-constexpr size_t INK_BRUSH_WIDTH = (5 mm / CELL_SIZE) > DEFAULT_HEIGHT ? DEFAULT_HEIGHT : (5 mm / CELL_SIZE);
+constexpr size_t INK_BRUSH_WIDTH = (5 mm / CELL_SIZE) > DEFAULT_HEIGHT ? DEFAULT_HEIGHT - 4 : (5 mm / CELL_SIZE);
 constexpr size_t INK_BRUSH_START_X = DEFAULT_WIDTH / 5;
 constexpr size_t INK_BRUSH_END_X = DEFAULT_WIDTH - DEFAULT_WIDTH / 5;
 constexpr size_t INK_BRUSH_START_Y = (DEFAULT_HEIGHT - INK_BRUSH_WIDTH) / 2;
@@ -66,7 +66,7 @@ constexpr size_t INK_BRUSH_END_Y = (DEFAULT_HEIGHT + INK_BRUSH_WIDTH) / 2;
 
 // water brush and stroke dimensions
 constexpr size_t WATER_BRUSH_WATER_ADD = 40000;
-constexpr size_t WATER_BRUSH_WIDTH = (5 mm / CELL_SIZE) > DEFAULT_WIDTH ? DEFAULT_WIDTH : (5 mm / CELL_SIZE);
+constexpr size_t WATER_BRUSH_WIDTH = (5 mm / CELL_SIZE) > DEFAULT_WIDTH ? DEFAULT_WIDTH - 4 : (5 mm / CELL_SIZE);
 constexpr size_t WATER_BRUSH_START_X = (DEFAULT_HEIGHT - WATER_BRUSH_WIDTH) / 2;
 constexpr size_t WATER_BRUSH_END_X = (DEFAULT_HEIGHT + WATER_BRUSH_WIDTH) / 2;
 constexpr size_t WATER_BRUSH_START_Y = DEFAULT_WIDTH / 5;
@@ -91,11 +91,6 @@ static_assert(WATER_DIFUSION_ALPHA <= 1, "WATER_DIFUSION_ALPHA must be <= 1 for 
 /* complex simulation  */
 constexpr double C_MIN = 5.0;
 constexpr double C_MAX = 10.0;
-
-constexpr size_t M_X1 = DEFAULT_WIDTH / 5;
-constexpr size_t M_X2 = DEFAULT_WIDTH - DEFAULT_WIDTH / 5;
-constexpr size_t M_Y1 = DEFAULT_HEIGHT / 5;
-constexpr size_t M_Y2 = DEFAULT_HEIGHT - DEFAULT_HEIGHT / 5;
 
 constexpr double WC_U = 0.1; // watercolor viscosity
 constexpr double WC_K = 0.01; // viscous drag

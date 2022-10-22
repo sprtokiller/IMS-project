@@ -24,7 +24,7 @@ public:
 	void fixPaperHeight();
 	void setHeightGradient(double new_hx, double new_hy);
 	double getWater() const { return 0.0; } /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */
-	void addWater() { /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */ };
+	void addWater();
 	void addInk() { /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */ };
 	double getMaxSpeed() const {
 		if (abs(u) > abs(v)) return abs(u);
@@ -35,10 +35,15 @@ private:
 public://TODO @vita remove public
 	double hx = 0; //height change in x direction
 	double hy = 0; //height change in y direction
-	double c = 0; //water capacity
-	double u = 0; //velocity in x direction
-	double v = 0; //velocity in y direction
+	double c = 0; //fluid holding capacity
+	double u = 0; //velocity in x direction (cells / cycle)
+	double v = 0; //velocity in y direction (cells / cycle)
 	double p = 0; //water pressure
+	double gk = 0; //pigment in shallow-water layer
+	double dk = 0; //deposited pigment
+	double s = 0; //water saturation
+	bool m = false; //mask
+	
 protected:
 	template<class T>
 	static void relaxDivergence(size_t x, size_t y, T* tca);
