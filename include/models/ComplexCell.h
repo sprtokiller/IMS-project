@@ -53,6 +53,8 @@ protected:
 	static void copyVelocities(size_t x, size_t y, T* tca);
 	template<class T>
 	static void updateVelocities(size_t x, size_t y, T* tca);
+	template<class T>
+	static void enforceBoundaryConditions(size_t x, size_t y, T* tca);
 public:
 	// Inherited via Cell
 	virtual const Color draw() const override;

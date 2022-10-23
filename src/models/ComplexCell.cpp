@@ -47,7 +47,12 @@ void ComplexCell::doCalc(size_t cores, T* tca) {
 	for (double t = 0.0; t < 1.0; t += ca->getDt())
 	{
 		Cell_T::runAsync(cores, updateVelocities<T>, ca);
+		// 2.1.1 : EnforceBoundaryConditions
+		Cell_T::runAsync(cores, enforceBoundaryConditions<T>, ca);
 	}
+	ca->flip();
+	Cell_T::runAsync(cores, copyVelocities<T>, ca, true);
+
 	printDebug(ca);
 	// 2.2.	: RelaxDivergence
 	ca->div_max = 0.0;
@@ -57,6 +62,7 @@ void ComplexCell::doCalc(size_t cores, T* tca) {
 		n++;
 		Cell_T::runAsync(cores, relaxDivergence<T>, ca);
 	}
+	printDebug(ca);
 	// 2.3.	: FlowOutward
 	//TODO
 	// 3.	: MovePigment
@@ -201,34 +207,53 @@ void ComplexCell::updateVelocities(size_t x, size_t y, T* tca)
 		ca->getNext(x, (y + 1))->v = 0.0;*/
 }
 
+template<class T>
+void ComplexCell::enforceBoundaryConditions(size_t x, size_t y, T* tca)
+{
+	Paper* ca = static_cast<Paper*>(tca);
+	if (!ca->getNext(x, y)->m)
+	{
+		ca->getNext(x, y)->u = 0.0;
+		ca->getNext(x, y)->v = 0.0;
+	}
+	
+	if (!ca->getNext(x + 1, y)->m)
+	{
+		ca->getNext(x, y)->u = 0.0;
+	}
+
+	if (!ca->getNext(x, y + 1)->m)
+	{
+		ca->getNext(x, y)->v = 0.0;
+	}
+}
+
 // works with M, u, v, p
 template<class T>
 void ComplexCell::relaxDivergence(size_t x, size_t y, T* tca)
 {
 	Paper* ca = static_cast<Paper*>(tca);
-	auto* cc = ca->getOld(x, y);
-	auto* cu = ca->getOld(x, y + 1);
-	auto* cd = ca->getOld(x, y - 1);
-	auto* cr = ca->getOld(x + 1, y);
-	auto* cl = ca->getOld(x - 1, y);
+	auto* o_cc = ca->getOld(x, y);
+	auto* o_cd = ca->getOld(x, y - 1);
+	auto* o_cl = ca->getOld(x - 1, y);
+	
+	auto* n_cc = ca->getNext(x, y);
+	auto* n_cd = ca->getNext(x, y - 1);
+	auto* n_cl = ca->getNext(x - 1, y);
+	
 	double div = 0.0;
-	div += (ca->getOld(x, y)->u + ca->getOld(x + 1, y)->u) / 2.0;
-	div -= (ca->getOld(x, y)->u + ca->getOld(x - 1, y)->u) / 2.0;
-	div += (ca->getOld(x, y)->v + ca->getOld(x, y + 1)->v) / 2.0;
-	div -= (ca->getOld(x, y)->v + ca->getOld(x, y - 1)->v) / 2.0;
+	div += o_cc->u;
+	div -= o_cl->u;
+	div += o_cc->v;
+	div -= o_cd->v;
 	div *= REL_DAMP;
 
-	ca->getNext(x, y)->p += div;
+	o_cc->p += div;
 
-	if (isinf(ca->getNext(x, y)->p))
-	{
-		std::cout << "Bruh";
-	}
-
-	ca->getNext(x + 1, y)->u += (div / 2.0);
-	ca->getNext(x - 1, y)->u -= (div / 2.0);
-	ca->getNext(x, y + 1)->v += (div / 2.0);
-	ca->getNext(x, y - 1)->v -= (div / 2.0);
+	n_cc->u += div;
+	n_cl->u -= div;
+	n_cc->v += div;
+	n_cd->v -= div;
 
 	ca->div_max = Tmax(ca->div_max, abs(div));
 }
