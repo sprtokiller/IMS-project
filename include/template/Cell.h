@@ -1,5 +1,4 @@
-#ifndef CELL_H
-#define CELL_H
+#pragma once
 
 #include "output/BitMapTypes.h"
 #include <cstddef>
@@ -33,7 +32,7 @@ public:
 		auto cell_caller = [&](size_t id) {
 			for (size_t y = id * ca->HEIGHT / cores; y < (id + 1) * ca->HEIGHT / cores; y++) {
 				if (!all) {
-					if (y <= 1) continue;
+					if (y < 2) continue;
 					if (y >= ca->HEIGHT - 2) break;
 
 					for (size_t x = 2; x < ca->WIDTH - 2; x++) {
@@ -58,5 +57,3 @@ public:
 		threads.clear();
 	}
 };
-
-#endif // !CELL_H

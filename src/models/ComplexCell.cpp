@@ -36,10 +36,10 @@ template<class T>
 void ComplexCell::doCalc(size_t cores, T* tca) {
 	Paper* ca = static_cast<Paper*>(tca);
 
-	// 1.	: clear velocities
-	printDebug(ca);
-	Cell_T::runAsync(cores, clearVelocities<T>, ca, true);
+	// 1.	: adjust velocities
+	Cell_T::runAsync(cores, adjustVelocities<T>, ca, true);
 	ca->flip();
+	Cell_T::runAsync(cores, copyVelocities<T>, ca, true);
 	// 2.	: MoveWater
 	// 2.1.	: UpdateVelocities
 	ca->calculatePaperMaxSpeed();
@@ -86,34 +86,78 @@ void ComplexCell::addWater()
 	m = true;
 }
 
-// works with M, u, v, p
 template<class T>
-void ComplexCell::clearVelocities(size_t x, size_t y, T* tca)
+/// (u, v) = (u, v) - Nabla (h)
+void ComplexCell::adjustVelocities(size_t x, size_t y, T* tca)
 {
 	Paper* ca = static_cast<Paper*>(tca);
 	ca->getNext(x, y)->u = ca->getOld(x, y)->u - ca->getOld(x, y)->hx;
-	ca->getNext(x, y)->v = ca->getOld(x, y)->v - ca->getOld(x, y)->hy;
+	ca->getNext(x, y)->v = ca->getOld(x, y)->u - ca->getOld(x, y)->hy;
+}
+
+template<class T>
+void ComplexCell::copyVelocities(size_t x, size_t y, T* tca)
+{
+	Paper* ca = static_cast<Paper*>(tca);
+	ca->getNext(x, y)->u = ca->getOld(x, y)->u;
+	ca->getNext(x, y)->v = ca->getOld(x, y)->v;
 }
 
 // works with M, u, v, p
 template<class T>
 void ComplexCell::updateVelocities(size_t x, size_t y, T* tca)
 {
-	Paper* ca = static_cast<Paper*>(tca);
+	Paper* ca = static_cast<Paper*>(tca); // 0.5index as own value
+	auto* cc = ca->getOld(x, y);
+	auto* cu = ca->getOld(x, y + 1);
+	auto* cd = ca->getOld(x, y - 1);
+	auto* cr = ca->getOld(x + 1, y);
+	auto* cl = ca->getOld(x - 1, y);
+
+	double A = 0.0;
+	A += pow((cc->u + cl->u) / 2.0, 2.0);
+	A -= pow((cc->u + cr->u) / 2.0, 2.0);
+	A += (cc->u + cd->u) * (cd->v + ca->getOld(x + 1, y - 1)->v) / 4.0;
+	A -= (cc->u + cu->u) * (cc->v + cr->v) / 4.0;
+	double B = 0.0;
+	B += cr->u;
+	B += cl->u;
+	B += cu->u;
+	B += cd->u;
+	B -= 4.0 * (cc->u);
+	//auto calc = cc->u + ca->getDt() * (A - WC_U * B + cc->p - cr->p - WC_K * cc->u);
+	ca->getNext(x, y)->u = cc->u + ca->getDt() * (A - WC_U * B + cc->p - cr->p - WC_K * cc->u);
+	/* ------ */
+
+	A = 0.0;
+	A += pow((cc->v + cd->v) / 2.0, 2.0);
+	A -= pow((cc->v + cu->v) / 2.0, 2.0);
+	A += (cc->v + cl->v) * (cl->u + ca->getOld(x - 1, y + 1)->u) / 4.0;
+	A -= (cc->v + cr->v) * (cc->u + cu->u) / 4.0;
+	B = 0.0;
+	B += cr->v;
+	B += cl->v;
+	B += cu->v;
+	B += cd->v;
+	B -= 4.0 * (cc->v);
+
+	ca->getNext(x, y)->v = cc->v + ca->getDt() * (A - WC_U * B + cc->p - cu->p - WC_K * cc->v);
+	/*
+	Paper* ca = static_cast<Paper*>(tca); // try fixing with 0.5index as "own" value
 	double A = 0.0;
 	A += pow(ca->getOld(x, y)->u, 2);
-	A -= pow(ca->getOld(x + 1, y)->u, 2);
+	A -= pow(cr->u, 2);
 	A += ((ca->getOld(x, y)->u + ca->getOld(x + 1, y - 1)->u) / 2.0) * ((ca->getOld(x, y)->v + ca->getOld(x + 1, y - 1)->v) / 2.0); // this line is fishy
 	A -= ((ca->getOld(x, y)->u + ca->getOld(x + 1, y + 1)->u) / 2.0) * ((ca->getOld(x, y)->v + ca->getOld(x + 1, y + 1)->v) / 2.0); // this line is fishy
 	double B = 0.0;
-	B += ((ca->getOld(x + 1, y)->u + ca->getOld(x + 2, y)->u) / 2.0);
-	B += ((ca->getOld(x - 1, y)->u + ca->getOld(x, y)->u) / 2.0);
-	B += ((ca->getOld(x, y + 1)->u + ca->getOld(x + 1, y + 1)->u) / 2.0);
-	B += ((ca->getOld(x, y - 1)->u + ca->getOld(x + 1, y - 1)->u) / 2.0);
-	B -= (4.0 * ((ca->getOld(x, y)->u + ca->getOld(x + 1, y)->u) / 2.0));
+	B += ((cr->u + ca->getOld(x + 2, y)->u) / 2.0);
+	B += ((cl->u + ca->getOld(x, y)->u) / 2.0);
+	B += ((cu->u + ca->getOld(x + 1, y + 1)->u) / 2.0);
+	B += ((cd->u + ca->getOld(x + 1, y - 1)->u) / 2.0);
+	B -= (4.0 * ((ca->getOld(x, y)->u + cr->u) / 2.0));
 	double val = 0.0;
-	val += ((ca->getOld(x, y)->u + ca->getOld(x + 1, y)->u) / 2.0);
-	val += ca->getDt() * (A - WC_U * B + ca->getOld(x, y)->p - ca->getOld(x + 1, y)->p - WC_K * ((ca->getOld(x, y)->u - ca->getOld(x + 1, y)->u) / 2.0));
+	val += ((ca->getOld(x, y)->u + cr->u) / 2.0);
+	val += ca->getDt() * (A - WC_U * B + ca->getOld(x, y)->p - cr->p - WC_K * ((ca->getOld(x, y)->u - cr->u) / 2.0));
 	//50% adds to my (x,y)->u, 50% adds to my next neighbor (x+1,y)->u
 
 	// enforceBoundaryConditions();
@@ -128,21 +172,20 @@ void ComplexCell::updateVelocities(size_t x, size_t y, T* tca)
 	else
 		ca->getNext((x + 1), y)->u = 0.0;
 
-	/* ------ */
 	A = 0.0;
 	A += pow(ca->getOld(x, y)->v, 2);
-	A -= pow(ca->getOld(x, y + 1)->v, 2);
+	A -= pow(cu->v, 2);
 	A += ((ca->getOld(x, y)->u + ca->getOld(x - 1, y + 1)->u) / 2.0) * ((ca->getOld(x, y)->v + ca->getOld(x - 1, y + 1)->v) / 2.0); // this line is fishy
 	A -= ((ca->getOld(x, y)->u + ca->getOld(x + 1, y + 1)->u) / 2.0) * ((ca->getOld(x, y)->v + ca->getOld(x + 1, y + 1)->v) / 2.0); // this line is fishy
 	B = 0.0;
-	B += ((ca->getOld(x + 1, y)->v + ca->getOld(x + 1, y + 1)->v) / 2.0);
-	B += ((ca->getOld(x - 1, y)->v + ca->getOld(x - 1, y + 1)->v) / 2.0);
-	B += ((ca->getOld(x, y + 1)->v + ca->getOld(x + 1, y + 2)->v) / 2.0);
-	B += ((ca->getOld(x, y)->v + ca->getOld(x, y - 1)->v) / 2.0);
-	B -= (4.0 * ((ca->getOld(x, y)->v + ca->getOld(x, y + 1)->v) / 2.0));
+	B += ((cr->v + ca->getOld(x + 1, y + 1)->v) / 2.0);
+	B += ((cl->v + ca->getOld(x - 1, y + 1)->v) / 2.0);
+	B += ((cu->v + ca->getOld(x + 1, y + 2)->v) / 2.0);
+	B += ((ca->getOld(x, y)->v + cd->v) / 2.0);
+	B -= (4.0 * ((ca->getOld(x, y)->v + cu->v) / 2.0));
 	val = 0.0;
-	val += ((ca->getOld(x, y)->v + ca->getOld(x, y + 1)->v) / 2.0);
-	val += ca->getDt() * (A - WC_U * B + ca->getOld(x, y)->p - ca->getOld(x, y + 1)->p - WC_K * ((ca->getOld(x, y)->v - ca->getOld(x, y + 1)->v) / 2.0));
+	val += ((ca->getOld(x, y)->v + cu->v) / 2.0);
+	val += ca->getDt() * (A - WC_U * B + ca->getOld(x, y)->p - cu->p - WC_K * ((ca->getOld(x, y)->v - cu->v) / 2.0));
 	//50% adds to my (x,y)->v, 50% adds to my next neighbor (x,y+1)->v
 
 	// enforceBoundaryConditions();
@@ -155,7 +198,7 @@ void ComplexCell::updateVelocities(size_t x, size_t y, T* tca)
 	if (ca->getOld(x, y)->m)
 		ca->getNext(x, (y + 1))->v += val / 2.0;
 	else
-		ca->getNext(x, (y + 1))->v = 0.0;
+		ca->getNext(x, (y + 1))->v = 0.0;*/
 }
 
 // works with M, u, v, p
@@ -163,6 +206,11 @@ template<class T>
 void ComplexCell::relaxDivergence(size_t x, size_t y, T* tca)
 {
 	Paper* ca = static_cast<Paper*>(tca);
+	auto* cc = ca->getOld(x, y);
+	auto* cu = ca->getOld(x, y + 1);
+	auto* cd = ca->getOld(x, y - 1);
+	auto* cr = ca->getOld(x + 1, y);
+	auto* cl = ca->getOld(x - 1, y);
 	double div = 0.0;
 	div += (ca->getOld(x, y)->u + ca->getOld(x + 1, y)->u) / 2.0;
 	div -= (ca->getOld(x, y)->u + ca->getOld(x - 1, y)->u) / 2.0;

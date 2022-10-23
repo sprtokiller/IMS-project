@@ -30,7 +30,7 @@ public:
 		if (abs(u) > abs(v)) return abs(u);
 		return abs(v);
 	}
-private:
+private: //TODO @ilya template hell
 	void flowOutward(); //TODO make static
 public://TODO @vita remove public
 	double hx = 0; //height change in x direction
@@ -48,7 +48,9 @@ protected:
 	template<class T>
 	static void relaxDivergence(size_t x, size_t y, T* tca);
 	template<class T>
-	static void clearVelocities(size_t x, size_t y, T* tca);
+	static void adjustVelocities(size_t x, size_t y, T* tca);
+	template<class T>
+	static void copyVelocities(size_t x, size_t y, T* tca);
 	template<class T>
 	static void updateVelocities(size_t x, size_t y, T* tca);
 public:

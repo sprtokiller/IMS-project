@@ -5,6 +5,7 @@
 #include "template/World.h"
 #include "MagicConstants.h"
 #include "PerlinNoise.h"
+#include "float.h"
 
 #include "models/ComplexCell.h"
 #include "models/SimpleCell.h"
@@ -38,7 +39,7 @@ public:
 	void makeWaterStroke();
 	void makeInkStroke();
 	void calculatePaperMaxSpeed();
-	void adjustDt() { dt = 1 / maxSpeed; }
+	void adjustDt() { dt = ceil(1 / (maxSpeed + DBL_MIN)); }
 	double getMaxSpeed() const { return maxSpeed; }
 	double getDt() const { return dt; }
 	double div_max = 0.0;
