@@ -53,7 +53,7 @@ bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name,
         // Mix it
         r = BitMapWriter::mixColors(r, paper);
 		// Cell color
-        Color cellC = cell.draw();
+        Color cellC = cell.draw(r);
         // Mix it
         r = BitMapWriter::mixColors(r, cellC);
 		

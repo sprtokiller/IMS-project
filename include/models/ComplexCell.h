@@ -58,7 +58,7 @@ protected:
 	static void enforceBoundaryConditions(size_t x, size_t y, T* tca);
 public:
 	// Inherited via Cell
-	virtual const Color draw() const override;
+	virtual const Color draw(Color base) const override;
 };
 
 #endif // !COMPLEXCELL_H

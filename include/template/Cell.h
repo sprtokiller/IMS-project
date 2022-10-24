@@ -16,7 +16,7 @@ public:
 	~Cell_T() {};
 
 	//returns pixel value of cell
-	const Color virtual draw() const = 0;
+	const Color virtual draw(Color base) const = 0;
 
 	template<class T>
 	//runs all calculations for all cells

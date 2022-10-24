@@ -41,7 +41,7 @@ protected:
 	static void simpleFlow(size_t x, size_t y, T* ca);
 public:
 	// Inherited via Cell
-	virtual const Color draw() const override;
+	virtual const Color draw(Color base) const override;
 };
 
 #endif // !SIMPLECELL_H

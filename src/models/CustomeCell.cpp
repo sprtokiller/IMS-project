@@ -38,7 +38,7 @@ void CustomeCell::setHeightGradient(double new_hx, double new_hy)
 	//hy = new_hy;
 }
 
-const Color CustomeCell::draw() const
+const Color CustomeCell::draw(Color base) const
 {
 	Color ph = Color({ 0, 0.5, 1.0, phobia });
 	Color wa = Color({ 0, 1.0, 0, water });

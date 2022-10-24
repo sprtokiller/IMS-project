@@ -257,7 +257,7 @@ void ComplexCell::flowOutward()
 
 }
 
-const Color ComplexCell::draw() const
+const Color ComplexCell::draw(Color base) const
 {
 	if (p > 1)
 		std::cout << p << "\n";

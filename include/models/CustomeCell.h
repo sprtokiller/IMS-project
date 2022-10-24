@@ -42,7 +42,7 @@ protected:
 	*/
 public:
 	// Inherited via Cell
-	virtual const Color draw() const override;
+	virtual const Color draw(Color base) const override;
 };
 
 #endif // !CUSTOMECELL_H

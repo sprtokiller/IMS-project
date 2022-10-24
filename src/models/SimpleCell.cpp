@@ -70,7 +70,7 @@ void SimpleCell::addInk()
 	I += INK_BRUSH_WATER_ADD;
 }
 
-const Color SimpleCell::draw() const
+const Color SimpleCell::draw(Color base) const
 {
 	if (W > 0)
 		return Color({0, 0, 1, 1});
