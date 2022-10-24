@@ -9,6 +9,15 @@
 
 #include "models/ComplexCell.h"
 #include "models/SimpleCell.h"
+#include "models/CustomeCell.h"
+
+inline int Tmax(int a, int b) { return a > b ? a : b; };
+inline double Tmax(double a, double b) { return a > b ? a : b; };
+inline int Tmin(int a, int b) { return a < b ? a : b; };
+inline double Tmin(double a, double b) { return a < b ? a : b; };
+
+inline double fRand(double fMin, double fMax) {	return fMin + ((double)rand() / RAND_MAX) * (fMax - fMin); }
+
 // define enum for paper types
 enum class PaperType
 {
@@ -16,6 +25,7 @@ enum class PaperType
 	NOISE = 1 << 1, //Perlin noise surface background
 	SBSK = 1 << 2, //Southern Bleached Softwood Kraft
 	SBHK = 1 << 3, //Southern Bleached Hardwood Kraft
+	HYDROPHOBIC = 1 << 4, //make the paper have small hydrophobic spots
 };
 
 inline int operator&(PaperType a, PaperType b)
@@ -28,7 +38,7 @@ inline PaperType operator|(PaperType a, PaperType b)
 	return PaperType(static_cast<int>(a) | static_cast<int>(b));
 }
 
-class Paper : public CAutomata_T<ComplexCell, DEFAULT_WIDTH, DEFAULT_HEIGHT> {
+class Paper : public CAutomata_T<CustomeCell, DEFAULT_WIDTH, DEFAULT_HEIGHT> {
 public:
 	using Data = CAutomata::World::Data;
 

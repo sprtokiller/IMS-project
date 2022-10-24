@@ -40,7 +40,7 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	TIMEIT(ca.mirror());
 	BitMapWriter bmw;
 
-	const size_t TIME = 20;	/// seconds to simulate
+	const size_t TIME = 1;	/// seconds to simulate
 	const size_t STEPS = 1 / TIME_STEP;
 	
 	/// Iterates simulation by one second and saves image

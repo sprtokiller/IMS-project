@@ -9,11 +9,6 @@
 #include "models/SimpleCell.h"
 #include "models/Paper.h"
 
-inline int Tmax(int a, int b) { return a > b ? a : b; };
-inline double Tmax(double a, double b) { return a > b ? a : b; };
-inline int Tmin(int a, int b) { return a < b ? a : b; };
-inline double Tmin(double a, double b) { return a < b ? a : b; };
-
 template<class T>
 void SimpleCell::doCalc(size_t cores, T* ca) {
 	runAsync(cores, simpleFlow<T>, ca);
