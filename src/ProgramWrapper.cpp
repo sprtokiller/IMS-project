@@ -30,7 +30,7 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	srand(time(NULL));
 	
 	const auto cores = 1; // getCores();
-	size_t ram = Paper::aproxSize();
+	size_t ram = Paper::aproxSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	MEMORY(ram);
 	if (ram > getTotalSystemMemory())
 		throw std::runtime_error("Not enough RAM for this program");

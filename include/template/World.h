@@ -57,8 +57,9 @@ public:
 	/// <summary>
 	/// Calculates approximated size of the world in Bytes
 	/// </summary>
-	static constexpr size_t aproxSize() {
-		return 0; //TODO @MARTIN
+	static constexpr size_t aproxSize(size_t WIDTH, size_t HEIGHT) {
+		//size of elements and pointer to elements + size of this object 
+		return WIDTH * HEIGHT * (sizeof(Unit) + sizeof(Unit*)) + sizeof(World_T<Unit>);
 	}
 
 	const size_t W;
@@ -70,6 +71,7 @@ protected:
 
 template<class Unit>
 inline World_T<Unit>::World_T(size_t WIDTH, size_t HEIGHT) : W(WIDTH), H(HEIGHT) {
+	cells.reserve(W*H);
 	for (size_t i = 0; i < W * H; i++) {
 		cells.push_back(Unit());
 	}

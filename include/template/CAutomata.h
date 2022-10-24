@@ -71,8 +71,9 @@ public:
 
 	virtual void run(size_t cores, size_t cycles) = 0;
 
-	static constexpr size_t aproxSize() {
-		return 2 * (World::aproxSize() + sizeof(World*));
+	static constexpr size_t aproxSize(size_t WIDTH, size_t HEIGHT) {
+		//size of worlds and size of this object
+		return 2 * (World::aproxSize(WIDTH, HEIGHT) + sizeof(CAutomata_T<Unit>));
 	}
 	
 	void mirror() {
