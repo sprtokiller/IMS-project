@@ -24,6 +24,7 @@ public:
 	void setHydrophobic(double ph) override { phobia = ph; };
 private:
 	double phobia = 0;
+	double water = 0;
 public:
 
 protected:

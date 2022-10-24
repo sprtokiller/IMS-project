@@ -51,11 +51,11 @@ bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name,
 		// paper height
         Color paper = Color({ 0.9490, 0.9334, 0.7961, cell.h });
         // Mix it
-        r = mixColors(r, paper);
+        r = BitMapWriter::mixColors(r, paper);
 		// Cell color
         Color cellC = cell.draw();
         // Mix it
-        r = mixColors(r, cellC);
+        r = BitMapWriter::mixColors(r, cellC);
 		
         Pixel pix = Pixel({ (uint8_t)floor(255 * r.B), (uint8_t)floor(255 * r.G), (uint8_t)floor(255 * r.R)});
 

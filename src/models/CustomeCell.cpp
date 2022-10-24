@@ -9,6 +9,7 @@
 #include "models/CustomeCell.h"
 #include "models/Paper.h"
 #include <iomanip>
+#include <output/BitMapWriter.h>
 
 template<class T>
 void printDebug(T* ca) {
@@ -39,7 +40,9 @@ void CustomeCell::setHeightGradient(double new_hx, double new_hy)
 
 const Color CustomeCell::draw() const
 {
-	return Color({ 0, 0.5, 1.0, phobia });
+	Color ph = Color({ 0, 0.5, 1.0, phobia });
+	Color wa = Color({ 0, 1.0, 0, water });
+	return BitMapWriter::mixColors(wa, ph);
 }
 
 //needed for proper linking

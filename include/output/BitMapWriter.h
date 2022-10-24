@@ -45,7 +45,7 @@ class BitMapWriter
 public:
     BitMapWriter() {};
     ~BitMapWriter() {};
-    Color mixColors(Color bg, Color fg);
+    static Color mixColors(Color bg, Color fg);
 	bool writeFile(const int32_t w, const int32_t h, const char* name, const Paper::Data& data);
 };
 
