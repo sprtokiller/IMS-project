@@ -72,7 +72,7 @@ void Paper::setNoise() {
 		double y = (double)(i / W) / ((double)H);
 
 		// Typical Perlin noise
-		double n = pn.noise(CELL_SIZE * 10 * x, CELL_SIZE * 10 * y, 0.42);
+		double n = pn.noise(CELL_SIZE * 10 * x, CELL_SIZE * 10 * y, rand1);
 
 		auto cell = getNext(i);
 		if (cell)
@@ -90,7 +90,7 @@ void Paper::setHydrophobic() {
 		double y = (double)(i / W) / ((double)H);
 
 		// Typical Perlin noise
-		double n = pow(pn.noise(CELL_SIZE * x, CELL_SIZE * y, 0.162), 2.0);
+		double n = pow(pn.noise(x * W * 0.005, y * H * 0.005, rand2), 2.0);
 
 		auto cell = getNext(i);
 		if (cell)

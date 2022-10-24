@@ -27,6 +27,8 @@ void PrintWaterDT(const Paper& ca) {
 
 ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 {
+	srand(time(NULL));
+	
 	const auto cores = 1; // getCores();
 	size_t ram = Paper::aproxSize();
 	MEMORY(ram);

@@ -42,7 +42,10 @@ class Paper: public CAutomata_T<CustomeCell> {
 public:
 	using Data = CAutomata::World::Data;
 	
-	Paper(size_t WIDTH, size_t HEIGHT): CAutomata(WIDTH,HEIGHT) {}
+	Paper(size_t WIDTH, size_t HEIGHT): CAutomata(WIDTH,HEIGHT) {
+		rand1 = fRand(0.0, 1.0);
+		rand2 = fRand(0.0, 1.0);
+	}
 	~Paper() {}
 	
 	void setPaperType(PaperType pt);
@@ -62,6 +65,8 @@ private:
 	void normalize();
 	double maxSpeed = 0.0;
 	double dt = 0.0;
+	double rand1;
+	double rand2;
 public:
 	// Inherited via CAutomata_T
 	virtual void run(size_t cores, size_t cycles) override;
