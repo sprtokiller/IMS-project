@@ -16,14 +16,14 @@ public:
 	static constexpr size_t aproxSize() { return sizeof(CustomeCell); }
 	template<class T>
 	static void doCalc(size_t cores, T* ca);
-	double getWater() const { return 0.0; }
+	float getWater() const { return 0.0; }
 	void fixPaperHeight();
-	void setHeightGradient(double new_hx, double new_hy);
-	void addWater(double w) { water += w; };
+	void setHeightGradient(float new_hx, float new_hy);
+	void addWater(float w) { water += w; };
 	void addInk() {};
-	void setHydrophobic(double ph) override { phobia = ph; };
+	void setHydrophobic(float ph) override { phobia = ph; };
 private:
-	double phobia = 0;
+	float phobia = 0;
 	float water = 0;
 public:
 

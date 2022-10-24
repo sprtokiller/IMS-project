@@ -15,11 +15,11 @@
 class Cell : public Cell_T
 {
 public:
-	void virtual addWater(double w) = 0;
+	void virtual addWater(float w) = 0;
 	void virtual addInk() = 0;
-	void virtual setHydrophobic(double ph) = 0;
+	void virtual setHydrophobic(float ph) = 0;
 public://TODO @vita remove public
-	double h = 0; //paper "structure"
+	float h = 0; //paper "structure"
 };
 
 #endif // !PAPERCELL_H

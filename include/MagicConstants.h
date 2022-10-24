@@ -23,9 +23,9 @@
 
 //used for calculation only
 namespace RL {
-	constexpr double WATER_EVAPORATION_RATE = 47 fg; // per second per 1 um2
-	constexpr double WATER_DIFUSION_ALPHA = 2.299e-9 m m;
-	constexpr double INK_DIFUSION_BETA = 2e-9 m m;
+	constexpr float WATER_EVAPORATION_RATE = 47 fg; // per second per 1 um2
+	constexpr float WATER_DIFUSION_ALPHA = 2.299e-9 m m;
+	constexpr float INK_DIFUSION_BETA = 2e-9 m m;
 }
 
 // minimal size unit we simulate
@@ -81,22 +81,22 @@ From that we express simulation time step
 TIME_STEP = 1 / (WATER_DIFUSION_ALPHA * CELL_SIZE^2)
 */
 
-constexpr double TIME_STEP = CELL_AREA / RL::WATER_DIFUSION_ALPHA;
-constexpr double WATER_DIFUSION_ALPHA = RL::WATER_DIFUSION_ALPHA * TIME_STEP / CELL_AREA;
-constexpr double WATER_EVAPORATION_RATE = RL::WATER_EVAPORATION_RATE * TIME_STEP * CELL_AREA / 1000;
-constexpr double INK_DIFUSION_BETA = RL::INK_DIFUSION_BETA * TIME_STEP / CELL_AREA;;
+constexpr float TIME_STEP = CELL_AREA / RL::WATER_DIFUSION_ALPHA;
+constexpr float WATER_DIFUSION_ALPHA = RL::WATER_DIFUSION_ALPHA * TIME_STEP / CELL_AREA;
+constexpr float WATER_EVAPORATION_RATE = RL::WATER_EVAPORATION_RATE * TIME_STEP * CELL_AREA / 1000;
+constexpr float INK_DIFUSION_BETA = RL::INK_DIFUSION_BETA * TIME_STEP / CELL_AREA;;
 
 static_assert(WATER_DIFUSION_ALPHA <= 1, "WATER_DIFUSION_ALPHA must be <= 1 for simulation to work properly!");
 
 /* complex simulation  */
-constexpr double C_MIN = 5.0;
-constexpr double C_MAX = 10.0;
+constexpr float C_MIN = 5.0;
+constexpr float C_MAX = 10.0;
 
-constexpr double WC_U = 0.1; // watercolor viscosity
-constexpr double WC_K = 0.01; // viscous drag
+constexpr float WC_U = 0.1; // watercolor viscosity
+constexpr float WC_K = 0.01; // viscous drag
 constexpr size_t REL_MAX = 50; // max relax iterations
-constexpr double REL_TOL = 0.01; // relax tolerance
-constexpr double REL_DAMP = 0.1; // relax damping
+constexpr float REL_TOL = 0.01; // relax tolerance
+constexpr float REL_DAMP = 0.1; // relax damping
  
 #undef um
 #undef mm

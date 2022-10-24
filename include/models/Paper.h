@@ -12,11 +12,11 @@
 #include "models/CustomeCell.h"
 
 inline int Tmax(int a, int b) { return a > b ? a : b; };
-inline double Tmax(double a, double b) { return a > b ? a : b; };
+inline float Tmax(float a, float b) { return a > b ? a : b; };
 inline int Tmin(int a, int b) { return a < b ? a : b; };
-inline double Tmin(double a, double b) { return a < b ? a : b; };
+inline float Tmin(float a, float b) { return a < b ? a : b; };
 
-inline double fRand(double fMin, double fMax) {	return fMin + ((double)rand() / RAND_MAX) * (fMax - fMin); }
+inline float fRand(float fMin, float fMax) {	return fMin + ((float)rand() / RAND_MAX) * (fMax - fMin); }
 
 // define enum for paper types
 enum class PaperType
@@ -54,20 +54,20 @@ public:
 	void makeInkStroke();
 	void calculatePaperMaxSpeed();
 	void adjustDt() { dt = ceil(1 / (maxSpeed + DBL_MIN)); }
-	double getMaxSpeed() const { return maxSpeed; }
-	double getDt() const { return dt; }
-	double div_max = 0.0;
+	float getMaxSpeed() const { return maxSpeed; }
+	float getDt() const { return dt; }
+	float div_max = 0.0;
 private:
-	double getPaperMaxSpeed() const { return maxSpeed; }
+	float getPaperMaxSpeed() const { return maxSpeed; }
 	void setPaperPlane(size_t newB = DEFAULT_B, size_t newC = DEFAULT_C);
 	void setNoise();
 	void setHydrophobic();
 	void addFibres(const PAPER paper);
 	void normalize();
-	double maxSpeed = 0.0;
-	double dt = 0.0;
-	double rand1;
-	double rand2;
+	float maxSpeed = 0.0;
+	float dt = 0.0;
+	float rand1;
+	float rand2;
 public:
 	// Inherited via CAutomata_T
 	virtual void run(size_t cores, size_t cycles) override;

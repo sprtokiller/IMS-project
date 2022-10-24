@@ -23,14 +23,14 @@ public:
 	template<class T>
 	static void doCalc(size_t cores, T* ca);
 
-	void setHeightGradient(double new_hx, double new_hy) {};
+	void setHeightGradient(float new_hx, float new_hy) {};
 	void fixPaperHeight();
-	void addWater(double w);
+	void addWater(float w);
 	void addInk();
-	void setHydrophobic(double ph) override {};
-	double getMaxSpeed() const { return 0.0; };
-	double getWater() const { return W; };
-	double getInk() const { return I; };
+	void setHydrophobic(float ph) override {};
+	float getMaxSpeed() const { return 0.0; };
+	float getWater() const { return W; };
+	float getInk() const { return I; };
 public://TODO @vita remove public
 	int W = 0; //water particles
 	int I = 0; //ink particles

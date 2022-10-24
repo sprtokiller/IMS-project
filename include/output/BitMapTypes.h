@@ -10,10 +10,10 @@ struct Pixel {
 };
 
 struct Color {
-	double R = 0.0;
-	double G = 0.0;
-	double B = 0.0;
-	double A = 0.0;
+	float R = 0.0;
+	float G = 0.0;
+	float B = 0.0;
+	float A = 0.0;
 };
 
 #endif // !BITMAPTYPES_H

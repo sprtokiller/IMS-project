@@ -79,11 +79,11 @@ void Paper::setNoise() {
 	PerlinNoise pn;
 	for (size_t i = 0; i < W * H; i++)
 	{
-		double x = (double)(i % W) / ((double)W);
-		double y = (double)(i / W) / ((double)H);
+		float x = (float)(i % W) / ((float)W);
+		float y = (float)(i / W) / ((float)H);
 
 		// Typical Perlin noise
-		double n = pn.noise(CELL_SIZE * 10 * x, CELL_SIZE * 10 * y, rand1);
+		float n = pn.noise(CELL_SIZE * 10 * x, CELL_SIZE * 10 * y, rand1);
 
 		auto cell = getNext(i);
 		if (cell)
@@ -97,11 +97,11 @@ void Paper::setHydrophobic() {
 	PerlinNoise pn;
 	for (size_t i = 0; i < W * H; i++)
 	{
-		double x = (double)(i % W) / ((double)W);
-		double y = (double)(i / W) / ((double)H);
+		float x = (float)(i % W) / ((float)W);
+		float y = (float)(i / W) / ((float)H);
 
 		// Typical Perlin noise
-		double n = pow(pn.noise(x * W * 0.005, y * H * 0.005, rand2), 2.0);
+		float n = pow(pn.noise(x * W * 0.005, y * H * 0.005, rand2), 2.0);
 
 		auto cell = getNext(i);
 		if (cell)
@@ -120,7 +120,7 @@ void Paper::addFibres(const PAPER paper) {
 		long long int y1 = rand() % H;
 
 		//the second point will be exactly FIBER_LEN away from the first
-		double angle = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 360));
+		float angle = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 360));
 		long long int x2 = x1 + paper.FIBER_LEN * cos(angle);
 		long long int y2 = y1 + paper.FIBER_LEN * sin(angle);
 
@@ -168,7 +168,7 @@ void Paper::addFibres(const PAPER paper) {
 
 void Paper::normalize()
 {
-	double max = -1;
+	float max = -1;
 
 	for (auto &c : getNext()) {
 		if (max < c.h)
@@ -187,13 +187,13 @@ void Paper::normalize()
 		{
 			//TODO @vita decide
 			// Vita: monke logic
-			//double hx = (getNext(x + 1, y)->h - getNext(x - 1, y)->h) / 2;
-			//double hy = (getNext(x, y + 1)->h - getNext(x, y - 1)->h) / 2;
+			//float hx = (getNext(x + 1, y)->h - getNext(x - 1, y)->h) / 2;
+			//float hy = (getNext(x, y + 1)->h - getNext(x, y - 1)->h) / 2;
 			//getNext(x, y)->setHeightGradient(hx, hy);
 
 			// Johanka: ((u+1,v) - (u,v), (u,v+1) - (u,v))
-			double hx = getNext(x + 1, y)->h - getNext(x, y)->h;
-			double hy = getNext(x, y + 1)->h - getNext(x, y)->h;
+			float hx = getNext(x + 1, y)->h - getNext(x, y)->h;
+			float hy = getNext(x, y + 1)->h - getNext(x, y)->h;
 			//getNext(x, y)->setHeightGradient(hx, hy);
 		}
 	}	

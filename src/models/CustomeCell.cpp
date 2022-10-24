@@ -32,7 +32,7 @@ void CustomeCell::fixPaperHeight()
 	//c = h * (C_MAX - C_MIN) + C_MIN;
 }
 
-void CustomeCell::setHeightGradient(double new_hx, double new_hy)
+void CustomeCell::setHeightGradient(float new_hx, float new_hy)
 {
 	//hx = new_hx;
 	//hy = new_hy;

@@ -22,27 +22,27 @@ public:
 	static void doCalc(size_t cores, T* ca);
 
 	void fixPaperHeight();
-	void setHeightGradient(double new_hx, double new_hy);
-	double getWater() const { return 0.0; } /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */
-	void addWater(double w);
-	void setHydrophobic(double ph) override {};
+	void setHeightGradient(float new_hx, float new_hy);
+	float getWater() const { return 0.0; } /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */
+	void addWater(float w);
+	void setHydrophobic(float ph) override {};
 	void addInk() { /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */ };
-	double getMaxSpeed() const {
+	float getMaxSpeed() const {
 		if (abs(u) > abs(v)) return abs(u);
 		return abs(v);
 	}
 private: //TODO @ilya template hell
 	void flowOutward(); //TODO make static
 public://TODO @vita remove public
-	double hx = 0; //height change in x direction
-	double hy = 0; //height change in y direction
-	double c = 0; //fluid holding capacity
-	double u = 0; //velocity in x direction (cells / cycle)
-	double v = 0; //velocity in y direction (cells / cycle)
-	double p = 0; //water pressure
-	double gk = 0; //pigment in shallow-water layer
-	double dk = 0; //deposited pigment
-	double s = 0; //water saturation
+	float hx = 0; //height change in x direction
+	float hy = 0; //height change in y direction
+	float c = 0; //fluid holding capacity
+	float u = 0; //velocity in x direction (cells / cycle)
+	float v = 0; //velocity in y direction (cells / cycle)
+	float p = 0; //water pressure
+	float gk = 0; //pigment in shallow-water layer
+	float dk = 0; //deposited pigment
+	float s = 0; //water saturation
 	bool m = false; //mask
 	
 protected:
