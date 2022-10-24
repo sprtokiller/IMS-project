@@ -16,17 +16,17 @@
 
 #include "template/World.h"
 
-template <class Unit, size_t W, size_t H>
+template <class Unit>
 class CAutomata_T
 {
 public:
-	using CAutomata = CAutomata_T<Unit, W, H>;
-	using World = World_T<Unit, W, H>;
+	using CAutomata = CAutomata_T<Unit>;
+	using World = World_T<Unit>;
 	using WorldUnit = Unit;
 
-	CAutomata_T() {
-		old = new World();
-		next = new World();
+	CAutomata_T(size_t WIDTH, size_t HEIGHT): W(WIDTH), H(HEIGHT) {
+		old = new World(W, H);
+		next = new World(W, H);
 	}
 	~CAutomata_T() {
 		free(old);
@@ -80,8 +80,8 @@ public:
 		old = new World(*next);
 	}
 
-	const size_t WIDTH = W;
-	const size_t HEIGHT = H;
+	const size_t W;
+	const size_t H;
 private:
 	World* old;
 	World* next;

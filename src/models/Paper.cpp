@@ -8,14 +8,6 @@
 
 #include "models/Paper.h"
 
-Paper::Paper()
-{
-}
-
-Paper::~Paper()
-{
-}
-
 void Paper::setPaperType(PaperType type) {
 	if (type & PaperType::PLAIN)
 		setPaperPlane();
@@ -64,8 +56,8 @@ void Paper::calculatePaperMaxSpeed()
 }
 
 void Paper::setPaperPlane(size_t newB, size_t newC) {
-	for (size_t x = 0; x < WIDTH; x++)
-		for (size_t y = 0; y < HEIGHT; y++) {
+	for (size_t x = 0; x < W; x++)
+		for (size_t y = 0; y < H; y++) {
 			auto cell = getNext(x, y);
 			//cell->B = newB;
 			//cell->C = newC;
@@ -74,10 +66,10 @@ void Paper::setPaperPlane(size_t newB, size_t newC) {
 
 void Paper::setNoise() {
 	PerlinNoise pn;
-	for (size_t i = 0; i < WIDTH * HEIGHT; i++)
+	for (size_t i = 0; i < W * H; i++)
 	{
-		double x = (double)(i % WIDTH) / ((double)WIDTH);
-		double y = (double)(i / WIDTH) / ((double)HEIGHT);
+		double x = (double)(i % W) / ((double)W);
+		double y = (double)(i / W) / ((double)H);
 
 		// Typical Perlin noise
 		double n = pn.noise(CELL_SIZE * 10 * x, CELL_SIZE * 10 * y, 0.42);
@@ -92,10 +84,10 @@ void Paper::setNoise() {
 
 void Paper::setHydrophobic() {
 	PerlinNoise pn;
-	for (size_t i = 0; i < WIDTH * HEIGHT; i++)
+	for (size_t i = 0; i < W * H; i++)
 	{
-		double x = (double)(i % WIDTH) / ((double)WIDTH);
-		double y = (double)(i / WIDTH) / ((double)HEIGHT);
+		double x = (double)(i % W) / ((double)W);
+		double y = (double)(i / W) / ((double)H);
 
 		// Typical Perlin noise
 		double n = pow(pn.noise(CELL_SIZE * x, CELL_SIZE * y, 0.162), 2.0);
@@ -110,11 +102,11 @@ void Paper::setHydrophobic() {
 }
 
 void Paper::addFibres(const PAPER paper) {
-	for (size_t i = 0; i < WIDTH * HEIGHT / paper.FIBER_INVERSE_DENSITY; i++)
+	for (size_t i = 0; i < W * H / paper.FIBER_INVERSE_DENSITY; i++)
 	{
 		//draw a random line from the selected cell of length FIBER_LEN and get all cells the line crosses using Bresenham's algorithm
-		long long int x1 = rand() % WIDTH;
-		long long int y1 = rand() % HEIGHT;
+		long long int x1 = rand() % W;
+		long long int y1 = rand() % H;
 
 		//the second point will be exactly FIBER_LEN away from the first
 		double angle = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 360));
@@ -178,9 +170,9 @@ void Paper::normalize()
 		c.fixPaperHeight();
 	}
 
-	for (size_t x = 1; x < DEFAULT_WIDTH - 1; x++)
+	for (size_t x = 1; x < W - 1; x++)
 	{
-		for (size_t y = 1; y < DEFAULT_HEIGHT - 1; y++)
+		for (size_t y = 1; y < H - 1; y++)
 		{
 			//TODO @vita decide
 			// Vita: monke logic

@@ -30,18 +30,18 @@ public:
 	static void runAsync(std::size_t cores, Cell_Function<T> __f, T* ca, bool all = false) {
 		std::vector<std::thread> threads;
 		auto cell_caller = [&](size_t id) {
-			for (size_t y = id * ca->HEIGHT / cores; y < (id + 1) * ca->HEIGHT / cores; y++) {
+			for (size_t y = id * ca->H / cores; y < (id + 1) * ca->H / cores; y++) {
 				if (!all) {
 					if (y < 2) continue;
-					if (y >= ca->HEIGHT - 2) break;
+					if (y >= ca->H - 2) break;
 
-					for (size_t x = 2; x < ca->WIDTH - 2; x++) {
+					for (size_t x = 2; x < ca->W - 2; x++) {
 						__f(x, y, ca);
 					}
 				}
 				else
 				{
-					for (size_t x = 0; x < ca->WIDTH; x++) {
+					for (size_t x = 0; x < ca->W; x++) {
 						__f(x, y, ca);
 					}
 				}

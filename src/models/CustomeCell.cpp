@@ -48,7 +48,7 @@ const Color CustomeCell::draw() const
 //needed for proper linking
 namespace CUSTOMECELL {
 	void Linking() {
-		Paper ca;
+		Paper ca(0,0);
 		Paper::WorldUnit::doCalc<Paper>(0, &ca);
 		exit(EXIT_FAILURE);
 	}

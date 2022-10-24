@@ -18,7 +18,7 @@
 
 void PrintWaterDT(const Paper& ca) {
 	long long int water = 0;
-	for (size_t i = 0; i < ca.WIDTH * ca.HEIGHT; i++)
+	for (size_t i = 0; i < ca.W * ca.H; i++)
 	{
 		water += ca.getOld(i)->getWater() - ca.getNext(i)->getWater();
 	}
@@ -33,7 +33,7 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	if (ram > getTotalSystemMemory())
 		throw std::runtime_error("Not enough RAM for this program");
 
-	Paper ca;
+	Paper ca(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	TIMEIT(ca.setPaperType(PaperType::NOISE | PaperType::SBSK | PaperType::HYDROPHOBIC));
 	TIMEIT(ca.makeWaterStroke());
 	TIMEIT(ca.makeInkStroke());
@@ -52,7 +52,7 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 		std::string comm = "test";
 		comm += std::to_string(frame_id);
 		comm += ".bmp";
-		bmw.writeFile(ca.WIDTH, ca.HEIGHT, comm.data(), ca.getOld());
+		bmw.writeFile(ca.W, ca.H, comm.data(), ca.getOld());
 	};
 
 	for (size_t frame_id = 0; frame_id < TIME; frame_id++) {

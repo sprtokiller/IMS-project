@@ -38,13 +38,13 @@ inline PaperType operator|(PaperType a, PaperType b)
 	return PaperType(static_cast<int>(a) | static_cast<int>(b));
 }
 
-class Paper : public CAutomata_T<CustomeCell, DEFAULT_WIDTH, DEFAULT_HEIGHT> {
+class Paper: public CAutomata_T<CustomeCell> {
 public:
 	using Data = CAutomata::World::Data;
-
-	Paper();
-	~Paper();
-
+	
+	Paper(size_t WIDTH, size_t HEIGHT): CAutomata(WIDTH,HEIGHT) {}
+	~Paper() {}
+	
 	void setPaperType(PaperType pt);
 	void makeWaterStroke();
 	void makeInkStroke();

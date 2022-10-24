@@ -267,7 +267,7 @@ const Color ComplexCell::draw() const
 //needed for proper linking
 namespace COMPLEXCELL {
 	void Linking() {
-		Paper ca;
+		Paper ca(0,0);
 		Paper::WorldUnit::doCalc<Paper>(0, &ca);
 		exit(EXIT_FAILURE);
 	}
