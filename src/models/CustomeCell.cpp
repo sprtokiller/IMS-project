@@ -43,7 +43,8 @@ const Color CustomeCell::draw(Color base) const
 	Color r = base;
 	Color ph = Color({ 0.8, 0.12, 0.0, phobia });
 	r = BitMapWriter::mixColors(r, ph);
-	Color wa = Color({ 0, 0.5, 1.0, water });
+	
+	Color wa = Color({ 0, 0.5, 1.0, Tmax(Tmin(water, 1.0), 0.0) });
 	r = BitMapWriter::mixColors(r, wa);
 	return r;
 }

@@ -49,6 +49,7 @@ public:
 	~Paper() {}
 	
 	void setPaperType(PaperType pt);
+	void addWaterDrop(size_t x, size_t y, size_t r);
 	void makeWaterStroke();
 	void makeInkStroke();
 	void calculatePaperMaxSpeed();

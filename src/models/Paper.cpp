@@ -31,7 +31,18 @@ void Paper::makeWaterStroke()
 	{
 		for (size_t y = WATER_BRUSH_START_Y; y < WATER_BRUSH_END_Y; y++)
 		{
-			getNext(x, y)->addWater();
+			getNext(x, y)->addWater(0);
+		}
+	}
+}
+
+void Paper::addWaterDrop(size_t x0, size_t y0, size_t r)
+{
+	for (size_t x = 0; x < W; x++) {
+		for (size_t y = 0; y < H; y++) {
+			float w = sqrt((float)(r * r - ((float)x - x0) * ((float)x - x0) - ((float)y - y0) * ((float)y - y0))) - (float)r / 2.0f;
+			if (w > 0)
+				getNext(x, y)->addWater(w / r);
 		}
 	}
 }

@@ -59,7 +59,7 @@ void SimpleCell::fixPaperHeight()
 	C -= floor(h * C_CHANGE);
 }
 
-void SimpleCell::addWater()
+void SimpleCell::addWater(double w)
 {
 	W += WATER_BRUSH_WATER_ADD;
 }

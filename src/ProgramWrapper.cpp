@@ -37,8 +37,9 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 
 	Paper ca(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	TIMEIT(ca.setPaperType(PaperType::NOISE | PaperType::SBSK | PaperType::HYDROPHOBIC));
-	TIMEIT(ca.makeWaterStroke());
-	TIMEIT(ca.makeInkStroke());
+	TIMEIT(ca.addWaterDrop(ca.W / 2, ca.H / 2, 500));
+	//TIMEIT(ca.makeWaterStroke());
+	//TIMEIT(ca.makeInkStroke());
 	TIMEIT(ca.mirror());
 	BitMapWriter bmw;
 

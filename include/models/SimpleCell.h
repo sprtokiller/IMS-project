@@ -25,7 +25,7 @@ public:
 
 	void setHeightGradient(double new_hx, double new_hy) {};
 	void fixPaperHeight();
-	void addWater();
+	void addWater(double w);
 	void addInk();
 	void setHydrophobic(double ph) override {};
 	double getMaxSpeed() const { return 0.0; };

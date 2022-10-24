@@ -19,12 +19,12 @@ public:
 	double getWater() const { return 0.0; }
 	void fixPaperHeight();
 	void setHeightGradient(double new_hx, double new_hy);
-	void addWater() {};
+	void addWater(double w) { water += w; };
 	void addInk() {};
 	void setHydrophobic(double ph) override { phobia = ph; };
 private:
 	double phobia = 0;
-	double water = 0;
+	float water = 0;
 public:
 
 protected:

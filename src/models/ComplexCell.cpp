@@ -77,7 +77,7 @@ void ComplexCell::setHeightGradient(double new_hx, double new_hy)
 	hy = new_hy;
 }
 
-void ComplexCell::addWater()
+void ComplexCell::addWater(double w)
 {
 	u = fRand(3.0, 3.4);
 	v = fRand(-0.5, 0.8);
