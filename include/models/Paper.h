@@ -57,6 +57,7 @@ private:
 	double getPaperMaxSpeed() const { return maxSpeed; }
 	void setPaperPlane(size_t newB = DEFAULT_B, size_t newC = DEFAULT_C);
 	void setNoise();
+	void setHydrophobic();
 	void addFibres(const PAPER paper);
 	void normalize();
 	double maxSpeed = 0.0;

@@ -17,6 +17,7 @@ class Cell : public Cell_T
 public:
 	void virtual addWater() = 0;
 	void virtual addInk() = 0;
+	void virtual setHydrophobic(double ph) = 0;
 public://TODO @vita remove public
 	double h = 0; //paper "structure"
 };

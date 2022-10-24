@@ -34,7 +34,7 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 		throw std::runtime_error("Not enough RAM for this program");
 
 	Paper ca;
-	TIMEIT(ca.setPaperType(PaperType::NOISE | PaperType::SBSK));
+	TIMEIT(ca.setPaperType(PaperType::NOISE | PaperType::SBSK | PaperType::HYDROPHOBIC));
 	TIMEIT(ca.makeWaterStroke());
 	TIMEIT(ca.makeInkStroke());
 	TIMEIT(ca.mirror());

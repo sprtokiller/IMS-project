@@ -39,7 +39,7 @@ void CustomeCell::setHeightGradient(double new_hx, double new_hy)
 
 const Color CustomeCell::draw() const
 {
-	return Color({ h, 1.0, 1.0, 1.0 });
+	return Color({ 0, 0.5, 1.0, phobia });
 }
 
 //needed for proper linking

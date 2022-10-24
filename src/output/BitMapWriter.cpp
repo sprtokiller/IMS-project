@@ -53,9 +53,9 @@ bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name,
         // Mix it
         r = mixColors(r, paper);
 		// Cell color
-        //Color cellC = cell.draw();
+        Color cellC = cell.draw();
         // Mix it
-        //r = mixColors(r, cellC);
+        r = mixColors(r, cellC);
 		
         Pixel pix = Pixel({ (uint8_t)floor(255 * r.B), (uint8_t)floor(255 * r.G), (uint8_t)floor(255 * r.R)});
 

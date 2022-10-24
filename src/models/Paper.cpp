@@ -28,6 +28,9 @@ void Paper::setPaperType(PaperType type) {
 
 	if (type & PaperType::SBHK)
 		addFibres(SBHK);
+	
+	if (type & PaperType::HYDROPHOBIC)
+		setHydrophobic();
 }
 
 void Paper::makeWaterStroke()
@@ -83,6 +86,24 @@ void Paper::setNoise() {
 		if (cell)
 		{
 			cell->h = n;
+		}
+	}
+}
+
+void Paper::setHydrophobic() {
+	PerlinNoise pn;
+	for (size_t i = 0; i < WIDTH * HEIGHT; i++)
+	{
+		double x = (double)(i % WIDTH) / ((double)WIDTH);
+		double y = (double)(i / WIDTH) / ((double)HEIGHT);
+
+		// Typical Perlin noise
+		double n = pn.noise(CELL_SIZE * x * 0.5, CELL_SIZE * y * 0.5, 0.162);
+
+		auto cell = getNext(i);
+		if (cell)
+		{
+			cell->setHydrophobic(n);
 		}
 	}
 }

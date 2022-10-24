@@ -16,13 +16,14 @@ public:
 	static constexpr size_t aproxSize() { return sizeof(CustomeCell); }
 	template<class T>
 	static void doCalc(size_t cores, T* ca);
-	double getWater() const { return 0.0; } /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */
+	double getWater() const { return 0.0; }
 	void fixPaperHeight();
 	void setHeightGradient(double new_hx, double new_hy);
 	void addWater() {};
 	void addInk() {};
+	void setHydrophobic(double ph) override { phobia = ph; };
 private:
-	
+	double phobia = 0;
 public:
 
 protected:
