@@ -23,7 +23,25 @@ void printDebug(T* ca) {
 }
 
 void CustomeCell::doCalc(size_t cores, CA* tca) {
+
+	//Cell_T::runAsync(cores, spreadWater<CA>, tca, true);
+	//tca->flip();
+}
+
+
+void CustomeCell::spreadWater(size_t x, size_t y, CA* ca) {
 	
+	const Cell* cell = ca->getOld(x, y);
+	Cell* future_cell = ca->getNext(x, y);
+	
+	float water_to_absorb = 0.0;
+	/*
+	if (cell->absorbed_water < 1)
+	{
+		float water_to_absorb = Tmin(1 - cell->absorbed_water) * 0.01 * cell->water, 0);
+	}
+	future_cell->absorbed_water = cell->absorbed_water + water_to_absorb;
+	future_cell->water = cell->water - water_to_absorb;*/
 }
 
 void CustomeCell::fixPaperHeight()
@@ -45,5 +63,8 @@ const Color CustomeCell::draw(Color base) const
 	
 	Color wa = Color({ 0, 0.5, 1.0, Tmax(Tmin(water, 1.0), 0.0) });
 	r = BitMapWriter::mixColors(r, wa);
+
+	Color ab = Color({ 0.8, 0.0, 0.0, absorbed_water });
+	r = BitMapWriter::mixColors(r, ab);
 	return r;
 }

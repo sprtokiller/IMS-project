@@ -16,6 +16,7 @@ public:
 	using CA = Cell::CA;
 
 	static constexpr size_t aproxSize() { return sizeof(CustomeCell); }
+
 	static void doCalc(size_t cores, CA* ca);
 	float getWater() const { return 0.0; }
 	void fixPaperHeight();
@@ -24,14 +25,15 @@ public:
 	void addInk() {};
 	void setHydrophobic(float ph) override { phobia = ph; };
 private:
+
+public:
 	float phobia = 0;
 	float water = 0;
-public:
-
+	float absorbed_water = 0;
 protected:
+	
+	static void spreadWater(size_t x, size_t y, CA* tca);
 	/*
-	template<class T>
-	static void relaxDivergence(size_t x, size_t y, T* tca);
 	template<class T>
 	static void adjustVelocities(size_t x, size_t y, T* tca);
 	template<class T>
