@@ -77,12 +77,3 @@ const Color SimpleCell::draw(Color base) const
 	else
 		return Color();
 }
-
-//needed for proper linking
-namespace SIMPLECELL {
-	void Linking() {
-		Paper ca(0,0);
-		Paper::WorldUnit::doCalc<Paper>(0, &ca);
-		exit(EXIT_FAILURE);
-	}
-}

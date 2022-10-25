@@ -263,12 +263,3 @@ const Color ComplexCell::draw(Color base) const
 		std::cout << p << "\n";
 	return Color({ 1.0f - p, 0, 0, 1.0 });
 }
-
-//needed for proper linking
-namespace COMPLEXCELL {
-	void Linking() {
-		Paper ca(0,0);
-		Paper::WorldUnit::doCalc<Paper>(0, &ca);
-		exit(EXIT_FAILURE);
-	}
-}

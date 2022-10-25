@@ -22,8 +22,7 @@ void printDebug(T* ca) {
 	//}
 }
 
-template<class T>
-void CustomeCell::doCalc(size_t cores, T* tca) {
+void CustomeCell::doCalc(size_t cores, CA* tca) {
 	
 }
 
@@ -47,13 +46,4 @@ const Color CustomeCell::draw(Color base) const
 	Color wa = Color({ 0, 0.5, 1.0, Tmax(Tmin(water, 1.0), 0.0) });
 	r = BitMapWriter::mixColors(r, wa);
 	return r;
-}
-
-//needed for proper linking
-namespace CUSTOMECELL {
-	void Linking() {
-		Paper ca(0,0);
-		Paper::WorldUnit::doCalc<Paper>(0, &ca);
-		exit(EXIT_FAILURE);
-	}
 }

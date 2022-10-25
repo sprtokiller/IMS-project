@@ -13,9 +13,10 @@
 
 class CustomeCell : public Cell {
 public:
+	using CA = Cell::CA;
+
 	static constexpr size_t aproxSize() { return sizeof(CustomeCell); }
-	template<class T>
-	static void doCalc(size_t cores, T* ca);
+	static void doCalc(size_t cores, CA* ca);
 	float getWater() const { return 0.0; }
 	void fixPaperHeight();
 	void setHeightGradient(float new_hx, float new_hy);
