@@ -8,7 +8,7 @@
 
 #include "output/BitMapWriter.h"
 
-bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name, const Paper::Data& data) {
+bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name, const CAutomata_T::Data* data) {
    
     std::ofstream fout(name, std::ios::binary);
 
@@ -39,6 +39,7 @@ bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name,
     // writing pixel data, TODO, replace with automaton visualization
     size_t maxWater = 0;
     size_t maxInk = 0;
+    
     for (auto& cell : data)
     {
 		if (cell.getWater() > maxWater)
@@ -63,6 +64,7 @@ bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name,
         fout.write((char*)&pix.green, sizeof(uint8_t));
         fout.write((char*)&pix.red, sizeof(uint8_t));
     }
+    
     fout.close();
     return true;
 }
