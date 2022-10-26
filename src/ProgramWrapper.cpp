@@ -62,12 +62,11 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 		TIMEIT(generateFrame(frame_id));
 	}
 
-	//show images
-	std::string comm = "eog --disable-gallery ";
-	comm += "test0.bmp";
-	system(comm.data());
-
-	//remove all
+	// create an animation
+	system("convert -delay 50 -resize 20% -loop 0 test*.bmp animation.gif");
+	// show the animation
+	system("eog --disable-gallery animation.gif");
+	// delete not necessary pictures
 	system("rm test*.bmp");
 }
 
