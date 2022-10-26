@@ -17,7 +17,6 @@
 #include "MagicConstants.h"
 #include "BitMapTypes.h"
 #include "models/PaperCell.h"
-#include "models/Paper.h"
 
 struct BmpHeader {
     const char bitmapSignatureBytes[2] = { 'B', 'M' };
@@ -46,7 +45,7 @@ public:
     BitMapWriter() {};
     ~BitMapWriter() {};
     static Color mixColors(Color bg, Color fg);
-	bool writeFile(const int32_t w, const int32_t h, const char* name, const Paper::Data& data);
+	bool writeFile(const int32_t w, const int32_t h, const char* name, std::vector<Cell_T*> data);
 };
 
 

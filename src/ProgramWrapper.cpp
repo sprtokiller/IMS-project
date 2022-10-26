@@ -15,43 +15,40 @@
 #include "MagicConstants.h"
 
 #include "models/Paper.h"
+#include "models/SimpleCell.h"
 
-void PrintWaterDT(const Paper& ca) {
-	long long int water = 0;
-	for (size_t i = 0; i < ca.W * ca.H; i++)
-	{
-		water += ca.getOld(i)->getWater() - ca.getNext(i)->getWater();
-	}
-	printf("WATER  %-10lld DT\n", water);
+template <typename T>
+Cell_T* abstracFactory() {
+	return (Cell_T*) new T();
 }
+
+#define CELL_TYPE SimpleCell
+auto factory = abstracFactory<CELL_TYPE>;
 
 ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 {
 	srand(time(NULL));
 	
-	const auto cores = 1; // getCores();
-	size_t ram = Paper::aproxSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+	const auto cores = getCores();
+	const size_t TIME = 1;	/// seconds to simulate
+	const size_t STEPS = 1 / TIME_STEP;
+
+	size_t ram = Paper::aproxSize<CELL_TYPE>(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	MEMORY(ram);
 	if (ram > getTotalSystemMemory())
 		throw std::runtime_error("Not enough RAM for this program");
 
-	Paper ca(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-	TIMEIT(ca.setPaperType(PaperType::NOISE | PaperType::SBSK | PaperType::HYDROPHOBIC));
-	TIMEIT(ca.addWaterDrop(ca.W / 2, ca.H / 2, 500));
-	//TIMEIT(ca.makeWaterStroke());
-	//TIMEIT(ca.makeInkStroke());
+	Paper ca(DEFAULT_WIDTH, DEFAULT_HEIGHT, factory);
+	//TIMEIT(ca.setPaperType(PaperType::NOISE | PaperType::SBSK | PaperType::HYDROPHOBIC));
+	//TIMEIT(ca.addWaterDrop(ca.W / 2, ca.H / 2, 500));
+	////TIMEIT(ca.makeWaterStroke());
+	////TIMEIT(ca.makeInkStroke());
 	TIMEIT(ca.mirror());
 	BitMapWriter bmw;
-
-	const size_t TIME = 1;	/// seconds to simulate
-	const size_t STEPS = 1 / TIME_STEP;
 	
 	/// Iterates simulation by one second and saves image
 	auto generateFrame = [&](size_t frame_id) {
-		for (size_t i = 0; i < STEPS; i++) {
-			ca.run(cores, 1);
-			//PrintWaterDT(ca);
-		}
+		ca.run(cores, STEPS, CELL_TYPE::doCalc);
 		std::string comm = "test";
 		comm += std::to_string(frame_id);
 		comm += ".bmp";

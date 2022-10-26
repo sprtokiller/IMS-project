@@ -20,28 +20,28 @@ class SimpleCell : public Cell {
 public:
 	static constexpr size_t aproxSize() { return sizeof(SimpleCell); }
 	// main simulation equations
-	template<class T>
-	static void doCalc(size_t cores, T* ca);
+	static void doCalc(size_t cores, CAutomata_T* ca);
 
 	void setHeightGradient(float new_hx, float new_hy) {};
 	void fixPaperHeight();
 	void addWater(float w);
 	void addInk();
-	void setHydrophobic(float ph) override {};
-	float getMaxSpeed() const { return 0.0; };
-	float getWater() const { return W; };
-	float getInk() const { return I; };
+
 public://TODO @vita remove public
 	int W = 0; //water particles
 	int I = 0; //ink particles
 	int B = DEFAULT_B; //height of bottom (water capacity)
 	int C = DEFAULT_C; //capacity of water captured to cells
 protected:
-	template<class T>
-	static void simpleFlow(size_t x, size_t y, T* ca);
+	static void simpleFlow(size_t x, size_t y, CAutomata_T* ca);
 public:
 	// Inherited via Cell
 	virtual const Color draw(Color base) const override;
+
+	void setHydrophobic(float ph) {};
+	float getMaxSpeed() const { return 0.0; };
+	float getWater() const { return W; };
+	float getInk() const { return I; };
 };
 
 #endif // !SIMPLECELL_H

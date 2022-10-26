@@ -8,7 +8,7 @@
 
 #include "output/BitMapWriter.h"
 
-bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name, const CAutomata_T::Data* data) {
+bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name, std::vector<Cell_T*> data) {
    
     std::ofstream fout(name, std::ios::binary);
 
@@ -36,25 +36,11 @@ bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name,
     fout.write((char*)&infoheader.colorTableEntries, sizeof(uint32_t));
     fout.write((char*)&infoheader.importantColors, sizeof(uint32_t));
 
-    // writing pixel data, TODO, replace with automaton visualization
-    size_t maxWater = 0;
-    size_t maxInk = 0;
-    
-    for (auto& cell : data)
-    {
-		if (cell.getWater() > maxWater)
-			maxWater = cell.getWater();
-    }
-
     for (auto& cell : data) {
         // background
 		Color r = Color({ 1.0, 1.0, 1.0, 1.0});
-		// paper height
-        Color paper = Color({ 0.9490, 0.9334, 0.7961, cell.h });
-        // Mix it
-        r = BitMapWriter::mixColors(r, paper);
 		// Cell color
-        Color cellC = cell.draw(r);
+        Color cellC = cell->draw(r);
         // Mix it
         r = BitMapWriter::mixColors(r, cellC);
 		

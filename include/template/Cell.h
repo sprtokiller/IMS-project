@@ -1,13 +1,14 @@
 #pragma once
 
-#include "output/BitMapTypes.h"
-#include <cstddef>
-#include <vector>
-#include <thread>
+//forward declaration
+class Cell_T;
+class CAutomata_T;
 
-template<typename T>
-//Cell update function
-using Cell_Function = void(*)(size_t, size_t, T*);
+#include "output/BitMapTypes.h"
+#include <vector>
+#include <cassert>
+
+using Cell_Function = void (*)(size_t x, size_t y, CAutomata_T* ca);
 
 class Cell_T
 {
@@ -18,42 +19,34 @@ public:
 	//returns pixel value of cell
 	const Color virtual draw(Color base) const = 0;
 
-	template<class T>
 	//runs all calculations for all cells
-	static void doCalc(size_t cores, T* ca) {};
-	
-	//doc used to create this lamba function
-	//https://learn.microsoft.com/en-us/cpp/cpp/lambda-expressions-in-cpp?view=msvc-170
-	
-	template<class T>
-	//Runs Cell update functions on separate threads
-	static void runAsync(std::size_t cores, Cell_Function<T> __f, T* ca, bool all = false) {
-		std::vector<std::thread> threads;
-		auto cell_caller = [&](size_t id) {
-			for (size_t y = id * ca->H / cores; y < (id + 1) * ca->H / cores; y++) {
-				if (!all) {
-					if (y < 2) continue;
-					if (y >= ca->H - 2) break;
-
-					for (size_t x = 2; x < ca->W - 2; x++) {
-						__f(x, y, ca);
-					}
-				}
-				else
-				{
-					for (size_t x = 0; x < ca->W; x++) {
-						__f(x, y, ca);
-					}
-				}
-			}
-		};
-
-		for (size_t id = 0; id < cores; id++)
-			threads.push_back(std::thread(cell_caller, id));
-
-		for (auto& th : threads)
-			th.join();
-
-		threads.clear();
+	static void doCalc(size_t cores, CAutomata_T* ca) {
+		assert(false);//Derived class is missing its doCalc implementation
 	}
+protected:
+	//Runs Cell update functions on separate threads
+	static void runAsync(std::size_t cores, Cell_Function __f, CAutomata_T* ca, bool all = false);
 };
+
+
+//conversion functions:
+
+template<class T>
+inline std::vector<const T*>& conv(std::vector<const Cell_T*>& vec) {
+	return *((std::vector<const T*>*) & vec);
+}
+
+template<class T>
+inline std::vector<T*>& conv(std::vector<Cell_T*>& vec) {
+	return *((std::vector<const T*>*) & vec);
+}
+
+template<class T>
+inline const T* conv(const Cell_T* cell) {
+	return ((const T*) cell);
+}
+
+template<class T>
+inline T* conv(Cell_T* cell) {
+	return ((T*) cell);
+}

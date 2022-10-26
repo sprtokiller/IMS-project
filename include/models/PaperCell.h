@@ -16,12 +16,6 @@
 class Cell : public Cell_T
 {
 public:
-	using CA = CAutomata_T<Cell>;
-
-	void virtual addWater(float w) = 0;
-	void virtual addInk() = 0;
-	void virtual setHydrophobic(float ph) = 0;
-public://TODO @vita remove public
 	float h = 0; //paper "structure"
 };
 
