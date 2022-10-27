@@ -30,8 +30,8 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	srand(time(NULL));
 	
 	const auto cores = getCores();
-	const size_t TIME = 1;	/// seconds to simulate
-	const size_t STEPS = 1 / TIME_STEP;
+	const size_t TIME = 10;	/// seconds to simulate
+	const size_t STEPS = 1; // / TIME_STEP;
 
 	size_t ram = Paper::aproxSize<CELL_TYPE>(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	MEMORY(ram);
@@ -39,7 +39,7 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 		throw std::runtime_error("Not enough RAM for this program");
 
 	Paper ca(DEFAULT_WIDTH, DEFAULT_HEIGHT, factory);
-	//TIMEIT(ca.setPaperType(PaperType::NOISE | PaperType::SBSK | PaperType::HYDROPHOBIC));
+	TIMEIT(ca.setPaperType(PaperType::NOISE | PaperType::SBSK | PaperType::HYDROPHOBIC));
 	//TIMEIT(ca.addWaterDrop(ca.W / 2, ca.H / 2, 500));
 	////TIMEIT(ca.makeWaterStroke());
 	////TIMEIT(ca.makeInkStroke());
