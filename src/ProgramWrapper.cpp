@@ -59,12 +59,20 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 		TIMEIT(generateFrame(frame_id));
 	}
 
+	int ret = 0;
+	const char* cmd = nullptr;
 	// create an animation
-	system("convert -delay 50 -resize 20% -loop 0 test*.bmp animation.gif");
+	cmd = "convert -delay 50 -resize 20% -loop 0 test*.bmp animation.gif";
+	ret = system(cmd);
+	if (ret == -1) fprintf(stderr,"error executing '%s'",cmd);
 	// show the animation
-	system("eog --disable-gallery animation.gif");
+	cmd = "eog --disable-gallery animation.gif";
+	ret = system(cmd);
+	if (ret == -1) fprintf(stderr, "error executing '%s'", cmd);
 	// delete not necessary pictures
-	system("rm test*.bmp");
+	cmd = "rm test*.bmp";
+	ret = system(cmd);
+	if (ret == -1) fprintf(stderr, "error executing '%s'", cmd);
 }
 
 ProgramWrapper::~ProgramWrapper()
