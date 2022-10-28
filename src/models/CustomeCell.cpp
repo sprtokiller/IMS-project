@@ -22,17 +22,16 @@ void printDebug(T* ca) {
 	//}
 }
 
-void CustomeCell::doCalc(size_t cores, CA* tca) {
-
-	//Cell_T::runAsync(cores, spreadWater<CA>, tca, true);
-	//tca->flip();
+void CustomeCell::doCalc(size_t cores, Paper* tca) {
+	CustomeCell::runAsync(cores, spreadWater, tca, true);
+	tca->flip();
 }
 
 
-void CustomeCell::spreadWater(size_t x, size_t y, CA* ca) {
+void CustomeCell::spreadWater(size_t x, size_t y, Paper* ca) {
 	
-	const Cell* cell = ca->getOld(x, y);
-	Cell* future_cell = ca->getNext(x, y);
+	const auto* cell = ca->getOld(x, y);
+	auto future_cell = ca->getNext(x, y);
 	
 	float water_to_absorb = 0.0;
 	/*

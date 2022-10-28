@@ -8,7 +8,7 @@
 
 #include "output/BitMapWriter.h"
 
-bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name, const CAutomata_T::Data* data) {
+bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name, const Paper::Data& data) {
    
     std::ofstream fout(name, std::ios::binary);
 

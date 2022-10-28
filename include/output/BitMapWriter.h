@@ -14,10 +14,9 @@
 #include <fstream>
 #include <array>
 #include <math.h>
+#include "models/paper.h"
 #include "MagicConstants.h"
 #include "BitMapTypes.h"
-#include "models/PaperCell.h"
-#include "models/Paper.h"
 
 struct BmpHeader {
     const char bitmapSignatureBytes[2] = { 'B', 'M' };

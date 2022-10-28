@@ -7,8 +7,6 @@
 #include "PerlinNoise.h"
 #include "float.h"
 
-#include "models/ComplexCell.h"
-#include "models/SimpleCell.h"
 #include "models/CustomeCell.h"
 
 inline int Tmax(int a, int b) { return a > b ? a : b; };

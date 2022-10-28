@@ -5,7 +5,7 @@
 #include <vector>
 #include <thread>
 
-template<typename T>
+template<class T>
 //Cell update function
 using Cell_Function = void(*)(size_t, size_t, T*);
 

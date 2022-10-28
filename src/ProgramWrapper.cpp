@@ -16,20 +16,11 @@
 
 #include "models/Paper.h"
 
-void PrintWaterDT(const Paper& ca) {
-	long long int water = 0;
-	for (size_t i = 0; i < ca.W * ca.H; i++)
-	{
-		water += ca.getOld(i)->getWater() - ca.getNext(i)->getWater();
-	}
-	printf("WATER  %-10lld DT\n", water);
-}
-
 ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 {
 	srand(time(NULL));
 	
-	const auto cores = 1; // getCores();
+	const auto cores = getCores();
 	size_t ram = Paper::aproxSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	MEMORY(ram);
 	if (ram > getTotalSystemMemory())
@@ -43,14 +34,14 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	TIMEIT(ca.mirror());
 	BitMapWriter bmw;
 
-	const size_t TIME = 1;	/// seconds to simulate
-	const size_t STEPS = 1 / TIME_STEP;
+	const size_t TIME = 10;	/// seconds to simulate
+	const size_t STEPS = 1; /// TIME_STEP;
 	
 	/// Iterates simulation by one second and saves image
 	auto generateFrame = [&](size_t frame_id) {
 		for (size_t i = 0; i < STEPS; i++) {
-			ca.run(cores, 1);
-			//PrintWaterDT(ca);
+			fprintf(stderr, "\t");
+			TIMEIT(ca.run(cores, 1));
 		}
 		std::string comm = "test";
 		comm += std::to_string(frame_id);

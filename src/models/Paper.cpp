@@ -203,7 +203,7 @@ void Paper::run(size_t cores, size_t cycles)
 {
 	for (size_t n = 0; n < cycles; n++)
 	{
-		Paper::WorldUnit::doCalc(cores, (CAutomata_T<Cell>*)this);
+		Paper::WorldUnit::doCalc(cores, this);
 	}
 }
  

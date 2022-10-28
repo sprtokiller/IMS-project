@@ -11,13 +11,13 @@
 
 #include "models/PaperCell.h"
 
+class Paper;
+
 class CustomeCell : public Cell {
 public:
-	using CA = Cell::CA;
-
 	static constexpr size_t aproxSize() { return sizeof(CustomeCell); }
 
-	static void doCalc(size_t cores, CA* ca);
+	static void doCalc(size_t cores, Paper* ca);
 	float getWater() const { return 0.0; }
 	void fixPaperHeight();
 	void setHeightGradient(float new_hx, float new_hy);
@@ -32,7 +32,7 @@ public:
 	float absorbed_water = 0;
 protected:
 	
-	static void spreadWater(size_t x, size_t y, CA* tca);
+	static void spreadWater(size_t x, size_t y, Paper* tca);
 	/*
 	template<class T>
 	static void adjustVelocities(size_t x, size_t y, T* tca);
