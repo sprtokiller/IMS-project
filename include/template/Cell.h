@@ -28,6 +28,12 @@ protected:
 	static void runAsync(std::size_t cores, Cell_Function __f, CAutomata_T* ca, bool all = false);
 };
 
+//abstract factory
+
+template <class T>
+Cell_T* abstracFactory() {
+	return (Cell_T*) new T();
+}
 
 //conversion functions:
 

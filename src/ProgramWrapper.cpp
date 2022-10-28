@@ -17,11 +17,6 @@
 #include "models/Paper.h"
 #include "models/SimpleCell.h"
 
-template <typename T>
-Cell_T* abstracFactory() {
-	return (Cell_T*) new T();
-}
-
 #define CELL_TYPE SimpleCell
 auto factory = abstracFactory<CELL_TYPE>;
 
