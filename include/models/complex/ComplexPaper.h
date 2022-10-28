@@ -37,8 +37,6 @@ private:
 public:
 	// Inherited via CAutomata_T
 	virtual void run(size_t cores, size_t cycles) override;
-	// Inherited via Paper
-	void setPaperType(PaperType pt);
 
 	void setPaperPlane(size_t newB, size_t newC);
 	void setNoise();

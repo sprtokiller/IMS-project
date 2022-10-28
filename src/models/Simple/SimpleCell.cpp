@@ -7,15 +7,14 @@
  */
 
 #include "models/simple/SimpleCell.h"
+#include "models/simple/SimplePaper.h"
 
-template<class T>
-void SimpleCell::doCalc(size_t cores, T* ca) {
-	runAsync(cores, simpleFlow<T>, ca);
+void SimpleCell::doCalc(size_t cores, SimplePaper* ca) {
+	runAsync(cores, simpleFlow, ca);
 	ca->flip();
 }
 
-template<class T>
-void SimpleCell::simpleFlow(size_t x, size_t y, T* ca) {
+void SimpleCell::simpleFlow(size_t x, size_t y, SimplePaper* ca) {
 	//get current cell
 	const SimpleCell* o = ca->getOld(x, y);
 

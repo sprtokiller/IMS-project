@@ -6,9 +6,9 @@
  * @author xkocic02
  */
 
-#include "models/complex/ComplexPaper.h"
+#include "models/simple/SimplePaper.h"
 
-void ComplexPaper::makeWaterStroke()
+void SimplePaper::makeWaterStroke()
 {
 	for (size_t x = WATER_BRUSH_START_X; x < WATER_BRUSH_END_X; x++)
 	{
@@ -19,7 +19,7 @@ void ComplexPaper::makeWaterStroke()
 	}
 }
 
-void ComplexPaper::addWaterDrop(size_t x0, size_t y0, size_t r)
+void SimplePaper::addWaterDrop(size_t x0, size_t y0, size_t r)
 {
 	for (size_t x = 0; x < W; x++) {
 		for (size_t y = 0; y < H; y++) {
@@ -30,7 +30,7 @@ void ComplexPaper::addWaterDrop(size_t x0, size_t y0, size_t r)
 	}
 }
 
-void ComplexPaper::makeInkStroke()
+void SimplePaper::makeInkStroke()
 {
 	for (size_t x = INK_BRUSH_START_X; x < INK_BRUSH_END_X; x++)
 	{
@@ -41,7 +41,7 @@ void ComplexPaper::makeInkStroke()
 	}	mirror();
 }
 
-void ComplexPaper::calculatePaperMaxSpeed()
+void SimplePaper::calculatePaperMaxSpeed()
 {
 	/*maxSpeed = -1.0;
 	for (auto u : getOld()) {
@@ -49,7 +49,7 @@ void ComplexPaper::calculatePaperMaxSpeed()
 	}*/
 }
 
-void ComplexPaper::setPaperPlane(size_t newB, size_t newC) {
+void SimplePaper::setPaperPlane(size_t newB, size_t newC) {
 	for (size_t x = 0; x < W; x++)
 		for (size_t y = 0; y < H; y++) {
 			auto cell = getNext(x, y);
@@ -58,7 +58,7 @@ void ComplexPaper::setPaperPlane(size_t newB, size_t newC) {
 		}
 }
 
-void ComplexPaper::setNoise() {
+void SimplePaper::setNoise() {
 	PerlinNoise pn;
 	for (size_t i = 0; i < W * H; i++)
 	{
@@ -76,7 +76,7 @@ void ComplexPaper::setNoise() {
 	}
 }
 
-void ComplexPaper::setHydrophobic() {
+void SimplePaper::setHydrophobic() {
 	PerlinNoise pn;
 	for (size_t i = 0; i < W * H; i++)
 	{
@@ -95,7 +95,7 @@ void ComplexPaper::setHydrophobic() {
 	}
 }
 
-void ComplexPaper::addFibres(const PAPER paper) {
+void SimplePaper::addFibres(const PAPER paper) {
 	for (size_t i = 0; i < W * H / paper.FIBER_INVERSE_DENSITY; i++)
 	{
 		//draw a random line from the selected cell of length FIBER_LEN and get all cells the line crosses using Bresenham's algorithm
@@ -149,7 +149,7 @@ void ComplexPaper::addFibres(const PAPER paper) {
 	normalize();
 }
 
-void ComplexPaper::normalize()
+void SimplePaper::normalize()
 {
 	float max = -1;
 
@@ -182,10 +182,11 @@ void ComplexPaper::normalize()
 	}	
 }
 
-void ComplexPaper::run(size_t cores, size_t cycles)
+void SimplePaper::run(size_t cores, size_t cycles)
 {
 	for (size_t n = 0; n < cycles; n++)
 	{
-		ComplexPaper::WorldUnit::doCalc(cores, this);
+		SimplePaper::WorldUnit::doCalc(cores, this);
 	}
 }
+ 

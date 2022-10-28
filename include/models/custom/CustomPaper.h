@@ -1,5 +1,5 @@
-#ifndef PAPER_H
-#define PAPER_H
+#ifndef CUSTOM_PAPER_H
+#define CUSTOM_PAPER_H
 
 #include "template/CAutomata.h"
 #include "template/World.h"
@@ -7,14 +7,14 @@
 #include "PerlinNoise.h"
 #include "float.h"
 
-#include "models/PaperType.h"
 #include "models/custom/CustomCell.h"
+#include "models/Paper.h"
 
-class CustomPaper : public CAutomata_T<CustomCell> {
+class CustomPaper : public CAutomata_T<CustomCell>, public Paper{
 public:
 	using Data = CAutomata::World::Data;
 	
-	CustomPaper(size_t WIDTH, size_t HEIGHT): CAutomata(WIDTH,HEIGHT) {
+	CustomPaper(size_t WIDTH, size_t HEIGHT): CAutomata(WIDTH,HEIGHT){
 		rand1 = fRand(0.0, 1.0);
 		rand2 = fRand(0.0, 1.0);
 	}
@@ -30,10 +30,6 @@ public:
 	float div_max = 0.0;
 private:
 	float getPaperMaxSpeed() const { return maxSpeed; }
-	void setPaperPlane(size_t newB = DEFAULT_B, size_t newC = DEFAULT_C);
-	void setNoise();
-	void setHydrophobic();
-	void addFibres(const PAPER paper);
 	void normalize();
 	float maxSpeed = 0.0;
 	float dt = 0.0;
@@ -42,6 +38,15 @@ private:
 public:
 	// Inherited via CAutomata_T
 	virtual void run(size_t cores, size_t cycles) override;
+
+	void setPaperPlane(size_t newB, size_t newC);
+	void setNoise();
+	void setHydrophobic();
+	void addFibres(const PAPER paper);
+
+	virtual const std::vector<Cell*> getData() const override {
+		return std::vector<Cell*>{};//TODO
+	};
 };
 
-#endif // PAPER_H
+#endif // CUSTOM_PAPER_H

@@ -15,6 +15,7 @@
 #include "MagicConstants.h"
 
 #include "models/complex/ComplexPaper.h"
+#include "models/simple/SimplePaper.h"
 
 ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 {
@@ -26,7 +27,7 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	if (ram > getTotalSystemMemory())
 		throw std::runtime_error("Not enough RAM for this program");
 
-	ComplexPaper ca(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+	SimplePaper ca(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	TIMEIT(ca.setPaperType(PaperType::NOISE | PaperType::SBSK | PaperType::HYDROPHOBIC));
 	TIMEIT(ca.addWaterDrop(ca.W / 2, ca.H / 2, 500));
 	//TIMEIT(ca.makeWaterStroke());

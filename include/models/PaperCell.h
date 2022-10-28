@@ -17,7 +17,9 @@
 class Cell : public Cell_T
 {
 public:
-	using CA = CAutomata_T<Cell>;
+	static void doCalc(size_t cores, CAutomata_T<Cell*>* ca) {
+		assert(false);//implement your own function in derived class
+	}
 
 	virtual const Color draw(Color base) const = 0;
 

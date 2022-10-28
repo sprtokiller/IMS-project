@@ -16,12 +16,13 @@
 	ZHANG, Qing, et al. Simple cellular automaton‐based simulation of ink behaviour and its application to Suibokuga‐like 3D rendering of trees.
 	The Journal of Visualization and Computer Animation, 1999, 10.1: 27-37.
 */
+class SimplePaper;
+
 class SimpleCell : public Cell {
 public:
 	static constexpr size_t aproxSize() { return sizeof(SimpleCell); }
 	// main simulation equations
-	template<class T>
-	static void doCalc(size_t cores, T* ca);
+	static void doCalc(size_t cores, SimplePaper* ca);
 
 	void setHeightGradient(float new_hx, float new_hy) {};
 	void fixPaperHeight();
@@ -37,8 +38,7 @@ public://TODO @vita remove public
 	int B = DEFAULT_B; //height of bottom (water capacity)
 	int C = DEFAULT_C; //capacity of water captured to cells
 protected:
-	template<class T>
-	static void simpleFlow(size_t x, size_t y, T* ca);
+	static void simpleFlow(size_t x, size_t y, SimplePaper* ca);
 public:
 	// Inherited via Cell
 	virtual const Color draw(Color base) const override;
