@@ -27,7 +27,7 @@ public:
 	void fixPaperHeight();
 	void addWater(float w);
 	void addInk();
-	void setHydrophobic(float ph) override {};
+	void setHydrophobic(float ph) {};
 	float getMaxSpeed() const { return 0.0; };
 	float getWater() const { return W; };
 	float getInk() const { return I; };

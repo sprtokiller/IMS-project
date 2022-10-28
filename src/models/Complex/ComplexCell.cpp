@@ -7,54 +7,40 @@
  */
 
 #include "models/complex/ComplexCell.h"
+#include "models/complex/ComplexPaper.h"
 #include "models/Paper.h"
 #include <iomanip>
 
-template<class T>
-void printDebug(T* ca) {
-	std::cout << "[u, v]: \n" << std::setprecision(2) << std::fixed;
-	for (size_t y = 0; y < ca->HEIGHT; y++) {
-		for (size_t x = 0; x < ca->WIDTH; x++) {
-			std::cout << "[" << ca->getOld(x, y)->u << ", " << ca->getOld(x, y)->v << "] ";
-		}
-		std::cout << "\n";
-	}
-}
-
-template<class T>
-void ComplexCell::doCalc(size_t cores, T* tca) {
-	Paper* ca = static_cast<Paper*>(tca);
-	printDebug(ca);
+void ComplexCell::doCalc(size_t cores, ComplexPaper* ca) {
 
 	// 1.	: adjust velocities
-	Cell_T::runAsync(cores, adjustVelocities<T>, ca, true);
+	runAsync(cores, adjustVelocities, ca, true);
 	ca->flip();
-	Cell_T::runAsync(cores, copyVelocities<T>, ca, true);
+	runAsync(cores, copyVelocities, ca, true);
 	// 2.	: MoveWater
 	// 2.1.	: UpdateVelocities
 	ca->calculatePaperMaxSpeed();
 	ca->adjustDt();
 	for (float t = 0.0; t < 1.0; t += ca->getDt())
 	{
-		Cell_T::runAsync(cores, updateVelocities<T>, ca);
+		runAsync(cores, updateVelocities, ca);
 		// 2.1.1 : EnforceBoundaryConditions
-		Cell_T::runAsync(cores, enforceBoundaryConditions<T>, ca, true);
+		runAsync(cores, enforceBoundaryConditions, ca, true);
 	}
 	ca->flip();
 
-	printDebug(ca);
 	// 2.2.	: RelaxDivergence
 	size_t n = 0;
 	do
 	{
 		ca->div_max = 0.0;
-		Cell_T::runAsync(cores, copyVelocities<T>, ca, true);
-		Cell_T::runAsync(cores, relaxDivergence<T>, ca, true);
+		runAsync(cores, copyVelocities, ca, true);
+		runAsync(cores, relaxDivergence, ca, true);
 		std::cout << n << " : " << ca->div_max << "\n";
 		ca->flip();
 		n++;
 	} while (!(ca->div_max <= REL_TOL || n > REL_MAX));
-	printDebug(ca);
+
 	// 2.3.	: FlowOutward
 	//TODO
 	// 3.	: MovePigment
@@ -68,7 +54,7 @@ void ComplexCell::doCalc(size_t cores, T* tca) {
 
 void ComplexCell::fixPaperHeight()
 {
-	c = h * (C_MAX - C_MIN) + C_MIN;
+	c = this->h * (C_MAX - C_MIN) + C_MIN;
 }
 
 void ComplexCell::setHeightGradient(float new_hx, float new_hy)
@@ -84,24 +70,21 @@ void ComplexCell::addWater(float w)
 	m = true;
 }
 
-template<class T>
 /// (u, v) = (u, v) - Nabla (h)
-void ComplexCell::adjustVelocities(size_t x, size_t y, T* ca)
+void ComplexCell::adjustVelocities(size_t x, size_t y, ComplexPaper* ca)
 {
 	ca->getNext(x, y)->u = ca->getOld(x, y)->u - ca->getOld(x, y)->hx;
 	ca->getNext(x, y)->v = ca->getOld(x, y)->u - ca->getOld(x, y)->hy;
 }
 
-template<class T>
-void ComplexCell::copyVelocities(size_t x, size_t y, T* ca)
+void ComplexCell::copyVelocities(size_t x, size_t y, ComplexPaper* ca)
 {
 	ca->getNext(x, y)->u = ca->getOld(x, y)->u;
 	ca->getNext(x, y)->v = ca->getOld(x, y)->v;
 }
 
 // works with M, u, v, p
-template<class T>
-void ComplexCell::updateVelocities(size_t x, size_t y, T* ca)
+void ComplexCell::updateVelocities(size_t x, size_t y, ComplexPaper* ca)
 {
 	auto* cc = ca->getOld(x, y);
 	auto* cu = ca->getOld(x, y + 1);
@@ -196,8 +179,7 @@ void ComplexCell::updateVelocities(size_t x, size_t y, T* ca)
 		ca->getNext(x, (y + 1))->v = 0.0;*/
 }
 
-template<class T>
-void ComplexCell::enforceBoundaryConditions(size_t x, size_t y, T* ca)
+void ComplexCell::enforceBoundaryConditions(size_t x, size_t y, ComplexPaper* ca)
 {
 	if (!ca->getNext(x, y)->m)
 	{
@@ -206,14 +188,14 @@ void ComplexCell::enforceBoundaryConditions(size_t x, size_t y, T* ca)
 		return;
 	}
 	
-	if (x < ca->WIDTH - 1) {
+	if (x < ca->W - 1) {
 		if (!ca->getNext(x + 1, y)->m)
 		{
 			ca->getNext(x, y)->u = 0.0;
 		}
 	}
 
-	if (y < ca->HEIGHT - 1)
+	if (y < ca->H - 1)
 	{
 		if (!ca->getNext(x, y + 1)->m)
 		{
@@ -223,8 +205,7 @@ void ComplexCell::enforceBoundaryConditions(size_t x, size_t y, T* ca)
 }
 
 // works with M, u, v, p
-template<class T>
-void ComplexCell::relaxDivergence(size_t x, size_t y, T* ca)
+void ComplexCell::relaxDivergence(size_t x, size_t y, ComplexPaper* ca)
 {
 	auto* o_cc = ca->getOld(x, y);
 	auto* o_cd = ca->getOld(x, y - 1) ? ca->getOld(x, y - 1) : o_cc;

@@ -1,0 +1,55 @@
+#ifndef PAPER_H
+#define PAPER_H
+
+#include "template/CAutomata.h"
+#include "template/World.h"
+#include "MagicConstants.h"
+#include "PerlinNoise.h"
+#include "float.h"
+
+#include "models/PaperType.h"
+#include "models/custom/CustomCell.h"
+
+inline int Tmax(int a, int b) { return a > b ? a : b; };
+inline float Tmax(float a, float b) { return a > b ? a : b; };
+inline int Tmin(int a, int b) { return a < b ? a : b; };
+inline float Tmin(float a, float b) { return a < b ? a : b; };
+
+inline float fRand(float fMin, float fMax) {	return fMin + ((float)rand() / RAND_MAX) * (fMax - fMin); }
+
+class Paper: public CAutomata_T<CustomCell> {
+public:
+	using Data = CAutomata::World::Data;
+	
+	Paper(size_t WIDTH, size_t HEIGHT): CAutomata(WIDTH,HEIGHT) {
+		rand1 = fRand(0.0, 1.0);
+		rand2 = fRand(0.0, 1.0);
+	}
+	~Paper() {}
+	
+	void setPaperType(PaperType pt);
+	void addWaterDrop(size_t x, size_t y, size_t r);
+	void makeWaterStroke();
+	void makeInkStroke();
+	void calculatePaperMaxSpeed();
+	void adjustDt() { dt = ceil(1 / (maxSpeed + DBL_MIN)); }
+	float getMaxSpeed() const { return maxSpeed; }
+	float getDt() const { return dt; }
+	float div_max = 0.0;
+private:
+	float getPaperMaxSpeed() const { return maxSpeed; }
+	void setPaperPlane(size_t newB = DEFAULT_B, size_t newC = DEFAULT_C);
+	void setNoise();
+	void setHydrophobic();
+	void addFibres(const PAPER paper);
+	void normalize();
+	float maxSpeed = 0.0;
+	float dt = 0.0;
+	float rand1;
+	float rand2;
+public:
+	// Inherited via CAutomata_T
+	virtual void run(size_t cores, size_t cycles) override;
+};
+
+#endif // PAPER_H

@@ -11,21 +11,17 @@
 
 #include "models/PaperCell.h"
 
-/*
-	CURTIS, Cassidy J., et al. Computer-generated watercolor.
-	In: Proceedings of the 24th annual conference on Computer graphics and interactive techniques. 1997. p. 421-430.
-*/
+class ComplexPaper;
+
 class ComplexCell : public Cell {
 public:
-	static constexpr size_t aproxSize() { return sizeof(ComplexCell); }
-	template<class T>
-	static void doCalc(size_t cores, T* ca);
+	static void doCalc(size_t cores, ComplexPaper* ca);
 
 	void fixPaperHeight();
 	void setHeightGradient(float new_hx, float new_hy);
 	float getWater() const { return 0.0; } /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */
 	void addWater(float w);
-	void setHydrophobic(float ph) override {};
+	void setHydrophobic(float ph) {};
 	void addInk() { /* NOT TODO THIS FUNCTION IS NOT NEEDED.EVER. */ };
 	float getMaxSpeed() const {
 		if (abs(u) > abs(v)) return abs(u);
@@ -46,16 +42,11 @@ public://TODO @vita remove public
 	bool m = false; //mask
 	
 protected:
-	template<class T>
-	static void relaxDivergence(size_t x, size_t y, T* tca);
-	template<class T>
-	static void adjustVelocities(size_t x, size_t y, T* tca);
-	template<class T>
-	static void copyVelocities(size_t x, size_t y, T* tca);
-	template<class T>
-	static void updateVelocities(size_t x, size_t y, T* tca);
-	template<class T>
-	static void enforceBoundaryConditions(size_t x, size_t y, T* tca);
+	static void relaxDivergence(size_t x, size_t y, ComplexPaper* tca);
+	static void adjustVelocities(size_t x, size_t y, ComplexPaper* tca);
+	static void copyVelocities(size_t x, size_t y, ComplexPaper* tca);
+	static void updateVelocities(size_t x, size_t y, ComplexPaper* tca);
+	static void enforceBoundaryConditions(size_t x, size_t y, ComplexPaper* tca);
 public:
 	// Inherited via Cell
 	virtual const Color draw(Color base) const override;

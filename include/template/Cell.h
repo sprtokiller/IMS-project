@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <vector>
 #include <thread>
+#include <assert.h>
 
 template<class T>
 //Cell update function
@@ -20,7 +21,10 @@ public:
 
 	template<class T>
 	//runs all calculations for all cells
-	static void doCalc(size_t cores, T* ca) {};
+	static void doCalc(size_t cores, T* ca) {
+		//define your own implementation in derived class
+		assert(false);
+	};
 	
 	//doc used to create this lamba function
 	//https://learn.microsoft.com/en-us/cpp/cpp/lambda-expressions-in-cpp?view=msvc-170

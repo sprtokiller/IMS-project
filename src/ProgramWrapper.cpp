@@ -14,19 +14,19 @@
 #include "output/BitMapWriter.h"
 #include "MagicConstants.h"
 
-#include "models/Paper.h"
+#include "models/complex/ComplexPaper.h"
 
 ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 {
 	srand(time(NULL));
 	
 	const auto cores = getCores();
-	size_t ram = Paper::aproxSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+	size_t ram = ComplexPaper::aproxSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	MEMORY(ram);
 	if (ram > getTotalSystemMemory())
 		throw std::runtime_error("Not enough RAM for this program");
 
-	Paper ca(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+	ComplexPaper ca(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	TIMEIT(ca.setPaperType(PaperType::NOISE | PaperType::SBSK | PaperType::HYDROPHOBIC));
 	TIMEIT(ca.addWaterDrop(ca.W / 2, ca.H / 2, 500));
 	//TIMEIT(ca.makeWaterStroke());
@@ -46,7 +46,7 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 		std::string comm = "test";
 		comm += std::to_string(frame_id);
 		comm += ".bmp";
-		bmw.writeFile(ca.W, ca.H, comm.data(), ca.getOld());
+		bmw.writeFile(ca.W, ca.H, comm.data(), &ca);
 	};
 
 	for (size_t frame_id = 0; frame_id < TIME; frame_id++) {

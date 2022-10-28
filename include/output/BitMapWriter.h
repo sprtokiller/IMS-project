@@ -39,13 +39,15 @@ struct BmpInfoHeader {
     const uint32_t importantColors = 0;
 };
 
+class Paper;
+
 class BitMapWriter
 {
 public:
     BitMapWriter() {};
     ~BitMapWriter() {};
     static Color mixColors(Color bg, Color fg);
-	bool writeFile(const int32_t w, const int32_t h, const char* name, const Paper::Data& data);
+	bool writeFile(const int32_t w, const int32_t h, const char* name, const Paper* data);
 };
 
 

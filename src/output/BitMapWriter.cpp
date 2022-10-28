@@ -7,8 +7,9 @@
  */
 
 #include "output/BitMapWriter.h"
+#include "models/Paper.h"
 
-bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name, const Paper::Data& data) {
+bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name, const Paper* data) {
    
     std::ofstream fout(name, std::ios::binary);
 
@@ -40,23 +41,23 @@ bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name,
     size_t maxWater = 0;
     size_t maxInk = 0;
     
-    for (auto& cell : data)
+    for (auto& cell : data->getData())
     {
-		if (cell.getWater() > maxWater)
-			maxWater = cell.getWater();
+		//if (cell.getWater() > maxWater) TODO
+		//	maxWater = cell.getWater();
     }
 
-    for (auto& cell : data) {
+    for (auto& cell : data->getData()) {
         // background
 		Color r = Color({ 1.0, 1.0, 1.0, 1.0});
 		// paper height
-        Color paper = Color({ 0.9490, 0.9334, 0.7961, cell.h });
-        // Mix it
-        r = BitMapWriter::mixColors(r, paper);
-		// Cell color
-        Color cellC = cell.draw(r);
-        // Mix it
-        r = BitMapWriter::mixColors(r, cellC);
+  //      Color paper = Color({ 0.9490, 0.9334, 0.7961, cell.h });
+  //      // Mix it
+  //      r = BitMapWriter::mixColors(r, paper);
+		//// Cell color
+  //      Color cellC = cell.draw(r);
+  //      // Mix it
+  //      r = BitMapWriter::mixColors(r, cellC);
 		
         Pixel pix = Pixel({ (uint8_t)floor(255 * r.B), (uint8_t)floor(255 * r.G), (uint8_t)floor(255 * r.R)});
 

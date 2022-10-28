@@ -11,19 +11,18 @@
 
 #include "models/PaperCell.h"
 
-class Paper;
+class CustomPaper;
 
 class CustomCell : public Cell {
 public:
-	static constexpr size_t aproxSize() { return sizeof(CustomCell); }
+	static void doCalc(size_t cores, CustomPaper* ca);
 
-	static void doCalc(size_t cores, Paper* ca);
 	float getWater() const { return 0.0; }
 	void fixPaperHeight();
 	void setHeightGradient(float new_hx, float new_hy);
 	void addWater(float w) { water += w; };
 	void addInk() {};
-	void setHydrophobic(float ph) override { phobia = ph; };
+	void setHydrophobic(float ph) { phobia = ph; };
 private:
 
 public:
@@ -32,7 +31,7 @@ public:
 	float absorbed_water = 0;
 protected:
 	
-	static void spreadWater(size_t x, size_t y, Paper* tca);
+	static void spreadWater(size_t x, size_t y, CustomPaper* tca);
 	/*
 	template<class T>
 	static void adjustVelocities(size_t x, size_t y, T* tca);

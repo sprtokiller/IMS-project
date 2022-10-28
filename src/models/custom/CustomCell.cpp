@@ -7,28 +7,16 @@
  */
 
 #include "models/custom/CustomCell.h"
-#include "models/Paper.h"
+#include "models/custom/CustomPaper.h"
 #include <iomanip>
 #include <output/BitMapWriter.h>
 
-template<class T>
-void printDebug(T* ca) {
-	//std::cout << "[u, v]: \n" << std::setprecision(2) << std::fixed;
-	//for (size_t y = 0; y < ca->HEIGHT; y++) {
-	//	for (size_t x = 0; x < ca->WIDTH; x++) {
-	//		std::cout << "[" << ca->getOld(x, y)->u << ", " << ca->getOld(x, y)->v << "] ";
-	//	}
-	//	std::cout << "\n";
-	//}
+void CustomCell::doCalc(size_t cores, CustomPaper* ca) {
+	runAsync(cores, spreadWater, ca, true);
+	ca->flip();
 }
 
-void CustomCell::doCalc(size_t cores, Paper* tca) {
-	CustomCell::runAsync(cores, spreadWater, tca, true);
-	tca->flip();
-}
-
-
-void CustomCell::spreadWater(size_t x, size_t y, Paper* ca) {
+void CustomCell::spreadWater(size_t x, size_t y, CustomPaper* ca) {
 	
 	const auto* cell = ca->getOld(x, y);
 	auto future_cell = ca->getNext(x, y);

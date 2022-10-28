@@ -7,7 +7,6 @@
  */
 
 #include "models/simple/SimpleCell.h"
-#include "models/Paper.h"
 
 template<class T>
 void SimpleCell::doCalc(size_t cores, T* ca) {
