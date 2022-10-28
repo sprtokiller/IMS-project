@@ -7,7 +7,7 @@
 #include "PerlinNoise.h"
 #include "float.h"
 
-#include "models/CustomeCell.h"
+#include "models/custom/CustomCell.h"
 
 inline int Tmax(int a, int b) { return a > b ? a : b; };
 inline float Tmax(float a, float b) { return a > b ? a : b; };
@@ -36,7 +36,7 @@ inline PaperType operator|(PaperType a, PaperType b)
 	return PaperType(static_cast<int>(a) | static_cast<int>(b));
 }
 
-class Paper: public CAutomata_T<CustomeCell> {
+class Paper: public CAutomata_T<CustomCell> {
 public:
 	using Data = CAutomata::World::Data;
 	

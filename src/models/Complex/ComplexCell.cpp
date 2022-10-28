@@ -6,7 +6,7 @@
  * @author xkocic02
  */
 
-#include "models/ComplexCell.h"
+#include "models/complex/ComplexCell.h"
 #include "models/Paper.h"
 #include <iomanip>
 

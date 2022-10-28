@@ -13,9 +13,9 @@
 
 class Paper;
 
-class CustomeCell : public Cell {
+class CustomCell : public Cell {
 public:
-	static constexpr size_t aproxSize() { return sizeof(CustomeCell); }
+	static constexpr size_t aproxSize() { return sizeof(CustomCell); }
 
 	static void doCalc(size_t cores, Paper* ca);
 	float getWater() const { return 0.0; }

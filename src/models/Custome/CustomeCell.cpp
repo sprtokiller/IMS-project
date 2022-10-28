@@ -1,12 +1,12 @@
 /**
- * @brief CustomeCell class, with our final custom implementation
+ * @brief CustomCell class, with our final custom implementation
  *
- * @file CustomeCell.cpp
+ * @file CustomCell.cpp
  * @author xkrizv03
  * @author xkocic02
  */
 
-#include "models/CustomeCell.h"
+#include "models/custom/CustomCell.h"
 #include "models/Paper.h"
 #include <iomanip>
 #include <output/BitMapWriter.h>
@@ -22,13 +22,13 @@ void printDebug(T* ca) {
 	//}
 }
 
-void CustomeCell::doCalc(size_t cores, Paper* tca) {
-	CustomeCell::runAsync(cores, spreadWater, tca, true);
+void CustomCell::doCalc(size_t cores, Paper* tca) {
+	CustomCell::runAsync(cores, spreadWater, tca, true);
 	tca->flip();
 }
 
 
-void CustomeCell::spreadWater(size_t x, size_t y, Paper* ca) {
+void CustomCell::spreadWater(size_t x, size_t y, Paper* ca) {
 	
 	const auto* cell = ca->getOld(x, y);
 	auto future_cell = ca->getNext(x, y);
@@ -43,18 +43,18 @@ void CustomeCell::spreadWater(size_t x, size_t y, Paper* ca) {
 	future_cell->water = cell->water - water_to_absorb;*/
 }
 
-void CustomeCell::fixPaperHeight()
+void CustomCell::fixPaperHeight()
 {
 	//c = h * (C_MAX - C_MIN) + C_MIN;
 }
 
-void CustomeCell::setHeightGradient(float new_hx, float new_hy)
+void CustomCell::setHeightGradient(float new_hx, float new_hy)
 {
 	//hx = new_hx;
 	//hy = new_hy;
 }
 
-const Color CustomeCell::draw(Color base) const
+const Color CustomCell::draw(Color base) const
 {
 	Color r = base;
 	Color ph = Color({ 0.8, 0.12, 0.0, phobia });
