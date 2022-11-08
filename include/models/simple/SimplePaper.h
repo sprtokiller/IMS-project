@@ -45,7 +45,11 @@ public:
 	void setHydrophobic();
 
 	const std::vector<Cell*> getData() const {
-		return std::vector<Cell*>{};//TODO
+		std::vector<Cell*> array;
+		for (auto cell : getOld()) {
+			array.push_back(cell);
+		}
+		return array;
 	}
 };
 

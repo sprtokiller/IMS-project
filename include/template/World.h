@@ -19,10 +19,10 @@ template <class Unit>
 class World_T
 {	
 public:
-	using Data = std::vector<Unit>;
+	using Data = std::vector<Unit*>;
 	
 	World_T(size_t WIDTH, size_t HEIGHT);
-	~World_T() = default;
+	~World_T();
 
 	Data& getData() {
 		return cells;
@@ -73,7 +73,15 @@ template<class Unit>
 inline World_T<Unit>::World_T(size_t WIDTH, size_t HEIGHT) : W(WIDTH), H(HEIGHT) {
 	cells.reserve(W*H);
 	for (size_t i = 0; i < W * H; i++) {
-		cells.push_back(Unit());
+		cells.push_back(new Unit());
+	}
+}
+
+template<class Unit>
+inline World_T<Unit>::~World_T()
+{
+	for (size_t i = 0; i < W * H; i++) {
+		free(cells[i]);
 	}
 }
 
@@ -81,14 +89,14 @@ template<class Unit>
 inline Unit* World_T<Unit>::get(long long int x, long long int y) {
 	if (!((x >= 0 && x < W) && (y >= 0 && y < H)))
 		return nullptr;
-	Unit* cell = &cells[x + y * W];
+	Unit* cell = cells[x + y * W];
 	return cell;
 }
 
 template<class Unit>
 inline Unit* World_T<Unit>::get(size_t i) {
 	if (i >= W * H) return nullptr;
-	Unit* cell = &cells[i];
+	Unit* cell = cells[i];
 	return cell;
 }
 
@@ -96,7 +104,7 @@ template<class Unit>
 inline Unit* World_T<Unit>::getUnsafe(size_t x, size_t y) {
 	assert(x < W);
 	assert(y < H);
-	Unit* cell = &cells[x + y * W];
+	Unit* cell = cells[x + y * W];
 	assert(cell != nullptr);
 	return cell;
 }
@@ -104,7 +112,7 @@ inline Unit* World_T<Unit>::getUnsafe(size_t x, size_t y) {
 template<class Unit>
 inline Unit* World_T<Unit>::getUnsafe(size_t i) {
 	assert(i < W* H);
-	Unit* cell = &cells[i];
+	Unit* cell = cells[i];
 	assert(cell != nullptr);
 	return cell;
 }

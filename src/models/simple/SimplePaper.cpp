@@ -154,14 +154,14 @@ void SimplePaper::normalize()
 	float max = -1;
 
 	for (auto &c : getNext()) {
-		if (max < c.h)
+		if (max < c->h)
 		{
-			max = c.h;
+			max = c->h;
 		}
 	}
 	for (auto &c : getNext()) {
-		c.h = c.h / max;
-		c.fixPaperHeight();
+		c->h = c->h / max;
+		c->fixPaperHeight();
 	}
 
 	for (size_t x = 1; x < W - 1; x++)

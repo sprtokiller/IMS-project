@@ -18,7 +18,7 @@
 #include "models/custom/CustomPaper.h"
 #include "models/simple/SimplePaper.h"
 
-using PaperUsed = SimplePaper;
+using PaperUsed = ComplexPaper;
 
 ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 {
