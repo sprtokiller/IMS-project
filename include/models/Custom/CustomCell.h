@@ -32,6 +32,8 @@ public:
 protected:
 	
 	static void spreadWater(size_t x, size_t y, CustomPaper* tca);
+	static void absorbWater(size_t x, size_t y, CustomPaper* tca);
+
 	/*
 	template<class T>
 	static void adjustVelocities(size_t x, size_t y, T* tca);

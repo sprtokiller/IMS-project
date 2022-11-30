@@ -26,7 +26,7 @@ void CustomPaper::addWaterDrop(size_t x0, size_t y0, size_t r)
 		for (size_t y = 0; y < H; y++) {
 			float w = sqrt((float)(r * r - ((float)x - x0) * ((float)x - x0) - ((float)y - y0) * ((float)y - y0))) - (float)r / 2.0f;
 			if (w > 0)
-				getNext(x, y)->addWater(w / r);
+				getNext(x, y)->addWater(w * 4 / r);
 		}
 	}
 }

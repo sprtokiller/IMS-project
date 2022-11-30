@@ -53,11 +53,11 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	}
 
 	// create an animation
-	system("convert -delay 50 -resize 20% -loop 0 test*.bmp animation.gif");
+	system("convert -delay 50 -resize 20% -loop 0 new_test*.bmp animation.gif");
 	// show the animation
 	system("eog --disable-gallery animation.gif");
 	// delete not necessary pictures
-	system("rm test*.bmp");
+	system("rm new_test*.bmp");
 }
 
 ProgramWrapper::~ProgramWrapper()
