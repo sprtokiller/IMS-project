@@ -38,22 +38,17 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	TIMEIT(ca.mirror());
 	BitMapWriter bmw;
 
-	const size_t TIME = 10;	/// seconds to simulate
-	const size_t STEPS = 1; /// TIME_STEP;
+	const size_t FRAMES = 10;	/// seconds to simulate
+	const size_t STEPS_PER_FRAME = 5; /// TIME_STEP;
 	
-	/// Iterates simulation by one second and saves image
 	auto generateFrame = [&](size_t frame_id) {
-		for (size_t i = 0; i < STEPS; i++) {
-			fprintf(stderr, "\t");
-			TIMEIT(ca.run(cores, 1));
-		}
-		std::string comm = "test";
-		comm += std::to_string(frame_id);
-		comm += ".bmp";
+		fprintf(stderr, "\t");
+		TIMEIT(ca.run(cores, STEPS_PER_FRAME));
+		std::string comm = "new_test" + std::to_string(frame_id) + ".bmp";
 		bmw.writeFile(ca.W, ca.H, comm.data(), &ca);
 	};
 
-	for (size_t frame_id = 0; frame_id < TIME; frame_id++) {
+	for (size_t frame_id = 0; frame_id < FRAMES; frame_id++) {
 		TIMEIT(generateFrame(frame_id));
 	}
 
