@@ -45,12 +45,12 @@ void CustomCell::spreadWater(size_t x, size_t y, CustomPaper* ca) {
 	float own_saturation = cell->absorbed_water / cell->h;
 	float right_saturation = cell_r->absorbed_water / cell_r->h;
 
-	if (x == 1200 && y == 1200) {
- 		std::cout << "own_saturation: " << own_saturation * 100 << "%, which is " << cell->absorbed_water << "\n";
-		std::cout << "right_saturation: " << right_saturation * 100 << "%, which is " << cell_r->absorbed_water << "\n";
-		std::cout << "diff: " << (own_saturation - right_saturation) * 100 / 2 * 0.1 << "\n";
-		std::cout << "\n";
-	}
+	//if (x == 1200 && y == 1200) {
+ //		std::cout << "own_saturation: " << own_saturation * 100 << "%, which is " << cell->absorbed_water << "\n";
+	//	std::cout << "right_saturation: " << right_saturation * 100 << "%, which is " << cell_r->absorbed_water << "\n";
+	//	std::cout << "diff: " << (own_saturation - right_saturation) * 100 / 2 * 0.1 << "\n";
+	//	std::cout << "\n";
+	//}
 	/*
 	if (cell->absorbed_water < 1)
 	{
