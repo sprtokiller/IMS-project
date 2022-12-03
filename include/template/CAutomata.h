@@ -25,13 +25,10 @@ public:
 	using WorldUnit = Unit;
 
 	CAutomata_T(size_t WIDTH, size_t HEIGHT): W(WIDTH), H(HEIGHT) {
-		old = new World(W, H);
-		next = new World(W, H);
+        old= std::make_unique<World>(W,H);
+        next= std::make_unique<World>(W,H);
 	}
-	~CAutomata_T() {
-		free(old);
-		free(next);
-	}
+
 	/// <summary>
 	/// Updates world
 	/// </summary>
@@ -77,15 +74,15 @@ public:
 	}
 	
 	void mirror() {
-		delete old;
-		old = new World(*next);
+        //creates deep copy of old world
+        next.reset(new World(*old));
 	}
 
 	const size_t W;
 	const size_t H;
 private:
-	World* old;
-	World* next;
+    std::unique_ptr<World> old;
+    std::unique_ptr<World> next;
 };
 
 #endif

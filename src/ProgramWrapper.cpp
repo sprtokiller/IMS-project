@@ -35,6 +35,7 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	TIMEIT(ca.addWaterDrop(ca.W / 2, ca.H / 2, 500));
 	//TIMEIT(ca.makeWaterStroke());
 	//TIMEIT(ca.makeInkStroke());
+    ca.flip();
 	TIMEIT(ca.mirror());
 	BitMapWriter bmw;
 
@@ -45,7 +46,8 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 		fprintf(stderr, "\t");
 		TIMEIT(ca.run(cores, STEPS_PER_FRAME));
 		std::string comm = "new_test" + std::to_string(frame_id) + ".bmp";
-		bmw.writeFile(ca.W, ca.H, comm.data(), &ca);
+        fprintf(stderr, "\t");
+        TIMEIT(bmw.writeFile(ca.W, ca.H, comm.data(), &ca));
 	};
 
 	for (size_t frame_id = 0; frame_id < FRAMES; frame_id++) {
@@ -57,7 +59,7 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	// show the animation
 	system("eog --disable-gallery animation.gif");
 	// delete not necessary pictures
-	system("rm new_test*.bmp");
+	system("rm new_test*.bmp animation.gif");
 }
 
 ProgramWrapper::~ProgramWrapper()

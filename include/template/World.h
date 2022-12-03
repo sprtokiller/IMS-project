@@ -22,7 +22,12 @@ public:
 	using Data = std::vector<Unit*>;
 	
 	World_T(size_t WIDTH, size_t HEIGHT);
+    World_T(const World_T& copy);
 	~World_T();
+
+    World_T& operator=(const World_T&) = delete;
+    World_T(World_T&&) = delete;
+    World_T& operator=(World_T&&) = delete;
 
 	Data& getData() {
 		return cells;
@@ -68,6 +73,14 @@ protected:
 	Data cells;
 };
 
+template<class Unit>
+World_T<Unit>::World_T(const World_T &copy) : W(copy.W), H(copy.H){
+    cells.reserve(W*H);
+    for (size_t i = 0; i < W*H; i++) {
+        cells.push_back(new Unit(*copy.cells[i]));
+    }
+}
+
 
 template<class Unit>
 inline World_T<Unit>::World_T(size_t WIDTH, size_t HEIGHT) : W(WIDTH), H(HEIGHT) {
@@ -81,7 +94,9 @@ template<class Unit>
 inline World_T<Unit>::~World_T()
 {
 	for (size_t i = 0; i < W * H; i++) {
-		free(cells[i]);
+        Unit* cell = cells.back();
+        cells.pop_back();
+        delete(cell);
 	}
 }
 
