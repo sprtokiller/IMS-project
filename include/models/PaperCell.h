@@ -22,7 +22,6 @@ public:
 	}
 
 	virtual const Color draw(Color base) const = 0;
-
 	float h = 0; //paper "structure"
 };
 

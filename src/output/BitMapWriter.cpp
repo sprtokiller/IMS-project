@@ -8,6 +8,7 @@
 
 #include "output/BitMapWriter.h"
 #include "models/Paper.h"
+#include "Util.h"
 
 bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name, const Paper* data) {
    
@@ -36,16 +37,6 @@ bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name,
     fout.write((char*)&infoheader.verticalResolution, sizeof(int32_t));
     fout.write((char*)&infoheader.colorTableEntries, sizeof(uint32_t));
     fout.write((char*)&infoheader.importantColors, sizeof(uint32_t));
-
-    // writing pixel data, TODO, replace with automaton visualization
-    size_t maxWater = 0;
-    size_t maxInk = 0;
-    
-    for (auto cell : data->getData())
-    {
-		//if (cell.getWater() > maxWater) TODO
-		//	maxWater = cell.getWater();
-    }
 
     for (auto cell : data->getData()) {
         // background

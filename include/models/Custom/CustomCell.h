@@ -26,7 +26,7 @@ public:
 private:
 
 public:
-	bool active = false;
+	bool active = false; // is cell active (for optimization)
 	float phobia = 0;
 	float water = 0;
 	float absorbed_water = 0;
