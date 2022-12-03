@@ -39,8 +39,8 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	TIMEIT(ca.mirror());
 	BitMapWriter bmw;
 
-	const size_t FRAMES = 10;	/// seconds to simulate
-	const size_t STEPS_PER_FRAME = 5; /// TIME_STEP;
+	const size_t FRAMES = 5;	/// seconds to simulate
+	const size_t STEPS_PER_FRAME = 50; /// TIME_STEP;
 	
 	auto generateFrame = [&](size_t frame_id) {
 		fprintf(stderr, "\t");

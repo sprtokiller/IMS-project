@@ -26,7 +26,7 @@ public:
 private:
 
 public:
-	bool active = false; // is cell active (for optimization)
+	bool active = false;
 	float phobia = 0;
 	float water = 0;
 	float absorbed_water = 0;
@@ -34,6 +34,8 @@ protected:
 	
 	static void spreadWater(size_t x, size_t y, CustomPaper* tca);
 	static void absorbWater(size_t x, size_t y, CustomPaper* tca);
+	static void flowWater(size_t x, size_t y, CustomPaper* tca);
+
 
 	/*
 	template<class T>

@@ -28,10 +28,10 @@ void CustomPaper::addWaterDrop(size_t x0, size_t y0, size_t r)
 			if (w > 0) {
 				getNext(x, y)->addWater(w * 4 / r);
 				getNext(x, y)->active = true;
-				getNext(x - 1, y)->active = true;
-				getNext(x, y - 1)->active = true;
 				getNext(x + 1, y)->active = true;
 				getNext(x, y + 1)->active = true;
+				getNext(x - 1, y)->active = true;
+				getNext(x, y - 1)->active = true;
 			}
 		}
 	}

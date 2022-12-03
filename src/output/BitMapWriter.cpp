@@ -8,7 +8,6 @@
 
 #include "output/BitMapWriter.h"
 #include "models/Paper.h"
-#include "Util.h"
 
 bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name, const Paper* data) {
    
