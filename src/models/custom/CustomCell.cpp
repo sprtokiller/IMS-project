@@ -18,10 +18,13 @@ void CustomCell::doCalc(size_t cores, CustomPaper* ca) {
 }
 
 void CustomCell::absorbWater(size_t x, size_t y, CustomPaper* ca) {
-
-	const auto* cell = ca->getOld(x, y);
 	auto future_cell = ca->getNext(x, y);
-
+	if (!future_cell->active)
+	{
+		return;
+	}
+	const auto* cell = ca->getOld(x, y);
+	
 	float water_to_absorbe = 0;
 	if (cell->absorbed_water < cell->phobia) {
 		water_to_absorbe = Tmin(0.05 * std::sin(M_PI * 0.5 * (cell->absorbed_water / cell->h)) + 0.001, cell->water) * 0.1;
@@ -35,12 +38,15 @@ void CustomCell::absorbWater(size_t x, size_t y, CustomPaper* ca) {
 }
 
 void CustomCell::spreadWater(size_t x, size_t y, CustomPaper* ca) {
-	
+	auto future_cell = ca->getNext(x, y);
+	if (!future_cell->active)
+	{
+		return;
+	}
 	const auto* cell = ca->getOld(x, y);
 	const auto* cell_r = ca->getOld(x + 1, y);
 	const auto* cell_d = ca->getOld(x, y + 1);
 
-	auto future_cell = ca->getNext(x, y);
 	
 	float own_saturation = cell->absorbed_water / cell->h;
 	float right_saturation = cell_r->absorbed_water / cell_r->h;

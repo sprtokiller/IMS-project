@@ -26,6 +26,7 @@ public:
 private:
 
 public:
+	bool active = false;
 	float phobia = 0;
 	float water = 0;
 	float absorbed_water = 0;
