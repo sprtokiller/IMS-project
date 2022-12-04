@@ -18,8 +18,6 @@ public:
 	static void doCalc(size_t cores, CustomPaper* ca);
 
 	float getWater() const { return 0.0; }
-	void fixPaperHeight();
-	void setHeightGradient(float new_hx, float new_hy);
 	void addWater(float w) { water += w; };
 	void addInk() {};
 	void setHydrophobic(float ph) { phobia = ph; };
@@ -32,22 +30,19 @@ public:
 	float absorbed_water = 0;
 protected:
 	static void activateNearby(size_t x, size_t y, CustomPaper* tca);
+
 	static void spreadWater(size_t x, size_t y, CustomPaper* tca);
 	static void absorbWater(size_t x, size_t y, CustomPaper* tca);
-	static void flowWater(size_t x, size_t y, CustomPaper* tca);
+    static void flowWater(size_t x, size_t y, CustomPaper* tca);
+
 	static void vaporizeWater(size_t x, size_t y, CustomPaper* tca);
 
-
-	/*
-	template<class T>
-	static void adjustVelocities(size_t x, size_t y, T* tca);
-	template<class T>
-	static void copyVelocities(size_t x, size_t y, T* tca);
-	template<class T>
-	static void updateVelocities(size_t x, size_t y, T* tca);
-	template<class T>
-	static void enforceBoundaryConditions(size_t x, size_t y, T* tca);
-	*/
+    /*
+	static void adjustVelocities(size_t x, size_t y, CustomPaper* tca);
+	static void copyVelocities(size_t x, size_t y, CustomPaper* tca);
+	static void updateVelocities(size_t x, size_t y, CustomPaper* tca);
+	static void enforceBoundaryConditions(size_t x, size_t y, CustomPaper* tca);
+     */
 public:
 	// Inherited via Cell
 	virtual const Color draw(Color base) const override;

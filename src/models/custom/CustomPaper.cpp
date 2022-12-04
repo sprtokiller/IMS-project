@@ -164,7 +164,6 @@ void CustomPaper::normalize()
 	}
 	for (auto &c : getNext()) {
 		c->h = c->h / max;
-		c->fixPaperHeight();
 	}
 
 	for (size_t x = 1; x < W - 1; x++)

@@ -144,25 +144,14 @@ void CustomCell::vaporizeWater(size_t x, size_t y, CustomPaper* ca) {
 	}
 }
 
-void CustomCell::fixPaperHeight()
-{
-	//c = h * (C_MAX - C_MIN) + C_MIN;
-}
-
-void CustomCell::setHeightGradient(float new_hx, float new_hy)
-{
-	//hx = new_hx;
-	//hy = new_hy;
-}
-
 const Color CustomCell::draw(Color base) const
 {
 	Color r = base;
-	//Color ph = Color({ 0.8, 0.12, 0.0, phobia });
-	//r = BitMapWriter::mixColors(r, ph);
+	Color ph = Color({ 0.8, 0.12, 0.0, phobia });
+	r = BitMapWriter::mixColors(r, ph);
 	
-	//Color wa = Color({ 0, 0.5, 1.0, Tmax(Tmin(water * 1.0f, 1.0), 0.0) });
-	//r = BitMapWriter::mixColors(r, wa);
+	Color wa = Color({ 0, 0.5, 1.0, Tmax(Tmin(water * 1.0f, 1.0), 0.0) });
+	r = BitMapWriter::mixColors(r, wa);
 
 	Color ab = Color({ 0.0, 0.8, 0.0, absorbed_water });
 	r = BitMapWriter::mixColors(r, ab);
