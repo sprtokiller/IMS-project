@@ -16,6 +16,7 @@ void CustomCell::doCalc(size_t cores, CustomPaper* ca) {
 	runAsync(cores, absorbWater, ca, true);
 	runAsync(cores, spreadWater, ca);
 	runAsync(cores, flowWater, ca);
+
 	runAsync(cores, vaporizeWater, ca);
 	ca->flip();
 }
@@ -39,8 +40,8 @@ void CustomCell::absorbWater(size_t x, size_t y, CustomPaper* ca) {
 		return;
 	}
 
-	const float ABSORB_COEF = 0.01;
 	const auto* cell = ca->getOld(x, y);
+	const float ABSORB_COEF = 0.01 + cell->water / 50;
 	
 	float water_to_absorbe = 0;
 	if (cell->absorbed_water < cell->phobia) {
@@ -157,8 +158,8 @@ void CustomCell::setHeightGradient(float new_hx, float new_hy)
 const Color CustomCell::draw(Color base) const
 {
 	Color r = base;
-	Color ph = Color({ 0.8, 0.12, 0.0, phobia });
-	r = BitMapWriter::mixColors(r, ph);
+	//Color ph = Color({ 0.8, 0.12, 0.0, phobia });
+	//r = BitMapWriter::mixColors(r, ph);
 	
 	//Color wa = Color({ 0, 0.5, 1.0, Tmax(Tmin(water * 1.0f, 1.0), 0.0) });
 	//r = BitMapWriter::mixColors(r, wa);

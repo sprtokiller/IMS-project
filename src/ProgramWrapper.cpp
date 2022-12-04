@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <algorithm>
 
 #include "ProgramWrapper.h"
 #include "Util.h"
@@ -40,12 +41,13 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	BitMapWriter bmw;
 
 	const size_t FRAMES = 20;	/// seconds to simulate
-	const size_t STEPS_PER_FRAME = 30; /// TIME_STEP;
+	const size_t STEPS_PER_FRAME = 10; /// TIME_STEP;
 	
 	auto generateFrame = [&](size_t frame_id) {
 		fprintf(stderr, "\t");
 		TIMEIT(ca.run(cores, STEPS_PER_FRAME));
-		std::string comm = "new_test" + std::to_string(frame_id) + ".bmp";
+		std::string num = std::to_string(frame_id);
+		std::string comm = "new_test" +std::string(3 - Tmin(3, num.length()), '0') + num + ".bmp";
         fprintf(stderr, "\t");
         TIMEIT(bmw.writeFile(ca.W, ca.H, comm.data(), &ca));
 	};
