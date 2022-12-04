@@ -54,8 +54,8 @@ constexpr PAPER SBSK = { 3 mm / CELL_SIZE, 50 };
 constexpr PAPER SBHK = { 1500 um / CELL_SIZE, 50 };
 
 // simulation size in real life units 
-constexpr size_t DEFAULT_WIDTH = 5 cm / CELL_SIZE;
-constexpr size_t DEFAULT_HEIGHT = 5 cm / CELL_SIZE;
+constexpr size_t DEFAULT_WIDTH = 1 cm / CELL_SIZE;
+constexpr size_t DEFAULT_HEIGHT = 1 cm / CELL_SIZE;
 
 // ink brush and stroke dimensions
 constexpr size_t INK_BRUSH_WIDTH = (5 mm / CELL_SIZE) > DEFAULT_HEIGHT ? DEFAULT_HEIGHT - 4 : (5 mm / CELL_SIZE);

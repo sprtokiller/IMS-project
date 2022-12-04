@@ -33,7 +33,7 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 
 	PaperUsed ca(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	TIMEIT(ca.setPaperType(PaperType::NOISE | PaperType::SBSK | PaperType::HYDROPHOBIC));
-	TIMEIT(ca.addWaterDrop(ca.W / 2, ca.H / 2, 500));
+	TIMEIT(ca.addWaterDrop(ca.W / 2, ca.H / 2, ca.W / 3));
 	//TIMEIT(ca.makeWaterStroke());
 	//TIMEIT(ca.makeInkStroke());
     ca.flip();
@@ -57,7 +57,7 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	}
 
 	// create an animation
-	system("convert -delay 30 -resize 20% -loop 0 new_test*.bmp animation.gif");
+	system("convert -delay 30 -loop 0 new_test*.bmp animation.gif");
 	// show the animation
 	system("eog --disable-gallery animation.gif");
 	// delete not necessary pictures
