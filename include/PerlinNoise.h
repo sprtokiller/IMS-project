@@ -1,4 +1,5 @@
 #include <vector>
+#include "models/PaperMath.h"
 
 // THIS CLASS IS A TRANSLATION TO C++11 FROM THE REFERENCE
 // JAVA IMPLEMENTATION OF THE IMPROVED PERLIN FUNCTION (see http://mrl.nyu.edu/~perlin/noise/)
@@ -13,12 +14,10 @@ class PerlinNoise {
 	// The permutation vector
 	std::vector<int> p;
 public:
-	// Initialize with the reference values for the permutation vector
-	PerlinNoise();
 	// Generate a new permutation vector based on the value of seed
-	PerlinNoise(unsigned int seed);
+	PerlinNoise(unsigned int seed = random());
 	// Get a noise value, for 2D images z can have any value
-	float noise(float x, float y, float z);
+	float noise(float x, float y, float z = 0.0f);
 private:
 	float fade(float t);
 	float lerp(float t, float a, float b);

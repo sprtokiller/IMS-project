@@ -14,10 +14,7 @@ class CustomPaper : public CAutomata_T<CustomCell>, public Paper{
 public:
 	using Data = CAutomata::World::Data;
 	
-	CustomPaper(size_t WIDTH, size_t HEIGHT): CAutomata(WIDTH,HEIGHT){
-		rand1 = fRand(0.0, 1.0);
-		rand2 = fRand(0.0, 1.0);
-	}
+	CustomPaper(size_t WIDTH, size_t HEIGHT): CAutomata(WIDTH,HEIGHT){}
 	~CustomPaper() {}
 	
 	void addWaterDrop(size_t x, size_t y, size_t r);
@@ -33,8 +30,6 @@ private:
 	void normalize();
 	float maxSpeed = 0.0;
 	float dt = 0.0;
-	float rand1;
-	float rand2;
 public:
 	// Inherited via CAutomata_T
 	virtual void run(size_t cores, size_t cycles) override;
