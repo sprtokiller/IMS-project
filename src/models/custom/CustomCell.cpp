@@ -12,10 +12,24 @@
 #include <output/BitMapWriter.h>
 
 void CustomCell::doCalc(size_t cores, CustomPaper* ca) {
+	runAsync(cores, activateNearby, ca);
 	runAsync(cores, absorbWater, ca, true);
 	runAsync(cores, spreadWater, ca);
 	runAsync(cores, flowWater, ca);
+	runAsync(cores, vaporizeWater, ca);
 	ca->flip();
+}
+
+void CustomCell::activateNearby(size_t x, size_t y, CustomPaper* ca) {
+	const auto* old_cell = ca->getOld(x, y);
+	if (!old_cell->active)
+	{
+		return;
+	}
+	ca->getNext(x + 1, y)->active = true;
+	ca->getNext(x, y + 1)->active = true;
+	ca->getNext(x - 1, y)->active = true;
+	ca->getNext(x, y - 1)->active = true;
 }
 
 void CustomCell::absorbWater(size_t x, size_t y, CustomPaper* ca) {
@@ -74,25 +88,59 @@ void CustomCell::spreadWater(size_t x, size_t y, CustomPaper* ca) {
 }
 
 void CustomCell::flowWater(size_t x, size_t y, CustomPaper* ca) {
+	const float SPREAD_C = (sqrt(2.0) - 1) / 4.0;
 	auto future_cell = ca->getNext(x, y);
 	if (!future_cell->active)
 	{
 		return;
 	}
 
-	const float FLOW_COEF = 1;
+	const float FLOW_COEF = 0.25;
 	const auto* cell = ca->getOld(x, y);
 	const auto* cell_r = ca->getOld(x + 1, y);
 	const auto* cell_u = ca->getOld(x, y + 1);
 	const auto* cell_l = ca->getOld(x - 1, y);
 	const auto* cell_d = ca->getOld(x, y - 1);
 
-	float flow_r = (cell->water - cell_r->water) * FLOW_COEF * (1 + (cell->phobia - cell_r->phobia)) / 4.0;
-	float flow_u = (cell->water - cell_u->water) * FLOW_COEF * (1 + (cell->phobia - cell_u->phobia)) / 4.0;
-	float flow_l = (cell->water - cell_l->water) * FLOW_COEF * (1 + (cell->phobia - cell_l->phobia)) / 4.0;
-	float flow_d = (cell->water - cell_d->water) * FLOW_COEF * (1 + (cell->phobia - cell_d->phobia)) / 4.0;
+	float flow_r = (cell->water - cell_r->water) / 2.0 * FLOW_COEF * (1 + (cell->phobia - cell_r->phobia));
+	float flow_u = (cell->water - cell_u->water) / 2.0 * FLOW_COEF * (1 + (cell->phobia - cell_u->phobia));
+	float flow_l = (cell->water - cell_l->water) / 2.0 * FLOW_COEF * (1 + (cell->phobia - cell_l->phobia));
+	float flow_d = (cell->water - cell_d->water) / 2.0 * FLOW_COEF * (1 + (cell->phobia - cell_d->phobia));
 
 	future_cell->water -= (flow_r + flow_u + flow_l + flow_d);
+}
+
+void CustomCell::vaporizeWater(size_t x, size_t y, CustomPaper* ca) {
+	auto future_cell = ca->getNext(x, y);
+	if (!future_cell->active)
+	{
+		return;
+	}
+	
+	float to_vaporize = 0.0001;
+
+	if (future_cell->water > to_vaporize)
+	{
+		future_cell->water -= to_vaporize;
+		to_vaporize = 0;
+	}
+	else
+	{
+		to_vaporize -= future_cell->water;
+		future_cell->water = 0;
+	}
+
+	to_vaporize *= 0.01;
+
+	// slow evaporation of stored water
+	if (future_cell->absorbed_water > to_vaporize)
+	{
+		future_cell->absorbed_water -= to_vaporize;
+	}
+	else
+	{
+		future_cell->absorbed_water = 0;
+	}
 }
 
 void CustomCell::fixPaperHeight()
@@ -112,7 +160,7 @@ const Color CustomCell::draw(Color base) const
 	Color ph = Color({ 0.8, 0.12, 0.0, phobia });
 	r = BitMapWriter::mixColors(r, ph);
 	
-	//Color wa = Color({ 0, 0.5, 1.0, Tmax(Tmin(water * 0.25f, 1.0), 0.0) });
+	//Color wa = Color({ 0, 0.5, 1.0, Tmax(Tmin(water * 1.0f, 1.0), 0.0) });
 	//r = BitMapWriter::mixColors(r, wa);
 
 	Color ab = Color({ 0.0, 0.8, 0.0, absorbed_water });

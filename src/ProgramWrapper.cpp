@@ -39,8 +39,8 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	TIMEIT(ca.mirror());
 	BitMapWriter bmw;
 
-	const size_t FRAMES = 5;	/// seconds to simulate
-	const size_t STEPS_PER_FRAME = 50; /// TIME_STEP;
+	const size_t FRAMES = 20;	/// seconds to simulate
+	const size_t STEPS_PER_FRAME = 30; /// TIME_STEP;
 	
 	auto generateFrame = [&](size_t frame_id) {
 		fprintf(stderr, "\t");
@@ -55,7 +55,7 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	}
 
 	// create an animation
-	system("convert -delay 50 -resize 20% -loop 0 new_test*.bmp animation.gif");
+	system("convert -delay 30 -resize 20% -loop 0 new_test*.bmp animation.gif");
 	// show the animation
 	system("eog --disable-gallery animation.gif");
 	// delete not necessary pictures

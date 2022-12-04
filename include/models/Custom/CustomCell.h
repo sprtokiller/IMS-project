@@ -31,10 +31,11 @@ public:
 	float water = 0;
 	float absorbed_water = 0;
 protected:
-	
+	static void activateNearby(size_t x, size_t y, CustomPaper* tca);
 	static void spreadWater(size_t x, size_t y, CustomPaper* tca);
 	static void absorbWater(size_t x, size_t y, CustomPaper* tca);
 	static void flowWater(size_t x, size_t y, CustomPaper* tca);
+	static void vaporizeWater(size_t x, size_t y, CustomPaper* tca);
 
 
 	/*
