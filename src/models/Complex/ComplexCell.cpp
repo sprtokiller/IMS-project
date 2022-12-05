@@ -26,6 +26,7 @@ void ComplexCell::doCalc(size_t cores, ComplexPaper* ca) {
 		runAsync(cores, updateVelocities, ca);
 		// 2.1.1 : EnforceBoundaryConditions
 		runAsync(cores, enforceBoundaryConditions, ca, true);
+        ca->flip();
 	}
 	ca->flip();
 
@@ -92,19 +93,21 @@ void ComplexCell::updateVelocities(size_t x, size_t y, ComplexPaper* ca)
 	auto* cr = ca->getOld(x + 1, y);
 	auto* cl = ca->getOld(x - 1, y);
 
-	float A = 0.0;
+    float A,B;
+
+	A = 0.0;
 	A += pow((cc->u + cl->u) / 2.0, 2.0);
 	A -= pow((cc->u + cr->u) / 2.0, 2.0);
 	A += (cc->u + cd->u) * (cd->v + ca->getOld(x + 1, y - 1)->v) / 4.0;
 	A -= (cc->u + cu->u) * (cc->v + cr->v) / 4.0;
-	float B = 0.0;
+	B = 0.0;
 	B += cr->u;
 	B += cl->u;
 	B += cu->u;
 	B += cd->u;
 	B -= 4.0 * (cc->u);
-	//auto calc = cc->u + ca->getDt() * (A - WC_U * B + cc->p - cr->p - WC_K * cc->u);
-	ca->getNext(x, y)->u = cc->u + ca->getDt() * (A - WC_U * B + cc->p - cr->p - WC_K * cc->u);
+
+	ca->getNext(x, y)->u += ca->getDt() * (A - WC_U * B + cc->p - cr->p - WC_K * cc->u);
 	/* ------ */
 
 	A = 0.0;
@@ -119,64 +122,7 @@ void ComplexCell::updateVelocities(size_t x, size_t y, ComplexPaper* ca)
 	B += cd->v;
 	B -= 4.0 * (cc->v);
 
-	ca->getNext(x, y)->v = cc->v + ca->getDt() * (A - WC_U * B + cc->p - cu->p - WC_K * cc->v);
-	/*
-	Paper* ca = static_cast<Paper*>(tca); // try fixing with 0.5index as "own" value
-	float A = 0.0;
-	A += pow(ca->getOld(x, y)->u, 2);
-	A -= pow(cr->u, 2);
-	A += ((ca->getOld(x, y)->u + ca->getOld(x + 1, y - 1)->u) / 2.0) * ((ca->getOld(x, y)->v + ca->getOld(x + 1, y - 1)->v) / 2.0); // this line is fishy
-	A -= ((ca->getOld(x, y)->u + ca->getOld(x + 1, y + 1)->u) / 2.0) * ((ca->getOld(x, y)->v + ca->getOld(x + 1, y + 1)->v) / 2.0); // this line is fishy
-	float B = 0.0;
-	B += ((cr->u + ca->getOld(x + 2, y)->u) / 2.0);
-	B += ((cl->u + ca->getOld(x, y)->u) / 2.0);
-	B += ((cu->u + ca->getOld(x + 1, y + 1)->u) / 2.0);
-	B += ((cd->u + ca->getOld(x + 1, y - 1)->u) / 2.0);
-	B -= (4.0 * ((ca->getOld(x, y)->u + cr->u) / 2.0));
-	float val = 0.0;
-	val += ((ca->getOld(x, y)->u + cr->u) / 2.0);
-	val += ca->getDt() * (A - WC_U * B + ca->getOld(x, y)->p - cr->p - WC_K * ((ca->getOld(x, y)->u - cr->u) / 2.0));
-	//50% adds to my (x,y)->u, 50% adds to my next neighbor (x+1,y)->u
-
-	// enforceBoundaryConditions();
-	if (ca->getOld(x, y)->m)
-		ca->getNext(x, y)->u += val / 2.0;
-	else
-		ca->getNext(x, y)->u = 0.0;
-
-	// enforceBoundaryConditions();
-	if (ca->getOld(x, y)->m)
-		ca->getNext((x + 1), y)->u += val / 2.0;
-	else
-		ca->getNext((x + 1), y)->u = 0.0;
-
-	A = 0.0;
-	A += pow(ca->getOld(x, y)->v, 2);
-	A -= pow(cu->v, 2);
-	A += ((ca->getOld(x, y)->u + ca->getOld(x - 1, y + 1)->u) / 2.0) * ((ca->getOld(x, y)->v + ca->getOld(x - 1, y + 1)->v) / 2.0); // this line is fishy
-	A -= ((ca->getOld(x, y)->u + ca->getOld(x + 1, y + 1)->u) / 2.0) * ((ca->getOld(x, y)->v + ca->getOld(x + 1, y + 1)->v) / 2.0); // this line is fishy
-	B = 0.0;
-	B += ((cr->v + ca->getOld(x + 1, y + 1)->v) / 2.0);
-	B += ((cl->v + ca->getOld(x - 1, y + 1)->v) / 2.0);
-	B += ((cu->v + ca->getOld(x + 1, y + 2)->v) / 2.0);
-	B += ((ca->getOld(x, y)->v + cd->v) / 2.0);
-	B -= (4.0 * ((ca->getOld(x, y)->v + cu->v) / 2.0));
-	val = 0.0;
-	val += ((ca->getOld(x, y)->v + cu->v) / 2.0);
-	val += ca->getDt() * (A - WC_U * B + ca->getOld(x, y)->p - cu->p - WC_K * ((ca->getOld(x, y)->v - cu->v) / 2.0));
-	//50% adds to my (x,y)->v, 50% adds to my next neighbor (x,y+1)->v
-
-	// enforceBoundaryConditions();
-	if (ca->getOld(x, y)->m)
-		ca->getNext(x, y)->v += val / 2.0;
-	else
-		ca->getNext(x, y)->v = 0.0;
-
-	// enforceBoundaryConditions();
-	if (ca->getOld(x, y)->m)
-		ca->getNext(x, (y + 1))->v += val / 2.0;
-	else
-		ca->getNext(x, (y + 1))->v = 0.0;*/
+	ca->getNext(x, y)->v += ca->getDt() * (A - WC_U * B + cc->p - cu->p - WC_K * cc->v);
 }
 
 void ComplexCell::enforceBoundaryConditions(size_t x, size_t y, ComplexPaper* ca)
@@ -186,21 +132,6 @@ void ComplexCell::enforceBoundaryConditions(size_t x, size_t y, ComplexPaper* ca
 		ca->getNext(x, y)->u = 0.0;
 		ca->getNext(x, y)->v = 0.0;
 		return;
-	}
-	
-	if (x < ca->W - 1) {
-		if (!ca->getNext(x + 1, y)->m)
-		{
-			ca->getNext(x, y)->u = 0.0;
-		}
-	}
-
-	if (y < ca->H - 1)
-	{
-		if (!ca->getNext(x, y + 1)->m)
-		{
-			ca->getNext(x, y)->v = 0.0;
-		}
 	}
 }
 
@@ -240,7 +171,6 @@ void ComplexCell::flowOutward()
 
 const Color ComplexCell::draw(Color base) const
 {
-	if (p > 1)
-		std::cout << p << "\n";
-	return Color({ 1.0f - p, 0, 0, 1.0 });
+    float b = m ? 0 : 1;
+	return Color({ 1/(p+1), 1, b, 1.0 });
 }

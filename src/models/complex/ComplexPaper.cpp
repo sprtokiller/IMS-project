@@ -43,10 +43,10 @@ void ComplexPaper::makeInkStroke()
 
 void ComplexPaper::calculatePaperMaxSpeed()
 {
-	/*maxSpeed = -1.0;
+	maxSpeed = 0.0;
 	for (auto u : getOld()) {
-		if (u.getMaxSpeed() > maxSpeed) maxSpeed = u.getMaxSpeed();
-	}*/
+		if (u->getMaxSpeed() > maxSpeed) maxSpeed = u->getMaxSpeed();
+	}
 }
 
 void ComplexPaper::setPaperPlane(size_t newB, size_t newC) {

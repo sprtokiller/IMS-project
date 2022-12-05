@@ -27,8 +27,8 @@ public:
 	void normalize();
 private:
 	float getPaperMaxSpeed() const { return maxSpeed; }
-	float maxSpeed = 0.0;
-	float dt = 0.0;
+	float maxSpeed = 1.0;
+	float dt = 1.0;
 public:
 	// Inherited via CAutomata_T
 	virtual void run(size_t cores, size_t cycles) override;
