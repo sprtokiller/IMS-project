@@ -15,18 +15,21 @@
 #include "MagicConstants.h"
 #include <vector>
 
-class Paper{
+class Paper {
 public:
-	virtual ~Paper() {};
+    virtual ~Paper() {};
 
-	void setPaperType(PaperType pt);
+    void setPaperType(PaperType pt);
 
-	virtual void setPaperPlane(size_t newB, size_t newC) {};
-	virtual void setNoise() {};
-	virtual void addFibres(const PAPER type) {};
-	virtual void setHydrophobic() {};
+    virtual void setPaperPlane(size_t newB, size_t newC) {};
 
-	virtual const std::vector<Cell*> getData() const = 0;
+    virtual void setNoise() {};
+
+    virtual void addFibres(const PAPER type) {};
+
+    virtual void setHydrophobic() {};
+
+    virtual const std::vector<Cell *> getData() const = 0;
 };
 
 #endif //! PAPER_H

@@ -11,14 +11,14 @@
 
 #include "Args.h"
 
-class ProgramWrapper
-{
+class ProgramWrapper {
 public:
-	ProgramWrapper(ProgramDesc d);
-	~ProgramWrapper();
-	
+    ProgramWrapper(ProgramDesc d);
+
+    ~ProgramWrapper();
+
 private:
-	ProgramDesc pd;
+    ProgramDesc pd;
 };
 
 #endif

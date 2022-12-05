@@ -32,14 +32,15 @@ void ComplexPaper::addWaterDrop(size_t x0, size_t y0, size_t r)
 
 void ComplexPaper::makeInkStroke()
 {
-	for (size_t x = INK_BRUSH_START_X; x < INK_BRUSH_END_X; x++)
-	{
-		for (size_t y = INK_BRUSH_START_Y; y < INK_BRUSH_END_Y; y++)
-		{
-			getNext(x, y)->addInk();
-		}
-	}
-    mirror();
+//	for (size_t x = INK_BRUSH_START_X; x < INK_BRUSH_END_X; x++)
+//	{
+//		for (size_t y = INK_BRUSH_START_Y; y < INK_BRUSH_END_Y; y++)
+//		{
+//			getNext(x, y)->addInk();
+//		}
+//	}
+//    mirror();
+    assert(true);
 }
 
 void ComplexPaper::calculatePaperMaxSpeed()

@@ -15,68 +15,71 @@
 
 #include "template/Cell.h"
 
-template <class Unit>
-class World_T
-{	
+template<class Unit>
+class World_T {
 public:
-	using Data = std::vector<Unit*>;
-	
-	World_T(size_t WIDTH, size_t HEIGHT);
-    World_T(const World_T& copy);
-	~World_T();
+    using Data = std::vector<Unit *>;
 
-    World_T& operator=(const World_T&) = delete;
-    World_T(World_T&&) = delete;
-    World_T& operator=(World_T&&) = delete;
+    World_T(size_t WIDTH, size_t HEIGHT);
 
-	Data& getData() {
-		return cells;
-	};
-	
-	/// <summary>
-	/// Gets cell at position (x, y),
-	/// checks if cell is out of bounds, returns nullptr it that case
-	/// </summary>
-	Unit* get(long long int x, long long int y);;
+    World_T(const World_T &copy);
 
-	/// <summary>
-	/// Gets cell at index,
-	/// does not check if cell is out of bounds, may return nullptr
-	/// </summary>
-	Unit* get(size_t i);;
+    ~World_T();
 
-	/// <summary>
-	/// Gets cell at position (x, y),
-	/// does not check if cell is out of bounds, may return invalid pointer,
-	/// use get() instead if unsure
-	/// </summary>
-	Unit* getUnsafe(size_t x, size_t y);;
+    World_T &operator=(const World_T &) = delete;
 
-	/// <summary>
-	/// Gets cell at index,
-	/// does not check if cell is out of bounds, may return invalid pointer,
-	/// use get() instead if unsure
-	/// </summary>
-	Unit* getUnsafe(size_t i);;
+    World_T(World_T &&) = delete;
 
-	/// <summary>
-	/// Calculates approximated size of the world in Bytes
-	/// </summary>
-	static constexpr size_t aproxSize(size_t WIDTH, size_t HEIGHT) {
-		//size of elements and pointer to elements + size of this object 
-		return WIDTH * HEIGHT * (sizeof(Unit) + sizeof(Unit*)) + sizeof(World_T<Unit>);
-	}
+    World_T &operator=(World_T &&) = delete;
 
-	const size_t W;
-	const size_t H;
+    Data &getData() {
+        return cells;
+    };
+
+    /// <summary>
+    /// Gets cell at position (x, y),
+    /// checks if cell is out of bounds, returns nullptr it that case
+    /// </summary>
+    Unit *get(long long int x, long long int y);;
+
+    /// <summary>
+    /// Gets cell at index,
+    /// does not check if cell is out of bounds, may return nullptr
+    /// </summary>
+    Unit *get(size_t i);;
+
+    /// <summary>
+    /// Gets cell at position (x, y),
+    /// does not check if cell is out of bounds, may return invalid pointer,
+    /// use get() instead if unsure
+    /// </summary>
+    Unit *getUnsafe(size_t x, size_t y);;
+
+    /// <summary>
+    /// Gets cell at index,
+    /// does not check if cell is out of bounds, may return invalid pointer,
+    /// use get() instead if unsure
+    /// </summary>
+    Unit *getUnsafe(size_t i);;
+
+    /// <summary>
+    /// Calculates approximated size of the world in Bytes
+    /// </summary>
+    static constexpr size_t aproxSize(size_t WIDTH, size_t HEIGHT) {
+        //size of elements and pointer to elements + size of this object
+        return WIDTH * HEIGHT * (sizeof(Unit) + sizeof(Unit *)) + sizeof(World_T<Unit>);
+    }
+
+    const size_t W;
+    const size_t H;
 protected:
-	Data cells;
+    Data cells;
 };
 
 template<class Unit>
-World_T<Unit>::World_T(const World_T &copy) : W(copy.W), H(copy.H){
-    cells.reserve(W*H);
-    for (size_t i = 0; i < W*H; i++) {
+World_T<Unit>::World_T(const World_T &copy) : W(copy.W), H(copy.H) {
+    cells.reserve(W * H);
+    for (size_t i = 0; i < W * H; i++) {
         cells.push_back(new Unit(*copy.cells[i]));
     }
 }
@@ -84,52 +87,51 @@ World_T<Unit>::World_T(const World_T &copy) : W(copy.W), H(copy.H){
 
 template<class Unit>
 inline World_T<Unit>::World_T(size_t WIDTH, size_t HEIGHT) : W(WIDTH), H(HEIGHT) {
-	cells.reserve(W*H);
-	for (size_t i = 0; i < W * H; i++) {
-		cells.push_back(new Unit());
-	}
+    cells.reserve(W * H);
+    for (size_t i = 0; i < W * H; i++) {
+        cells.push_back(new Unit());
+    }
 }
 
 template<class Unit>
-inline World_T<Unit>::~World_T()
-{
-	for (size_t i = 0; i < W * H; i++) {
-        Unit* cell = cells.back();
+inline World_T<Unit>::~World_T() {
+    for (size_t i = 0; i < W * H; i++) {
+        Unit *cell = cells.back();
         cells.pop_back();
-        delete(cell);
-	}
+        delete (cell);
+    }
 }
 
 template<class Unit>
-inline Unit* World_T<Unit>::get(long long int x, long long int y) {
-	if (!((x >= 0 && x < W) && (y >= 0 && y < H)))
-		return nullptr;
-	Unit* cell = cells[x + y * W];
-	return cell;
+inline Unit *World_T<Unit>::get(long long int x, long long int y) {
+    if (!((x >= 0 && x < W) && (y >= 0 && y < H)))
+        return nullptr;
+    Unit *cell = cells[x + y * W];
+    return cell;
 }
 
 template<class Unit>
-inline Unit* World_T<Unit>::get(size_t i) {
-	if (i >= W * H) return nullptr;
-	Unit* cell = cells[i];
-	return cell;
+inline Unit *World_T<Unit>::get(size_t i) {
+    if (i >= W * H) return nullptr;
+    Unit *cell = cells[i];
+    return cell;
 }
 
 template<class Unit>
-inline Unit* World_T<Unit>::getUnsafe(size_t x, size_t y) {
-	assert(x < W);
-	assert(y < H);
-	Unit* cell = cells[x + y * W];
-	assert(cell != nullptr);
-	return cell;
+inline Unit *World_T<Unit>::getUnsafe(size_t x, size_t y) {
+    assert(x < W);
+    assert(y < H);
+    Unit *cell = cells[x + y * W];
+    assert(cell != nullptr);
+    return cell;
 }
 
 template<class Unit>
-inline Unit* World_T<Unit>::getUnsafe(size_t i) {
-	assert(i < W* H);
-	Unit* cell = cells[i];
-	assert(cell != nullptr);
-	return cell;
+inline Unit *World_T<Unit>::getUnsafe(size_t i) {
+    assert(i < W * H);
+    Unit *cell = cells[i];
+    assert(cell != nullptr);
+    return cell;
 }
 
 #endif //!WORLD_H

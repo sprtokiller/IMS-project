@@ -19,7 +19,7 @@
 #include "BitMapTypes.h"
 
 struct BmpHeader {
-    const char bitmapSignatureBytes[2] = { 'B', 'M' };
+    const char bitmapSignatureBytes[2] = {'B', 'M'};
     uint32_t sizeOfBitmapFile; // this needs to be redefined
     const uint32_t reservedBytes = 0;
     const uint32_t pixelDataOffset = 54;
@@ -41,13 +41,15 @@ struct BmpInfoHeader {
 
 class Paper;
 
-class BitMapWriter
-{
+class BitMapWriter {
 public:
     BitMapWriter() {};
+
     ~BitMapWriter() {};
+
     static Color mixColors(Color bg, Color fg);
-	bool writeFile(const int32_t w, const int32_t h, const char* name, const Paper* data);
+
+    bool writeFile(const int32_t w, const int32_t h, const char *name, const Paper *data);
 };
 
 

@@ -41,16 +41,16 @@ unsigned long long getTotalSystemMemory();
 /// </summary>
 #define TIMEIT(FUNC)\
 do {\
-	std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();\
-	{\
-	FUNC;\
-	}\
-	std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();\
-	std::chrono::duration<float> time_span = std::chrono::duration_cast<std::chrono::duration<float>>(t2 - t1);\
-	std::cout << "TIMEIT ";\
-	std::cout.width(10);\
-	std::cout << std::left << time_span.count() << " s ";\
-	std::cout << #FUNC << std::endl;\
+    std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();\
+    {\
+    FUNC;\
+    }\
+    std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();\
+    std::chrono::duration<float> time_span = std::chrono::duration_cast<std::chrono::duration<float>>(t2 - t1);\
+    std::cout << "TIMEIT ";\
+    std::cout.width(10);\
+    std::cout << std::left << time_span.count() << " s ";\
+    std::cout << #FUNC << std::endl;\
 } while (false);
 
 #endif //UTIL_H

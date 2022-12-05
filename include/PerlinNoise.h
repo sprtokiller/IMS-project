@@ -17,17 +17,21 @@
 #define PERLINNOISE_H
 
 class PerlinNoise {
-	// The permutation vector
-	std::vector<int> p;
+    // The permutation vector
+    std::vector<int> p;
 public:
-	// Generate a new permutation vector based on the value of seed
-	PerlinNoise(unsigned int seed = random());
-	// Get a noise value, for 2D images z can have any value
-	float noise(float x, float y, float z = 0.0f);
+    // Generate a new permutation vector based on the value of seed
+    PerlinNoise(unsigned int seed = random());
+
+    // Get a noise value, for 2D images z can have any value
+    float noise(float x, float y, float z = 0.0f);
+
 private:
-	float fade(float t);
-	float lerp(float t, float a, float b);
-	float grad(int hash, float x, float y, float z);
+    float fade(float t);
+
+    float lerp(float t, float a, float b);
+
+    float grad(int hash, float x, float y, float z);
 };
 
 #endif

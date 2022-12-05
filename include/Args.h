@@ -11,12 +11,12 @@
 
 #include <string_view>
 
-struct ProgramDesc
-{
+struct ProgramDesc {
 public:
-	ProgramDesc(int argc, char* argv[]);
+    ProgramDesc(int argc, char *argv[]);
+
 public:
-	bool verbose = false;
+    bool verbose = false;
 };
 
 #endif

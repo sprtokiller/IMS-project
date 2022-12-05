@@ -23,9 +23,9 @@
 
 //used for calculation only
 namespace RL {
-	constexpr float WATER_EVAPORATION_RATE = 47 fg; // per second per 1 um2
-	constexpr float WATER_DIFUSION_ALPHA = 2.299e-9 m m;
-	constexpr float INK_DIFUSION_BETA = 2e-9 m m;
+    constexpr float WATER_EVAPORATION_RATE = 47 fg; // per second per 1 um2
+    constexpr float WATER_DIFUSION_ALPHA = 2.299e-9 m m;
+    constexpr float INK_DIFUSION_BETA = 2e-9 m m;
 }
 
 // minimal size unit we simulate
@@ -46,12 +46,12 @@ constexpr size_t WATER_MAX_GRAPHIC_LEVEL = 30000;
 constexpr size_t INK_MAX_GRAPHIC_LEVEL = 2500;
 
 struct PAPER {
-	uint FIBER_LEN;
-	uint FIBER_INVERSE_DENSITY;
+    uint FIBER_LEN;
+    uint FIBER_INVERSE_DENSITY;
 };
 
-constexpr PAPER SBSK = { 3 mm / CELL_SIZE, 50 };
-constexpr PAPER SBHK = { 1500 um / CELL_SIZE, 50 };
+constexpr PAPER SBSK = {3 mm / CELL_SIZE, 50};
+constexpr PAPER SBHK = {1500 um / CELL_SIZE, 50};
 
 // simulation size in real life units 
 constexpr size_t DEFAULT_WIDTH = 1 cm / CELL_SIZE;
@@ -97,7 +97,7 @@ constexpr float WC_K = 0.01; // viscous drag
 constexpr size_t REL_MAX = 50; // max relax iterations
 constexpr float REL_TOL = 0.01; // relax tolerance
 constexpr float REL_DAMP = 0.1; // relax damping
- 
+
 #undef um
 #undef mm
 #undef cm

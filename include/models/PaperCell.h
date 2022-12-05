@@ -14,15 +14,15 @@
 #include "template/CAutomata.h"
 #include "models/PaperMath.h"
 
-class Cell : public Cell_T
-{
+class Cell : public Cell_T {
 public:
-	static void doCalc(size_t cores, CAutomata_T<Cell*>* ca) {
-		assert(false);//implement your own function in derived class
-	}
+    static void doCalc(size_t cores, CAutomata_T<Cell *> *ca) {
+        assert(false);//implement your own function in derived class
+    }
 
-	virtual const Color draw(Color base) const = 0;
-	float h = 0; //paper "structure"
+    virtual const Color draw(Color base) const = 0;
+
+    float h = 0; //paper "structure"
 };
 
 #endif // !PAPERCELL_H
