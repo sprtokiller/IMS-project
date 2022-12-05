@@ -19,51 +19,54 @@
 #include "models/custom/CustomPaper.h"
 #include "models/simple/SimplePaper.h"
 
+/// seconds to simulate
+const size_t FRAMES = 20;
 using PaperUsed = CustomPaper;
 
-ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
-{
-	srand(time(NULL));
-	
-	const auto cores = getCores();
-	size_t ram = PaperUsed::aproxSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-	MEMORY(ram);
-	if (ram > getTotalSystemMemory())
-		throw std::runtime_error("Not enough RAM for this program");
+ProgramWrapper::ProgramWrapper(ProgramDesc d) : pd(d) {
+    srand(time(NULL));
 
-	PaperUsed ca(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-	TIMEIT(ca.setPaperType(PaperType::NOISE | PaperType::SBSK | PaperType::HYDROPHOBIC));
-	TIMEIT(ca.addWaterDrop(ca.W / 2, ca.H / 2, ca.W / 3));
-	//TIMEIT(ca.makeWaterStroke());
-	//TIMEIT(ca.makeInkStroke());
-	TIMEIT(ca.mirror());
-	BitMapWriter bmw;
+    const auto cores = getCores();
+    size_t ram = PaperUsed::aproxSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+    MEMORY(ram);
+    if (ram > getTotalSystemMemory())
+        throw std::runtime_error("Not enough RAM for this program");
 
-	const size_t FRAMES = 20;	/// seconds to simulate
-	const size_t STEPS_PER_FRAME = 1 / TIME_STEP;
-	
-	auto generateFrame = [&](size_t frame_id) {
-		fprintf(stderr, "\t");
-		TIMEIT(ca.run(cores, STEPS_PER_FRAME));
-		std::string num = std::to_string(frame_id);
-		std::string comm = "new_test" +std::string(3 - Tmin(3, num.length()), '0') + num + ".bmp";
+    PaperUsed ca(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+    TIMEIT(ca.setPaperType(PaperType::NOISE | PaperType::SBSK | PaperType::HYDROPHOBIC));
+    TIMEIT(ca.addWaterDrop(ca.W / 2, ca.H / 2, ca.W / 3));
+    //TIMEIT(ca.makeWaterStroke());
+    //TIMEIT(ca.makeInkStroke());
+    TIMEIT(ca.mirror());
+    BitMapWriter bmw;
+
+    /// Subframes per frame
+    const size_t STEPS_PER_FRAME = 1 / TIME_STEP;
+
+    auto generateFrame = [&](size_t frame_id) {
+        fprintf(stderr, "\t");
+        //run STEPS_PER_FRAME steps
+        TIMEIT(ca.run(cores, STEPS_PER_FRAME));
+        //write frame to file
+        std::string num = std::to_string(frame_id);
+        std::string comm = "new_test" + std::string(3 - Tmin(3, num.length()), '0') + num + ".bmp";
         fprintf(stderr, "\t");
         TIMEIT(bmw.writeFile(ca.W, ca.H, comm.data(), &ca));
-	};
+    };
 
-	for (size_t frame_id = 0; frame_id < FRAMES; frame_id++) {
-		TIMEIT(generateFrame(frame_id));
-	}
+    //generate animation
+    for (size_t frame_id = 0; frame_id < FRAMES; frame_id++) {
+        TIMEIT(generateFrame(frame_id));
+    }
 
-	// create an animation
-	system("convert -delay 30 -loop 0 new_test*.bmp animation.gif");
-	// show the animation
-	system("eog --disable-gallery animation.gif");
-	// delete not necessary pictures
-	system("rm new_test*.bmp animation.gif");
+    // create an animation
+    system("convert -delay 30 -loop 0 new_test*.bmp animation.gif");
+    // show the animation
+    system("eog --disable-gallery animation.gif");
+    // delete not necessary pictures
+    system("rm new_test*.bmp animation.gif");
 }
 
-ProgramWrapper::~ProgramWrapper()
-{
+ProgramWrapper::~ProgramWrapper() {
 
 }

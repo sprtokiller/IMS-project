@@ -17,10 +17,9 @@
 /// <param name="argc">Argument count</param>
 /// <param name="argv">Argument values</param>
 /// <returns>Standard exit codes</returns>
-int main(int argc, char* argv[])
-{
-	std::cout << "Hello CA\n";
-	ProgramWrapper pw({ argc, argv });
-	std::cout << "Bye CA\n";
-	return 0;
+int main(int argc, char *argv[]) {
+    std::cout << "Hello CA\n";
+    ProgramWrapper pw({argc, argv});
+    std::cout << "Bye CA\n";
+    return 0;
 }

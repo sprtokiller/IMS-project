@@ -9,53 +9,53 @@
 #include "output/BitMapWriter.h"
 #include "models/Paper.h"
 
-bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char* name, const Paper* data) {
-   
+bool BitMapWriter::writeFile(const int32_t w, const int32_t h, const char *name, const Paper *data) {
+
     std::ofstream fout(name, std::ios::binary);
 
     BmpHeader header = BmpHeader();
     header.sizeOfBitmapFile = header.pixelDataOffset + w * h * 3;
-	
+
     BmpInfoHeader infoheader = BmpInfoHeader();
     infoheader.width = w;
     infoheader.height = h;
 
     fout.write(header.bitmapSignatureBytes, 2);
-    fout.write((char*)&header.sizeOfBitmapFile, sizeof(uint32_t));
-    fout.write((char*)&header.reservedBytes, sizeof(uint32_t));
-    fout.write((char*)&header.pixelDataOffset, sizeof(uint32_t));
+    fout.write((char *) &header.sizeOfBitmapFile, sizeof(uint32_t));
+    fout.write((char *) &header.reservedBytes, sizeof(uint32_t));
+    fout.write((char *) &header.pixelDataOffset, sizeof(uint32_t));
 
-    fout.write((char*)&infoheader.sizeOfThisHeader, sizeof(uint32_t));
-    fout.write((char*)&infoheader.width, sizeof(int32_t));
-    fout.write((char*)&infoheader.height, sizeof(int32_t));
-    fout.write((char*)&infoheader.numberOfColorPlanes, sizeof(uint16_t));
-    fout.write((char*)&infoheader.colorDepth, sizeof(uint16_t));
-    fout.write((char*)&infoheader.compressionMethod, sizeof(uint32_t));
-    fout.write((char*)&infoheader.rawBitmapDataSize, sizeof(uint32_t));
-    fout.write((char*)&infoheader.horizontalResolution, sizeof(int32_t));
-    fout.write((char*)&infoheader.verticalResolution, sizeof(int32_t));
-    fout.write((char*)&infoheader.colorTableEntries, sizeof(uint32_t));
-    fout.write((char*)&infoheader.importantColors, sizeof(uint32_t));
+    fout.write((char *) &infoheader.sizeOfThisHeader, sizeof(uint32_t));
+    fout.write((char *) &infoheader.width, sizeof(int32_t));
+    fout.write((char *) &infoheader.height, sizeof(int32_t));
+    fout.write((char *) &infoheader.numberOfColorPlanes, sizeof(uint16_t));
+    fout.write((char *) &infoheader.colorDepth, sizeof(uint16_t));
+    fout.write((char *) &infoheader.compressionMethod, sizeof(uint32_t));
+    fout.write((char *) &infoheader.rawBitmapDataSize, sizeof(uint32_t));
+    fout.write((char *) &infoheader.horizontalResolution, sizeof(int32_t));
+    fout.write((char *) &infoheader.verticalResolution, sizeof(int32_t));
+    fout.write((char *) &infoheader.colorTableEntries, sizeof(uint32_t));
+    fout.write((char *) &infoheader.importantColors, sizeof(uint32_t));
 
-    for (auto cell : data->getData()) {
+    for (auto cell: data->getData()) {
         // background
-		Color r = Color({ 1.0, 1.0, 1.0, 1.0});
-		//paper height
-        Color paper = Color({ 0.9490, 0.9334, 0.7961, cell->h });
+        Color r = Color({1.0, 1.0, 1.0, 1.0});
+        //paper height
+        Color paper = Color({0.9490, 0.9334, 0.7961, cell->h});
         // Mix it
         r = BitMapWriter::mixColors(r, paper);
-		// Cell color
+        // Cell color
         Color cellC = cell->draw(r);
         // Mix it
         r = BitMapWriter::mixColors(r, cellC);
-		
-        Pixel pix = Pixel({ (uint8_t)floor(255 * r.B), (uint8_t)floor(255 * r.G), (uint8_t)floor(255 * r.R)});
 
-        fout.write((char*)&pix.blue, sizeof(uint8_t));
-        fout.write((char*)&pix.green, sizeof(uint8_t));
-        fout.write((char*)&pix.red, sizeof(uint8_t));
+        Pixel pix = Pixel({(uint8_t) floor(255 * r.B), (uint8_t) floor(255 * r.G), (uint8_t) floor(255 * r.R)});
+
+        fout.write((char *) &pix.blue, sizeof(uint8_t));
+        fout.write((char *) &pix.green, sizeof(uint8_t));
+        fout.write((char *) &pix.red, sizeof(uint8_t));
     }
-    
+
     fout.close();
     return true;
 }
