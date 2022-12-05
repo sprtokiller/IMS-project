@@ -74,8 +74,8 @@ public:
 	}
 	
 	void mirror() {
-        //creates deep copy of old world
-        next.reset(new World(*old));
+        //creates deep copy of world
+        old.reset(new World(*next));
 	}
 
 	const size_t W;

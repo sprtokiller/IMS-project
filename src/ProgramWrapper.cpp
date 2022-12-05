@@ -36,12 +36,11 @@ ProgramWrapper::ProgramWrapper(ProgramDesc d) :pd(d)
 	TIMEIT(ca.addWaterDrop(ca.W / 2, ca.H / 2, ca.W / 3));
 	//TIMEIT(ca.makeWaterStroke());
 	//TIMEIT(ca.makeInkStroke());
-    ca.flip();
 	TIMEIT(ca.mirror());
 	BitMapWriter bmw;
 
 	const size_t FRAMES = 20;	/// seconds to simulate
-	const size_t STEPS_PER_FRAME = 10; /// TIME_STEP;
+	const size_t STEPS_PER_FRAME = 1 / TIME_STEP;
 	
 	auto generateFrame = [&](size_t frame_id) {
 		fprintf(stderr, "\t");

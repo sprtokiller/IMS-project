@@ -38,7 +38,8 @@ void SimplePaper::makeInkStroke()
 		{
 			getNext(x, y)->addInk();
 		}
-	}	mirror();
+	}
+    mirror();
 }
 
 void SimplePaper::calculatePaperMaxSpeed()

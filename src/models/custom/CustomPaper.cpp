@@ -41,7 +41,8 @@ void CustomPaper::makeInkStroke()
 		{
 			getNext(x, y)->addInk();
 		}
-	}	mirror();
+	}
+    mirror();
 }
 
 void CustomPaper::calculatePaperMaxSpeed()

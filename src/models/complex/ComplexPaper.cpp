@@ -38,7 +38,8 @@ void ComplexPaper::makeInkStroke()
 		{
 			getNext(x, y)->addInk();
 		}
-	}	mirror();
+	}
+    mirror();
 }
 
 void ComplexPaper::calculatePaperMaxSpeed()
