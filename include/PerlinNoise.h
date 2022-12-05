@@ -1,3 +1,9 @@
+/**
+ * @brief Perlin noise generator
+ *
+ * @file PerlinNoise.h
+ */
+
 #include <vector>
 #include "models/PaperMath.h"
 

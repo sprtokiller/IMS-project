@@ -1,3 +1,11 @@
+/**
+ * @brief Abstract paper CA class definition
+ *
+ * @file Paper.h
+ * @author xkrizv03
+ * @author xkocic02
+ */
+
 #ifndef PAPER_H
 #define PAPER_H
 

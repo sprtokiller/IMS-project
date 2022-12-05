@@ -1,7 +1,7 @@
 ﻿/**
- * @brief Abstract Cell class, must be populated with a concrete implementation and rules
+ * @brief Abstract paper cell CA class definition
  *
- * @file Cell.h
+ * @file PaperCell.h
  * @author xkrizv03
  * @author xkocic02
  */

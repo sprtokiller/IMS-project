@@ -1,3 +1,12 @@
+/**
+ * @brief Paper CA Math functions definition
+ *
+ * @file PaperMath.h
+ * @author xkrizv03
+ * @author xkocic02
+ */
+
+
 #ifndef PAPER_MATH_H
 #define PAPER_MATH_H
 

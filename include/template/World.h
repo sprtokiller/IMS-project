@@ -1,5 +1,5 @@
 /**
- * @brief Abstract Field class, must be populated with a concrete implementation and rules
+ * @brief Abstract CA 2D array class definition
  *
  * @file World.h
  * @author xkrizv03

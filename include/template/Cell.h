@@ -1,5 +1,12 @@
-#pragma once
+/**
+ * @brief Abstract CA cell class definition and implementation
+ *
+ * @file Cell.h
+ * @author xkrizv03
+ * @author xkocic02
+ */
 
+#pragma once
 #include "output/BitMapTypes.h"
 #include <cstddef>
 #include <vector>

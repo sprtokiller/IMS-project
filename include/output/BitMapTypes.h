@@ -1,3 +1,11 @@
+/**
+ * @brief Bitmap types definition
+ *
+ * @file .h
+ * @author xkrizv03
+ * @author xkocic02
+ */
+
 #ifndef BITMAPTYPES_H
 #define BITMAPTYPES_H
 

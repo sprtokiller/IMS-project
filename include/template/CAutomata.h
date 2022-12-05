@@ -1,5 +1,5 @@
 /**
- * @brief Defines an abstract class for a Cellular Automaton
+ * @brief Abstract CA class definition and implementation
  *
  * @file CAutomata.h
  * @author xkrizv03

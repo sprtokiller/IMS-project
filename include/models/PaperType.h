@@ -1,3 +1,11 @@
+/**
+ * @brief Paper types definition
+ *
+ * @file PaperType.h
+ * @author xkrizv03
+ * @author xkocic02
+ */
+
 #pragma once
 #ifndef PAPER_TYPES_H
 #define PAPER_TYPES_H

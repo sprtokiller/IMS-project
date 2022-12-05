@@ -1,7 +1,7 @@
 ﻿/**
- * @brief Abstract Cell class, must be populated with a concrete implementation and rules
+ * @brief Custom cell class definition
  *
- * @file Cell.h
+ * @file CustomCell.h
  * @author xkrizv03
  * @author xkocic02
  */
